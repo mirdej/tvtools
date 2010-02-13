@@ -1,1 +1,1 @@
-folder boxon:/Users/me/Movies/clipotheque/bond/ 
+folder tv:/tvtools-read-only/maxmsp/ 
