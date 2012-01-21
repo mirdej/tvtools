@@ -20,6 +20,7 @@ function paths(p,home) {
 	preferences_path = p + "/";
 
 	setting ("beamer_ip",							"10.0.2.20");
+	setting ("log_titles",							"0");
 	setting ("font", 								"Lucida Grande");
 	setting ("size", 								"40");
 	setting ("espacement", 							"0.12");
