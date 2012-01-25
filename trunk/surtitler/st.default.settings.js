@@ -23,6 +23,7 @@ function paths(p,home) {
 	setting ("log_titles",							"0");
 	setting ("font", 								"Lucida Grande");
 	setting ("size", 								"40");
+	setting ("brightness", 								"1.");
 	setting ("espacement", 							"0.12");
 	setting ("position"	, 							"-0.614");
 	setting ("enable_keyboard"	, 					"1");
