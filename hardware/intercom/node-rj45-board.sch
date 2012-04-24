@@ -13132,6 +13132,9 @@ NS Package M08A</description>
 <part name="P+4" library="supply1" deviceset="+5V" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C0603" value="120p"/>
+<part name="PREAMP" library="pinhead" deviceset="PINHD-1X3" device=""/>
+<part name="P-4" library="supply1" deviceset="-5V" device=""/>
+<part name="P+2" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13191,6 +13194,9 @@ NS Package M08A</description>
 <instance part="P+4" gate="1" x="-299.72" y="43.18"/>
 <instance part="GND9" gate="1" x="-358.14" y="33.02" rot="R90"/>
 <instance part="C1" gate="G$1" x="-393.7" y="38.1" rot="R180"/>
+<instance part="PREAMP" gate="A" x="-398.78" y="104.14" rot="R90"/>
+<instance part="P-4" gate="1" x="-396.24" y="99.06"/>
+<instance part="P+2" gate="1" x="-401.32" y="99.06" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -13214,6 +13220,10 @@ NS Package M08A</description>
 <pinref part="C6" gate="G$1" pin="2"/>
 <pinref part="P+4" gate="1" pin="+5V"/>
 </segment>
+<segment>
+<pinref part="PREAMP" gate="A" pin="1"/>
+<pinref part="P+2" gate="1" pin="+5V"/>
+</segment>
 </net>
 <net name="-5V" class="0">
 <segment>
@@ -13234,6 +13244,10 @@ NS Package M08A</description>
 <segment>
 <pinref part="IC3" gate="G$1" pin="V-"/>
 <pinref part="P-1" gate="1" pin="-5V"/>
+</segment>
+<segment>
+<pinref part="PREAMP" gate="A" pin="3"/>
+<pinref part="P-4" gate="1" pin="-5V"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -13387,6 +13401,8 @@ NS Package M08A</description>
 <segment>
 <pinref part="R6" gate="G$1" pin="2"/>
 <pinref part="R9" gate="G$1" pin="2"/>
+<pinref part="PREAMP" gate="A" pin="2"/>
+<wire x1="-398.78" y1="91.44" x2="-398.78" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$21" class="0">
