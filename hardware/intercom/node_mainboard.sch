@@ -17615,8 +17615,8 @@ Source: http://focus.ti.com/lit/ds/symlink/sn75176a.pdf</description>
 <part name="AMP1" library="anyma-lib" deviceset="BHF3544-ATOMIZED" device=""/>
 <part name="C21" library="rcl" deviceset="C-EU" device="C0603" value="100n"/>
 <part name="C22" library="rcl" deviceset="C-EU" device="C0603" value="100n"/>
-<part name="R15" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
-<part name="R16" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
+<part name="R15" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
+<part name="R16" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
 <part name="GND23" library="supply1" deviceset="GND" device=""/>
 <part name="C23" library="rcl" deviceset="C-EU" device="C0603" value="100n"/>
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
@@ -17693,8 +17693,8 @@ Source: http://focus.ti.com/lit/ds/symlink/sn75176a.pdf</description>
 <part name="GND20" library="supply1" deviceset="GND" device=""/>
 <part name="R2" library="rcl" deviceset="R-EU_" device="R1206" value="1k"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="R4" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
-<part name="R5" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
+<part name="R4" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
+<part name="R5" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
 <part name="GND22" library="supply1" deviceset="GND" device=""/>
 <part name="R6" library="rcl" deviceset="R-EU_" device="R1206" value="75"/>
 <part name="R24" library="rcl" deviceset="R-EU_" device="R1206" value="75"/>

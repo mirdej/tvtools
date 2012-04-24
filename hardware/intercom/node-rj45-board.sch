@@ -13095,12 +13095,12 @@ NS Package M08A</description>
 <part name="P-2" library="supply1" deviceset="-5V" device=""/>
 <part name="C2" library="rcl" deviceset="C-EU" device="C0603" value="1u"/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
-<part name="R6" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
+<part name="R6" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
 <part name="IC2" library="linear" deviceset="LM833" device="D"/>
 <part name="R9" library="rcl" deviceset="R-EU_" device="R1206" value="1k"/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
-<part name="R10" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
+<part name="R10" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="R1206" value="6k8"/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R1206" value="75"/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="R1206" value="75"/>
