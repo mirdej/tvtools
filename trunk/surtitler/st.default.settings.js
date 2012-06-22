@@ -29,6 +29,7 @@ function paths(p,home) {
 	setting ("enable_keyboard"	, 					"1");
 	setting ("auto_reload"	, 					"0");
 	setting ("gnusb"	, 					"0");
+	setting ("rotate"	, 					"0.");
 	setting ("display_french"	, 					"1");
 	setting ("display_german"	, 					"1");
 	setting ("file", 								"Boxon:/Users/me/patchesMAX5/opera2010/surtitres.txt");
