@@ -13032,6 +13032,8 @@ NS Package M08A</description>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="R2" library="rcl" deviceset="R-EU_" device="R1206" value="4k7"/>
 <part name="GND25" library="supply1" deviceset="GND" device=""/>
+<part name="R8" library="rcl" deviceset="R-EU_" device="R1206" value="20k"/>
+<part name="GND21" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13136,6 +13138,8 @@ NS Package M08A</description>
 <instance part="GND3" gate="1" x="-22.86" y="231.14"/>
 <instance part="R2" gate="G$1" x="22.86" y="218.44" rot="R90"/>
 <instance part="GND25" gate="1" x="22.86" y="210.82"/>
+<instance part="R8" gate="G$1" x="-20.32" y="243.84" rot="R270"/>
+<instance part="GND21" gate="1" x="-20.32" y="251.46" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -13316,6 +13320,10 @@ NS Package M08A</description>
 <pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="GND25" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="R8" gate="G$1" pin="1"/>
+<pinref part="GND21" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="N$10" class="0">
 <segment>
@@ -13389,8 +13397,10 @@ NS Package M08A</description>
 <net name="N$7" class="0">
 <segment>
 <pinref part="IC2" gate="A" pin="+IN"/>
-<wire x1="-25.4" y1="238.76" x2="-12.7" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="238.76" x2="-20.32" y2="238.76" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="-"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<wire x1="-20.32" y1="238.76" x2="-12.7" y2="238.76" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
