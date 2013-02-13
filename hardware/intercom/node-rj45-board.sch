@@ -306,12 +306,12 @@
 <instance part="GND5" gate="1" x="-254" y="73.66" rot="R270"/>
 <instance part="VIDEO" gate="-1" x="-266.7" y="81.28" rot="R180"/>
 <instance part="VIDEO" gate="-2" x="-266.7" y="83.82" rot="R180"/>
-<instance part="SERIAL" gate="-1" x="-266.7" y="86.36" rot="R180"/>
-<instance part="SERIAL" gate="-2" x="-269.24" y="88.9" rot="R180"/>
+<instance part="SERIAL" gate="-1" x="-254" y="88.9" rot="R180"/>
+<instance part="SERIAL" gate="-2" x="-254" y="91.44" rot="R180"/>
 <instance part="MIC" gate="-1" x="-254" y="96.52" rot="R180"/>
 <instance part="MIC" gate="-2" x="-254" y="99.06" rot="R180"/>
-<instance part="HP" gate="-1" x="-254" y="91.44" rot="R180"/>
-<instance part="HP" gate="-2" x="-254" y="93.98" rot="R180"/>
+<instance part="HP" gate="-1" x="-276.86" y="86.36" rot="R180"/>
+<instance part="HP" gate="-2" x="-274.32" y="93.98" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -320,20 +320,6 @@
 <segment>
 <pinref part="U$1" gate="G$1" pin="P$1"/>
 <pinref part="GND5" gate="1" pin="GND"/>
-</segment>
-</net>
-<net name="N$16" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="5"/>
-<wire x1="-251.46" y1="88.9" x2="-266.7" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="SERIAL" gate="-2" pin="S"/>
-</segment>
-</net>
-<net name="N$17" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="6"/>
-<wire x1="-251.46" y1="86.36" x2="-264.16" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="SERIAL" gate="-1" pin="S"/>
 </segment>
 </net>
 <net name="VIDEO+" class="0">
@@ -363,16 +349,30 @@
 <pinref part="MIC" gate="-1" pin="S"/>
 </segment>
 </net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="4"/>
-<pinref part="HP" gate="-1" pin="S"/>
-</segment>
-</net>
 <net name="N$4" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="3"/>
 <pinref part="HP" gate="-2" pin="S"/>
+<wire x1="-271.78" y1="93.98" x2="-251.46" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="4"/>
+<pinref part="SERIAL" gate="-2" pin="S"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="5"/>
+<pinref part="SERIAL" gate="-1" pin="S"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="6"/>
+<pinref part="HP" gate="-1" pin="S"/>
+<wire x1="-274.32" y1="86.36" x2="-251.46" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
