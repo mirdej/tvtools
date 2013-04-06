@@ -1,0 +1,1 @@
+num_dimmers 22
