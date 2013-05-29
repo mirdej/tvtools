@@ -1,1 +1,1 @@
-folder anyma:/Movies/ 
+folder Macintosh HD:/Users/tv/Movies/ 
