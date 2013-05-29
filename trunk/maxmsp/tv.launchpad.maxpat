@@ -68,6 +68,20 @@
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
+									"id" : "obj-5",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 328.0, 228.0, 74.0, 20.0 ],
+									"text" : "prepend set"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
 									"id" : "obj-25",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
@@ -88,7 +102,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 468.0, 315.0, 50.0, 18.0 ],
-									"text" : "61."
+									"text" : "779."
 								}
 
 							}
@@ -122,20 +136,6 @@
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
-									"id" : "obj-15",
-									"maxclass" : "message",
-									"numinlets" : 2,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
-									"patching_rect" : [ 559.5, 207.0, 50.0, 18.0 ],
-									"text" : "3."
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontname" : "Arial",
-									"fontsize" : 12.0,
 									"id" : "obj-14",
 									"maxclass" : "newobj",
 									"numinlets" : 0,
@@ -151,13 +151,12 @@
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
 									"id" : "obj-13",
-									"linecount" : 2,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 439.0, 277.0, 50.0, 31.0 ],
-									"text" : "20.333334"
+									"patching_rect" : [ 439.0, 277.0, 50.0, 18.0 ],
+									"text" : "31.16"
 								}
 
 							}
@@ -179,20 +178,6 @@
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
-									"id" : "obj-11",
-									"maxclass" : "message",
-									"numinlets" : 2,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
-									"patching_rect" : [ 531.0, 161.0, 50.0, 18.0 ],
-									"text" : "600"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontname" : "Arial",
-									"fontsize" : 12.0,
 									"id" : "obj-9",
 									"maxclass" : "newobj",
 									"numinlets" : 0,
@@ -200,20 +185,6 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 531.0, 116.0, 107.0, 20.0 ],
 									"text" : "r movie_timescale"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontname" : "Arial",
-									"fontsize" : 12.0,
-									"id" : "obj-6",
-									"maxclass" : "message",
-									"numinlets" : 2,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
-									"patching_rect" : [ 429.0, 149.0, 50.0, 18.0 ],
-									"text" : "12200"
 								}
 
 							}
@@ -527,15 +498,6 @@
 							}
 , 							{
 								"patchline" : 								{
-									"destination" : [ "obj-15", 1 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-14", 0 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
 									"destination" : [ "obj-22", 1 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -599,16 +561,7 @@
 							}
 , 							{
 								"patchline" : 								{
-									"destination" : [ "obj-12", 0 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-2", 0 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-6", 1 ],
+									"destination" : [ "obj-5", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
 									"source" : [ "obj-2", 0 ]
@@ -735,6 +688,15 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-5", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-45", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -775,15 +737,6 @@
 									"disabled" : 0,
 									"hidden" : 0,
 									"source" : [ "obj-7", 3 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-11", 1 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-9", 0 ]
 								}
 
 							}
@@ -2974,13 +2927,13 @@
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
 									"id" : "obj-92",
-									"linecount" : 3,
+									"linecount" : 6,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 17.0, 369.5, 49.0, 45.0 ],
-									"text" : "anyma:/Movies/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -4324,7 +4277,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 279.0, 223.5, 344.0, 18.0 ],
-									"text" : "anyma:/Movies/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -5236,7 +5189,7 @@
 					"fontsize" : 36.0,
 					"frgb" : 0.0,
 					"id" : "obj-12",
-					"linecount" : 4,
+					"linecount" : 2,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -5245,7 +5198,7 @@
 					"patching_rect" : [ 490.0, 120.0, 129.0, 277.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 592.0, 121.0, 480.0, 54.0 ],
-					"text" : "InitiationImage.mov",
+					"text" : "test.mov",
 					"textcolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
 				}
 
@@ -5295,7 +5248,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 596.0, 249.0, 131.0, 34.0 ],
 					"readonly" : 1,
-					"text" : "00:20:01",
+					"text" : "00:00:00",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -5317,8 +5270,8 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 723.0, 206.0, 347.0, 82.0 ],
 					"readonly" : 1,
-					"text" : "-00:33:02",
-					"textcolor" : [ 0.858824, 0.858824, 0.858824, 1.0 ]
+					"text" : "-00:15:14",
+					"textcolor" : [ 1.0, 0.196078, 0.196078, 1.0 ]
 				}
 
 			}
@@ -5776,7 +5729,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 503.0, 143.0, 231.0, 18.0 ],
-									"text" : "anyma:/Movies/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -5816,7 +5769,35 @@
 										"description" : "",
 										"digest" : "",
 										"tags" : "",
+										"visible" : 1,
 										"boxes" : [ 											{
+												"box" : 												{
+													"fontname" : "Arial",
+													"fontsize" : 12.0,
+													"id" : "obj-8",
+													"maxclass" : "newobj",
+													"numinlets" : 3,
+													"numoutlets" : 3,
+													"outlettype" : [ "", "", "" ],
+													"patching_rect" : [ 150.0, 252.0, 135.0, 20.0 ],
+													"text" : "route .fcplock .localized"
+												}
+
+											}
+, 											{
+												"box" : 												{
+													"fontname" : "Arial",
+													"fontsize" : 12.0,
+													"id" : "obj-6",
+													"maxclass" : "newobj",
+													"numinlets" : 1,
+													"numoutlets" : 0,
+													"patching_rect" : [ 317.0, 202.0, 34.0, 20.0 ],
+													"text" : "print"
+												}
+
+											}
+, 											{
 												"box" : 												{
 													"fontname" : "Arial",
 													"fontsize" : 12.0,
@@ -5838,7 +5819,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "int" ],
-													"patching_rect" : [ 467.0, 529.0, 24.0, 20.0 ],
+													"patching_rect" : [ 462.0, 626.0, 24.0, 20.0 ],
 													"text" : "t 0"
 												}
 
@@ -6306,7 +6287,7 @@
  ]
 													}
 ,
-													"patching_rect" : [ 420.0, 558.0, 69.0, 20.0 ],
+													"patching_rect" : [ 415.0, 655.0, 69.0, 20.0 ],
 													"saved_object_attributes" : 													{
 														"default_fontface" : 0,
 														"default_fontname" : "Arial",
@@ -6787,7 +6768,7 @@
  ]
 													}
 ,
-													"patching_rect" : [ 628.0, 409.0, 69.0, 20.0 ],
+													"patching_rect" : [ 623.0, 506.0, 69.0, 20.0 ],
 													"saved_object_attributes" : 													{
 														"default_fontface" : 0,
 														"default_fontname" : "Arial",
@@ -6813,7 +6794,7 @@
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 496.5, 399.0, 109.0, 20.0 ],
+													"patching_rect" : [ 491.5, 496.0, 109.0, 20.0 ],
 													"text" : "s movie_timescale"
 												}
 
@@ -6826,7 +6807,7 @@
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 722.5, 399.0, 75.0, 20.0 ],
+													"patching_rect" : [ 717.5, 496.0, 75.0, 20.0 ],
 													"text" : "s movie_fps"
 												}
 
@@ -6839,7 +6820,7 @@
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 349.5, 423.0, 81.0, 20.0 ],
+													"patching_rect" : [ 344.5, 520.0, 81.0, 20.0 ],
 													"text" : "s movie_time"
 												}
 
@@ -6853,7 +6834,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 463.5, 457.0, 184.0, 18.0 ],
+													"patching_rect" : [ 458.5, 554.0, 184.0, 18.0 ],
 													"text" : "gettimescale, getduration, getfps"
 												}
 
@@ -6867,7 +6848,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 2,
 													"outlettype" : [ "bang", "" ],
-													"patching_rect" : [ 463.5, 427.0, 36.0, 20.0 ],
+													"patching_rect" : [ 458.5, 524.0, 36.0, 20.0 ],
 													"text" : "sel 1"
 												}
 
@@ -6881,7 +6862,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 2,
 													"outlettype" : [ "", "int" ],
-													"patching_rect" : [ 413.5, 399.0, 69.0, 20.0 ],
+													"patching_rect" : [ 408.5, 496.0, 69.0, 20.0 ],
 													"text" : "unpack s 0"
 												}
 
@@ -6895,7 +6876,7 @@
 													"numinlets" : 6,
 													"numoutlets" : 6,
 													"outlettype" : [ "", "", "", "", "", "" ],
-													"patching_rect" : [ 350.5, 366.0, 482.0, 20.0 ],
+													"patching_rect" : [ 345.5, 463.0, 482.0, 20.0 ],
 													"text" : "route time read timescale duration fps"
 												}
 
@@ -6909,7 +6890,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 2,
 													"outlettype" : [ "jit_matrix", "" ],
-													"patching_rect" : [ 354.0, 315.0, 160.0, 20.0 ],
+													"patching_rect" : [ 349.0, 412.0, 160.0, 20.0 ],
 													"text" : "jit.qt.movie 2 2 @autostart 0"
 												}
 
@@ -6923,7 +6904,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 256.0, 286.0, 122.0, 20.0 ],
+													"patching_rect" : [ 251.0, 383.0, 122.0, 20.0 ],
 													"text" : "sprintf read \\\"%s%s\\\""
 												}
 
@@ -6937,8 +6918,8 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 269.0, 256.0, 289.0, 18.0 ],
-													"text" : "anyma:/Movies/"
+													"patching_rect" : [ 264.0, 353.0, 289.0, 18.0 ],
+													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 												}
 
 											}
@@ -6951,7 +6932,7 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 540.0, 228.0, 73.0, 20.0 ],
+													"patching_rect" : [ 535.0, 325.0, 73.0, 20.0 ],
 													"text" : "r film_folder"
 												}
 
@@ -6990,7 +6971,7 @@
 													"numinlets" : 7,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 129.0, 597.0, 596.0, 20.0 ],
+													"patching_rect" : [ 124.0, 694.0, 596.0, 20.0 ],
 													"text" : "pack 0 s s s s 0 0"
 												}
 
@@ -7004,7 +6985,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 4,
 													"outlettype" : [ "bang", "", "bang", "" ],
-													"patching_rect" : [ 150.0, 247.0, 59.5, 20.0 ],
+													"patching_rect" : [ 145.0, 344.0, 59.5, 20.0 ],
 													"text" : "t b s b s"
 												}
 
@@ -7018,7 +6999,7 @@
 													"numinlets" : 5,
 													"numoutlets" : 4,
 													"outlettype" : [ "int", "", "", "int" ],
-													"patching_rect" : [ 132.0, 293.0, 73.0, 20.0 ],
+													"patching_rect" : [ 127.0, 390.0, 73.0, 20.0 ],
 													"text" : "counter"
 												}
 
@@ -7046,7 +7027,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 2,
 													"outlettype" : [ "", "" ],
-													"patching_rect" : [ 150.0, 218.0, 81.0, 20.0 ],
+													"patching_rect" : [ 150.0, 210.0, 81.0, 20.0 ],
 													"text" : "route append"
 												}
 
@@ -7100,7 +7081,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 149.0, 112.0, 289.0, 18.0 ],
-													"text" : "anyma:/Movies/"
+													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 												}
 
 											}
@@ -7141,7 +7122,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 4,
 													"outlettype" : [ "", "", "", "" ],
-													"patching_rect" : [ 201.0, 688.0, 79.0, 20.0 ],
+													"patching_rect" : [ 196.0, 785.0, 79.0, 20.0 ],
 													"saved_object_attributes" : 													{
 														"embed" : 0
 													}
@@ -7162,7 +7143,7 @@
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-14", 0 ],
+													"destination" : [ "obj-8", 0 ],
 													"disabled" : 0,
 													"hidden" : 0,
 													"source" : [ "obj-11", 0 ]
@@ -7237,7 +7218,7 @@
 													"destination" : [ "obj-15", 1 ],
 													"disabled" : 0,
 													"hidden" : 0,
-													"midpoints" : [ 173.0, 279.0, 234.666672, 279.0 ],
+													"midpoints" : [ 168.0, 376.0, 229.666672, 376.0 ],
 													"source" : [ "obj-14", 1 ]
 												}
 
@@ -7299,6 +7280,15 @@
 , 											{
 												"patchline" : 												{
 													"destination" : [ "obj-11", 0 ],
+													"disabled" : 0,
+													"hidden" : 0,
+													"source" : [ "obj-2", 0 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
+													"destination" : [ "obj-6", 0 ],
 													"disabled" : 0,
 													"hidden" : 0,
 													"source" : [ "obj-2", 0 ]
@@ -7482,6 +7472,15 @@
 													"disabled" : 0,
 													"hidden" : 0,
 													"source" : [ "obj-7", 0 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
+													"destination" : [ "obj-14", 0 ],
+													"disabled" : 0,
+													"hidden" : 0,
+													"source" : [ "obj-8", 2 ]
 												}
 
 											}
@@ -8011,7 +8010,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 8.0, 121.0, 569.0, 28.0 ],
 					"readonly" : 1,
-					"text" : "anyma:/Movies/",
+					"text" : "\"Macintosh HD:/Users/tv/Movies/\"",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -8066,7 +8065,7 @@
 							"architecture" : "x86"
 						}
 ,
-						"rect" : [ 324.0, 357.0, 1511.0, 713.0 ],
+						"rect" : [ 165.0, 191.0, 1511.0, 713.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -8086,6 +8085,20 @@
 						"digest" : "",
 						"tags" : "",
 						"boxes" : [ 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-39",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "bang" ],
+									"patching_rect" : [ 1055.0, 449.0, 60.0, 20.0 ],
+									"text" : "loadbang"
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
@@ -10296,7 +10309,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 966.0, 477.0, 77.0, 18.0 ]
+									"patching_rect" : [ 966.0, 477.0, 47.0, 18.0 ],
+									"text" : "input 2"
 								}
 
 							}
@@ -12007,6 +12021,15 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-34", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-39", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-10", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -12552,7 +12575,7 @@
 					"patching_rect" : [ 346.0, 154.0, 246.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 592.0, 298.0, 480.0, 30.0 ],
-					"setminmax" : [ 0.0, 32400.0 ],
+					"setminmax" : [ 0.0, 38900.0 ],
 					"setstyle" : 1,
 					"settype" : 0,
 					"slidercolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
@@ -13089,6 +13112,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 8.0, 185.0, 569.0, 589.0 ],
 					"rowheight" : 28,
+					"rows" : 9,
 					"selmode" : 3
 				}
 
@@ -13707,13 +13731,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "filmlist.txt",
-				"bootpath" : "/Volumes/anyma/Movies",
-				"patcherrelativepath" : "../../../../Volumes/anyma/Movies",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "whatismyip.maxpat",
 				"bootpath" : "/Users/tv/tvtools/maxmsp",
 				"patcherrelativepath" : ".",
