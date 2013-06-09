@@ -1,1 +1,3 @@
-folder Macintosh HD:/Users/tv/Movies/ 
+<<<<<<< .mine
+folder Turner:/Users/me/Desktop/testmovies-launchpad/ =======
+folder Macintosh HD:/Users/tv/Movies/ >>>>>>> .r57
