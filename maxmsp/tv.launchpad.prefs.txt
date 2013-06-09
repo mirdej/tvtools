@@ -1,3 +1,1 @@
-<<<<<<< .mine
-folder Turner:/Users/me/Desktop/testmovies-launchpad/ =======
-folder Macintosh HD:/Users/tv/Movies/ >>>>>>> .r57
+folder Macintosh HD:/Users/tv/Desktop/SchulTV-OE/Beiträge-Fertig/ 
