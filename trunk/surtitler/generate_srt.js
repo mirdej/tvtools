@@ -75,15 +75,8 @@ function firsttitle(n,t){
 
 function bang() {
 
-	if (verbose) {
-		post("generating .srt file from\n");
-		post("logfile:",logfile);
-		post();
-		post("subtitles:",subsfile);
-		post();
-		post("output:",srtfile);
-		post();
-	}
+	var theline,items,start,end,text,temp,i;
+	var subs = new Array();
 	
 	var lf = new File(logfile);
 	if (!lf.isopen) {outlet(1,"no log"); return;}
@@ -91,44 +84,50 @@ function bang() {
 	sf = new File(subsfile);
 	if (!sf.isopen) {outlet(1,"no subs"); return;}
 	
-	of = new File (srtfile,"write");
-	if (!of.isopen) {outlet(1,"no srt"); return;}
-	of.eof = 0;
+	// parse subtitle file
 	
-	var theline,items,start,end,text,temp,i;
-	i=0;
-	
-	while (lf.position != lf.eof) {
-		 post(i);
-		theline = lf.readline();
-		items = (theline.split(" "));
-	
-		if (i == first_title) {
-			startticks = items[0]- startticks;
-		}
-		
-		start= to_srt_time(items[0]- startticks);
-		end= to_srt_time(items[1]- startticks);
-		text = sf.readline().replace(/\\/g,"");;;
-		
+	while (sf.position != sf.eof) {
+		text = sf.readline().replace(/\\/g,"");
 		if (mode == 1) {
 			text = sf.readline().replace(/\\/g,"");
 		} else if (mode == 2) {
 			text = text + "\n"+ sf.readline().replace(/\\/g,"");
 		}
+		subs.push(text);
+		if (mode == 0) {
+			text = sf.readline().replace(/\\/g,"");
+		}
+		text = sf.readline()
+	}
+	
+	of = new File (srtfile,"write");
+	if (!of.isopen) {outlet(1,"no srt"); return;}
+	of.eof = 0;
+	
+	i=0;
+	
+	while (lf.position != lf.eof) {
+		theline = lf.readline();
+		items = (theline.split(" "));
+	
+		if (i == first_title) {
+			startticks = items[0]- startticks;
+			post ("first:",i,items[0],startticks);
+		}
 		
-		if ((text != "BLANC") && (text != "LEER")) {
+		start= to_srt_time(items[0]- startticks);
+		end= to_srt_time(items[1]- startticks);
+
+		
+		if ((subs[items[2]] != "BLANC") && (subs[items[2]] != "LEER")) {
 			if (i >= first_title) {
 				of.writeline(i+"");
 				of.writeline(start + " --> "+ end);
-				of.writeline(text);
+				of.writeline(subs[items[2]]);
 				of.writeline("");
 			}
 		}
-		if (mode == 0) {
-			text = sf.readline()
-		}
-		text = sf.readline()
+		
 		i++;
 	}
 	sf.close();
