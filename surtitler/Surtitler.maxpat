@@ -33,6 +33,34 @@
 				"box" : 				{
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
+					"id" : "obj-59",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 829.0, 486.0, 69.0, 20.0 ],
+					"saved_object_attributes" : 					{
+						"allwindowsactive" : 0,
+						"audiosupport" : 1,
+						"cantclosetoplevelpatchers" : 1,
+						"database" : 0,
+						"extensions" : 1,
+						"midisupport" : 1,
+						"noloadbangdefeating" : 0,
+						"overdrive" : 0,
+						"preffilename" : "Max 6 Preferences",
+						"searchformissingfiles" : 0,
+						"statusvisible" : 0,
+						"usesearchpath" : 0
+					}
+,
+					"text" : "standalone"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
 					"id" : "obj-58",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
@@ -196,8 +224,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 365.0, 114.0, 278.0, 18.0 ],
-									"text" : "Turner:/Users/me/Desktop/Ntando Cele"
+									"patching_rect" : [ 365.0, 114.0, 278.0, 32.0 ],
+									"text" : "Turner:/Users/me/Desktop/Le voyage retouché.txt"
 								}
 
 							}
@@ -2274,8 +2302,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 588.0, 188.0, 278.0, 18.0 ],
-									"text" : "Turner:/Users/me/Desktop/Ntando Cele"
+									"patching_rect" : [ 588.0, 188.0, 278.0, 32.0 ],
+									"text" : "Turner:/Users/me/Desktop/Le voyage retouché.txt"
 								}
 
 							}
@@ -5830,7 +5858,7 @@
 									"patching_rect" : [ 440.0, 221.0, 405.0, 30.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 108.0, 190.714279, 386.0, 21.0 ],
-									"text" : "Turner:/Users/me/Desktop/Ntando Cele"
+									"text" : "Turner:/Users/me/Desktop/Le voyage retouché.txt"
 								}
 
 							}
@@ -8748,7 +8776,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 562.0, 284.0, 342.0, 18.0 ],
-									"text" : "Turner:/Users/me/Desktop/Ntando Cele"
+									"text" : "Turner:/Users/me/Desktop/Le voyage retouché.txt"
 								}
 
 							}
@@ -9969,7 +9997,6 @@
 						"description" : "",
 						"digest" : "",
 						"tags" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontname" : "Arial",
@@ -10266,24 +10293,6 @@
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-83", 0 ],
-													"disabled" : 0,
-													"hidden" : 0,
-													"source" : [ "obj-80", 0 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
-													"destination" : [ "obj-83", 0 ],
-													"disabled" : 0,
-													"hidden" : 0,
-													"source" : [ "obj-81", 0 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
 													"destination" : [ "obj-74", 0 ],
 													"disabled" : 0,
 													"hidden" : 0,
@@ -10519,24 +10528,6 @@
 													"disabled" : 0,
 													"hidden" : 0,
 													"source" : [ "obj-78", 0 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
-													"destination" : [ "obj-83", 0 ],
-													"disabled" : 0,
-													"hidden" : 0,
-													"source" : [ "obj-80", 0 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
-													"destination" : [ "obj-83", 0 ],
-													"disabled" : 0,
-													"hidden" : 0,
-													"source" : [ "obj-81", 0 ]
 												}
 
 											}
@@ -10986,7 +10977,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 2,
 									"outlettype" : [ "jit_matrix", "" ],
-									"patching_rect" : [ 864.0, 323.0, 105.0, 74.0 ],
+									"patching_rect" : [ 864.0, 323.0, 105.0, 75.0 ],
 									"text" : "jit.gl.videoplane st_proj @scale 1.333 1. 1. @automatic 0 @blend_enable 0 @depth_enable 0 @texture view"
 								}
 
@@ -11753,8 +11744,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 339.0, 116.0, 278.0, 18.0 ],
-									"text" : "Turner:/Users/me/Desktop/Ntando Cele"
+									"patching_rect" : [ 339.0, 116.0, 278.0, 32.0 ],
+									"text" : "Turner:/Users/me/Desktop/Le voyage retouché.txt"
 								}
 
 							}
@@ -12144,7 +12135,7 @@
  ]
 									}
 ,
-									"patching_rect" : [ 308.0, 564.0, 37.0, 20.0 ],
+									"patching_rect" : [ 211.0, 585.0, 37.0, 20.0 ],
 									"saved_object_attributes" : 									{
 										"default_fontface" : 0,
 										"default_fontname" : "Arial",
