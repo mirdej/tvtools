@@ -6316,9 +6316,9 @@ NS Package M08A</description>
 <segment>
 <pinref part="U$7" gate="G$1" pin="5"/>
 <wire x1="266.7" y1="71.12" x2="421.64" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="-8.1" pin="1"/>
-<wire x1="281.94" y1="114.3" x2="266.7" y2="114.3" width="0.1524" layer="91"/>
-<wire x1="266.7" y1="114.3" x2="266.7" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="266.7" y1="71.12" x2="266.7" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="U$6" gate="-9.1" pin="1"/>
+<wire x1="281.94" y1="111.76" x2="266.7" y2="111.76" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$24" class="0">
@@ -6354,10 +6354,10 @@ NS Package M08A</description>
 <pinref part="IC6" gate="B" pin="-IN"/>
 <wire x1="309.88" y1="96.52" x2="302.26" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="96.52" x2="302.26" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="302.26" y1="96.52" x2="256.54" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="302.26" y1="96.52" x2="248.92" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="U$6" gate="-3.1" pin="1"/>
-<wire x1="281.94" y1="127" x2="256.54" y2="127" width="0.1524" layer="91"/>
-<wire x1="256.54" y1="127" x2="256.54" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="127" x2="248.92" y2="127" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="127" x2="248.92" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -6367,37 +6367,37 @@ NS Package M08A</description>
 <pinref part="IC6" gate="A" pin="-IN"/>
 <wire x1="358.14" y1="93.98" x2="350.52" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="350.52" y1="93.98" x2="350.52" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="350.52" y1="93.98" x2="259.08" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="259.08" y1="129.54" x2="259.08" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="350.52" y1="93.98" x2="251.46" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="129.54" x2="251.46" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="U$6" gate="-2.1" pin="1"/>
-<wire x1="281.94" y1="129.54" x2="259.08" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="129.54" x2="251.46" y2="129.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$17" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="3"/>
-<wire x1="421.64" y1="76.2" x2="261.62" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="421.64" y1="76.2" x2="254" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="U$6" gate="-5.1" pin="1"/>
-<wire x1="281.94" y1="121.92" x2="261.62" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="261.62" y1="121.92" x2="261.62" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="121.92" x2="254" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="254" y1="121.92" x2="254" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$23" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="4"/>
 <wire x1="421.64" y1="73.66" x2="264.16" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="-6.1" pin="1"/>
-<wire x1="281.94" y1="119.38" x2="264.16" y2="119.38" width="0.1524" layer="91"/>
-<wire x1="264.16" y1="119.38" x2="264.16" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="264.16" y1="73.66" x2="264.16" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="U$6" gate="-8.1" pin="1"/>
+<wire x1="281.94" y1="114.3" x2="264.16" y2="114.3" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$36" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="6"/>
-<wire x1="421.64" y1="68.58" x2="269.24" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="-9.1" pin="1"/>
-<wire x1="281.94" y1="111.76" x2="269.24" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="269.24" y1="111.76" x2="269.24" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="421.64" y1="68.58" x2="256.54" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="68.58" x2="256.54" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="U$6" gate="-6.1" pin="1"/>
+<wire x1="281.94" y1="119.38" x2="256.54" y2="119.38" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

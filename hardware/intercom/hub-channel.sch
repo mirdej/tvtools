@@ -6307,24 +6307,24 @@ NS Package M08A</description>
 </net>
 <net name="N$52" class="0">
 <segment>
-<wire x1="-12.7" y1="81.28" x2="10.16" y2="81.28" width="0.1524" layer="91"/>
-<wire x1="10.16" y1="81.28" x2="10.16" y2="15.24" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="5"/>
+<wire x1="10.16" y1="83.82" x2="10.16" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="81.28" x2="124.46" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="15.24" x2="10.16" y2="15.24" width="0.1524" layer="91"/>
 <pinref part="U$2" gate="-8.1" pin="1"/>
 <wire x1="147.32" y1="81.28" x2="124.46" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="4"/>
+<wire x1="-12.7" y1="83.82" x2="10.16" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$53" class="0">
 <segment>
-<wire x1="-12.7" y1="78.74" x2="7.62" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="7.62" y1="78.74" x2="7.62" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="6"/>
+<wire x1="7.62" y1="81.28" x2="7.62" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="7.62" y1="12.7" x2="127" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="127" y1="12.7" x2="127" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="U$2" gate="-9.1" pin="1"/>
 <wire x1="127" y1="78.74" x2="147.32" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="81.28" x2="-12.7" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="5"/>
 </segment>
 </net>
 <net name="N$76" class="0">
@@ -6402,12 +6402,12 @@ NS Package M08A</description>
 </net>
 <net name="N$6" class="0">
 <segment>
-<wire x1="-12.7" y1="83.82" x2="12.7" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="12.7" y1="83.82" x2="12.7" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="78.74" x2="12.7" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="12.7" y1="73.66" x2="104.14" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="4"/>
 <pinref part="R54" gate="G$1" pin="1"/>
 <wire x1="104.14" y1="73.66" x2="104.14" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="6"/>
+<wire x1="-12.7" y1="78.74" x2="12.7" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
