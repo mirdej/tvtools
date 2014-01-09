@@ -1,8 +1,8 @@
 # Name: gnusb Makefile
 # www.anyma.ch
 
-DEVICE     = atmega16
-CLOCK      = 12000000
+DEVICE     = atmega88p
+CLOCK      = 1000000
 PROGRAMMER = -c usbasp -P usb
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 
@@ -12,7 +12,7 @@ COMPILE = avr-gcc -Wall -Os -Iusbdrv -I. -mmcu=$(DEVICE) #-DDEBUG_LEVEL=2
 # NEVER compile the final product with debugging! Any debug output will
 # distort timing so that the specs can't be met.
 
-OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o gnusb.o main.o
+OBJECTS = main.o
 
 
 # symbolic targets:
@@ -35,7 +35,7 @@ flash:	all
 	$(AVRDUDE) -D -U flash:w:main.hex:i
 
 clean:
-	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.bin *.o usbdrv/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
+	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.bin *.o 
 
 # file targets:
 main.bin:	$(OBJECTS)
