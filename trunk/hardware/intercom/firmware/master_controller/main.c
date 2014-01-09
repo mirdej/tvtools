@@ -87,18 +87,34 @@ void check_uart(void) {
 	
 }
 
+// ------------------------------------------------------------------------------
+// - Select Camera
+// ------------------------------------------------------------------------------
+
+void select_cam(unsigned char idx) {
+	if (idx > 3) idx = 3;
+	PORTD = 1 << (idx + 4);
+	on_tally = 1 << idx;
+	PORTB = 1 << idx;
+	update_tallys();
+}
+
+// ------------------------------------------------------------------------------
+// - Interrupt on new video frame (every 40 ms)
+// ------------------------------------------------------------------------------
+
 ISR(INT0_vect) {
 	// sample buttons
 	unsigned char temp = PINC & 0x0f;
 	if (temp == old_buttons) return;
 	
 	unsigned char trigger = temp & ~old_buttons;
-	PORTD = trigger << 4;
-	on_tally = trigger;
-	PORTB = on_tally;
-	
 	old_buttons = temp;
-	update_tallys();
+	
+	if (trigger & 1) select_cam(0);
+	else if (trigger & 2) select_cam(1);
+	else if (trigger & 4) select_cam(2);
+	else select_cam(3);
 }
 
 // ==============================================================================
@@ -135,6 +151,8 @@ int main(void)
 	tx_state = idle_tx;
 	
 	UCSR0B |= (1 << TXEN0); // turn on uart
+	
+	select_cam(0);
 	
 	// ------------------------- Main Loop
 	while(1) {
