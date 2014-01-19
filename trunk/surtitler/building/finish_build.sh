@@ -1,6 +1,7 @@
 # ----------------------------------------------------------------------------------------------------
 # configure paths
-APP_DIR=Surtitler.app/Contents/
+#APP_DIR=Surtitler.app/Contents/
+APP_DIR=surtitler_tv_client.app/Contents/
 MAX_DIR="/Applications/Max 6.1/Cycling '74/"
 
 # ----------------------------------------------------------------------------------------------------
