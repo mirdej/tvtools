@@ -115,8 +115,15 @@ function bang() {
 			post ("first:",i,items[0],startticks);
 		}
 		
-		start= to_srt_time(items[0]- startticks);
-		end= to_srt_time(items[1]- startticks);
+		start = items[0]- startticks;
+		end = items[1]- startticks;
+		
+		if (end - start < 50) {
+			end = start + 50;
+		}
+		
+		start= to_srt_time(start);
+		end= to_srt_time(end);
 
 		
 		if ((subs[items[2]] != "BLANC") && (subs[items[2]] != "LEER")) {
