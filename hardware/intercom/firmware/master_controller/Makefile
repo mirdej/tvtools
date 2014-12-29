@@ -1,7 +1,7 @@
 # Name: gnusb Makefile
 # www.anyma.ch
 
-DEVICE     = atmega88p
+DEVICE     = atmega88
 CLOCK      = 1000000
 PROGRAMMER = -c usbasp -P usb
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
