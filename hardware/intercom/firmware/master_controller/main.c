@@ -92,8 +92,28 @@ void check_uart(void) {
 // ------------------------------------------------------------------------------
 
 void select_cam(unsigned char idx) {
+
+/*-------------
+
+Cam 1: 1x1
+Cam 2: 1x0
+Cam 3: 01x
+Cam 4: 00x
+
+--------------*/
+    unsigned char selector;
+
 	if (idx > 3) idx = 3;
-	PORTD = 1 << (idx + 4);
+
+    switch (idx) {
+           case 0: selector = 0x50; break;
+           case 1: selector = 0x40; break;
+           case 2: selector = 0x20; break;
+           default: selector = 0x00;
+    }
+
+    PORTD = ( PORTD & 0x8F ) | selector;
+
 	on_tally = 1 << idx;
 	PORTB = 1 << idx;
 	update_tallys();
@@ -103,7 +123,7 @@ void select_cam(unsigned char idx) {
 // - Interrupt on new video frame (every 40 ms)
 // ------------------------------------------------------------------------------
 
-ISR(INT0_vect) {
+ISR(PCI1_vect) {
 	// sample buttons
 	unsigned char temp = PINC & 0x0f;
 	if (temp == old_buttons) return;
@@ -143,9 +163,15 @@ int main(void)
 	UBRR0H = 0;
 	UBRR0L = 11; 												// 5000 baud (F_CPU/16/BAUD - 1)
 	
+	
+	// enable Pinchange Interrupt on PC5 -> PCINT13
+	PCICR = (1 << PCIE1);
+	PCMSK1 = (1 << PCINT13);
+	
 	// enable external interrupt
-	EICRA = (1 << ISC01) | (1 << ISC00);
-	EIMSK = (1 << INT0);
+	/*EICRA = (1 << ISC01) | (1 << ISC00);
+	EIMSK = (1 << INT0);*/
+	
 	sei();
 	
 	tx_state = idle_tx;
