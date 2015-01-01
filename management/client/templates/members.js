@@ -127,18 +127,35 @@ Template.editmemberform.events({
   "submit": function (event) {
      
         
-    var f = capitaliseFirstLetter(event.target.up_first.value);
-     var l = capitaliseFirstLetter(event.target.up_last.value);
+    var f = event.target.up_first.value;
+     var l = event.target.up_last.value;
     var n = event.target.up_tel.value;
 
 
  Members.update(Session.get("edit"),{$set:{
       first: f,
       last: l,
-      tel: n
+      tel: n,
+      pic:$(".img-container > img").cropper("getDataURL")
        }});
      Session.set("edit", null);
 
         return false;
   }
 });
+
+
+Template.editmemberform.rendered = function() {
+$(".img-container > img").cropper({
+  aspectRatio: 0.777777,
+  data: {
+    x: 0,
+    y: 0,
+    width: 350,
+    height: 450
+  },
+  done: function(data) {
+    // Output the result data for cropping image.
+  }
+});
+}
