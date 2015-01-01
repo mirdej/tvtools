@@ -1,5 +1,14 @@
 <template name="memberlist">
-      <h2 class="sub-header">Mitarbeiter ({{member_count}})   <label class="show-all">Show All<input type="checkbox" checked="{{show_all}}" /></label>
+{{#if doedit}}
+
+<div> 
+{{doedit}}
+              {{#each editmembers}}
+ {{> editmemberform}}
+             {{/each}}
+</div>
+{{else}}
+      <h2 class="sub-header">Mitarbeiter ({{member_count}})  <label class="showall">Show All<input type="checkbox" checked="{{show_all}}" /></label>
 </h2>
           <div class="table-responsive">
                                <form class="new-member">
@@ -25,7 +34,7 @@
 
   {{#if photo}}
     <div>
-      <img src={{photo}} width="160"/>
+      <img alt="{{first}}" src={{photo}}  width="160"/>
     </div>
   {{/if}}</td>
    <td> <input type="text" name="first" placeholder="Vorname" /></td>
@@ -38,8 +47,9 @@
             </table>
   </form>
         </div>
+    {{/if}}
 
-    </template>
+</template>
     
 <!--  ..................................................................... MEMBER ROW -->    
 <template name="memberlist_row">
@@ -49,11 +59,20 @@
                   <td>{{last}}</td>
                   <td>{{tel}}</td>
                   <td class="smalltext">{{group}}{{#if show_all}} | {{project}}
-{{/if}}<button class="delete">&times;</button>
+{{/if}}<button class="delete">&times;</button><button class="edit">edit</button>
 </td>
                 </tr>
 </template>
 
+
+<template name="editmemberform">
+   <div><form><img src={{pic}}  width="320"/>
+
+<input type="text" name="up_first" value="{{first}}" />
+ <input type="text" name="up_last" value="{{last}}" />
+ <input type="text" name="up_tel" value="{{tel}}" />
+<input type="submit"  class="save" /><button class="cancel">Cancel</button></form></div>   
+</template>
 <!--  ..................................................................... UPLOAD     -->    
 <template name="upload">
 <p style="margin-top:40px"></p>
