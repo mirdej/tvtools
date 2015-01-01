@@ -1,5 +1,23 @@
+function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+function formatPhone(t){
+ var s = t.toString()
+ s = s.replace(/\D\W[^\.]/g, "");
+ if (s.length==10) {
+   s = s[0]+s[1]+s[2]+" "+s[3]+s[4]+s[5]+" "+s[6]+s[7]+" "+s[8]+s[9];
+
+ }
+   return s;
+}
 
   Template.memberlist.helpers({
+     editmembers:function(){
+         return Members.find({_id:Session.get("edit")}, {sort: {first: 1}});
+     },
+  
     members: function () {
         if (Session.get("show_all")){
           return Members.find({}, {sort: {first: 1}});
@@ -22,8 +40,12 @@
     
     show_all:function () {
       return Session.get("show_all");
+    },
+    
+    doedit:function() {
+ return Session.get("edit");
     }
-  });
+      });
   
   Template.memberlist_row.helpers({
     
@@ -38,9 +60,10 @@
     // This function is called when the new task form is submitted
 
 
-    var f = event.target.first.value;
-    var l = event.target.last.value;
-    var n = event.target.tel.value;
+    var f = capitaliseFirstLetter(event.target.first.value);
+    var l = capitaliseFirstLetter(event.target.last.value);
+    var n = formatPhone(event.target.tel.value);
+
 
     Members.insert({
       pic:Session.get("photo"),
@@ -59,16 +82,18 @@
     // Prevent default form submit
     return false;
   },
+
   
   'click .snap': function () {
       var cameraOptions = {
-        width: 800,
-        height: 600
+        width: 1024,
+        height: 1024
       };
 
       MeteorCamera.getPicture(cameraOptions, function (error, data) {
         Session.set("photo", data);
       });
+        return false;
     },
     
       "click .delete": function () {
@@ -77,10 +102,43 @@
       } else {
           Members.update(this._id, {$set: {project:"deleted"}});
         }
+        return false;
       },
       
-       "change .show-all input": function (event) {
+      "click .edit": function () {
+           Session.set("edit", this._id);
+          // window.location.href = '/crop';
+
+            return false;
+      },
+    
+       "change .showall input": function (event) {
   Session.set("show_all", event.target.checked);
 }
 });
 
+
+Template.editmemberform.events({
+  'click .cancel': function () {
+     Session.set("edit", null);
+        return false;
+  },
+
+  "submit": function (event) {
+     
+        
+    var f = capitaliseFirstLetter(event.target.up_first.value);
+     var l = capitaliseFirstLetter(event.target.up_last.value);
+    var n = event.target.up_tel.value;
+
+
+ Members.update(Session.get("edit"),{$set:{
+      first: f,
+      last: l,
+      tel: n
+       }});
+     Session.set("edit", null);
+
+        return false;
+  }
+});
