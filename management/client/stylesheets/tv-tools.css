@@ -5,7 +5,12 @@ h1 {font-size:.5em;text-align:right;}
 .navbar ul li {display:inline;margin:10px;}
 .navbar {background-color:#2df;}
 */
+
+#branding {margin-top:1.5cm;margin-right:1cm;text-align:right;}
+.smalltext {color:888;font-size:.75em;}
 /* DROPZONE */
+
+
 
 .jqDropZone {
     background: lightgrey;
