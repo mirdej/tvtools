@@ -1,5 +1,6 @@
 <template name="memberlist">
-      <h2 class="sub-header">Mitarbeiter</h2>
+      <h2 class="sub-header">Mitarbeiter ({{member_count}})   <label class="show-all">Show All<input type="checkbox" checked="{{show_all}}" /></label>
+</h2>
           <div class="table-responsive">
                                <form class="new-member">
 
@@ -19,11 +20,19 @@
                 {{/each}}
                 
                   <tr>
- <td></td>
+ <td><button class="snap">Take a Photo</button>
+
+
+  {{#if photo}}
+    <div>
+      <img src={{photo}} width="160"/>
+    </div>
+  {{/if}}</td>
    <td> <input type="text" name="first" placeholder="Vorname" /></td>
    <td> <input type="text" name="last" placeholder="Nachname" /></td>
    <td> <input type="text" name="tel" placeholder="Mobil Nummer" /></td>
-   <td><input type="submit" /></td>
+   <td><input type="submit" />         
+</td>
    </tr>
                </tbody>
             </table>
@@ -34,12 +43,14 @@
     
 <!--  ..................................................................... MEMBER ROW -->    
 <template name="memberlist_row">
-<tr>
-                  <td>.</td>
+<tr class="boy">
+                  <td><img src={{pic}} width="160"/></td>
                   <td>{{first}}</td>
                   <td>{{last}}</td>
                   <td>{{tel}}</td>
-                  <td>{{group}}</td>
+                  <td class="smalltext">{{group}}{{#if show_all}} | {{project}}
+{{/if}}<button class="delete">&times;</button>
+</td>
                 </tr>
 </template>
 
