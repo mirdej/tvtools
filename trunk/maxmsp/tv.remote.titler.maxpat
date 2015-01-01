@@ -64,8 +64,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 293.5, 557.0, 94.0, 21.0 ],
-					"text" : "home Desktop"
+					"patching_rect" : [ 293.5, 557.0, 105.0, 21.0 ],
+					"text" : "home Desktop 0"
 				}
 
 			}
@@ -271,7 +271,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 615.0, 659.0, 50.0, 34.0 ],
-					"text" : "connected 1"
+					"text" : "connected 0"
 				}
 
 			}
