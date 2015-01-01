@@ -34,7 +34,7 @@
 
   {{#if photo}}
     <div>
-      <img alt="{{first}}" src={{photo}}  width="160"/>
+      <img alt="{{first}}" src={{photo}}  height="90"/>
     </div>
   {{/if}}</td>
    <td> <input type="text" name="first" placeholder="Vorname" /></td>
@@ -54,7 +54,7 @@
 <!--  ..................................................................... MEMBER ROW -->    
 <template name="memberlist_row">
 <tr class="boy">
-                  <td><img src={{pic}} width="160"/></td>
+                  <td><img src={{pic}} height="90"/></td>
                   <td>{{first}}</td>
                   <td>{{last}}</td>
                   <td>{{tel}}</td>
@@ -66,7 +66,8 @@
 
 
 <template name="editmemberform">
-   <div><form><img src={{pic}}  width="320"/>
+   <div><form><div class="img-container">
+<img src={{pic}}  width="320"/></div>
 
 <input type="text" name="up_first" value="{{first}}" />
  <input type="text" name="up_last" value="{{last}}" />
