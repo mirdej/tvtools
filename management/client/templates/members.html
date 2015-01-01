@@ -1,0 +1,52 @@
+<template name="memberlist">
+      <h2 class="sub-header">Mitarbeiter</h2>
+          <div class="table-responsive">
+                               <form class="new-member">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Vorname</th>
+                  <th>Name</th>
+                  <th>Mobile</th>
+                  <th>Gruppe</th>
+                </tr>
+              </thead>
+              <tbody>
+              {{#each members}}
+                 {{> memberlist_row}}
+                {{/each}}
+                
+                  <tr>
+ <td></td>
+   <td> <input type="text" name="first" placeholder="Vorname" /></td>
+   <td> <input type="text" name="last" placeholder="Nachname" /></td>
+   <td> <input type="text" name="tel" placeholder="Mobil Nummer" /></td>
+   <td><input type="submit" /></td>
+   </tr>
+               </tbody>
+            </table>
+  </form>
+        </div>
+
+    </template>
+    
+<!--  ..................................................................... MEMBER ROW -->    
+<template name="memberlist_row">
+<tr>
+                  <td>.</td>
+                  <td>{{first}}</td>
+                  <td>{{last}}</td>
+                  <td>{{tel}}</td>
+                  <td>{{group}}</td>
+                </tr>
+</template>
+
+<!--  ..................................................................... UPLOAD     -->    
+<template name="upload">
+<p style="margin-top:40px"></p>
+          {{> upload_bootstrap contentType='images' fileTypes='.jpg' }}
+
+            <hr />
+</template>
