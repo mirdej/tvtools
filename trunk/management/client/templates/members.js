@@ -5,13 +5,39 @@ function capitaliseFirstLetter(string) {
 
 function formatPhone(t){
  var s = t.toString()
- s = s.replace(/\D\W[^\.]/g, "");
- if (s.length==10) {
+ s = s.replace(/[^0-9\+]/g, '');
+  if (s.length==10) {
    s = s[0]+s[1]+s[2]+" "+s[3]+s[4]+s[5]+" "+s[6]+s[7]+" "+s[8]+s[9];
-
  }
    return s;
 }
+
+function new_member(event,g) {
+    // This function is called when the new task form is submitted
+
+    var f = capitaliseFirstLetter(event.target.first.value);
+    var l = capitaliseFirstLetter(event.target.last.value);
+    var n = formatPhone(event.target.tel.value);
+
+
+    Members.insert({
+      pic:Session.get("photo"),
+      first: f,
+      last: l,
+      tel: n,
+      gender:g,
+      project: Session.get("Project").id,
+      createdAt: new Date() // current time
+    });
+
+    // Clear form
+    event.target.first.value = "";
+    event.target.last.value = "";
+    event.target.tel.value = "";
+    Session.set("photo","");
+    // Prevent default form submit
+    return false;
+  }
 
   Template.memberlist.helpers({
      editmembers:function(){
@@ -55,34 +81,20 @@ function formatPhone(t){
 
   });
   
+  
+
   Template.memberlist.events({
-  "submit .new-member": function (event) {
-    // This function is called when the new task form is submitted
+  
+      'submit': function (event) {
+      alert(event.target.name);
+         new_member(event,"boy");
+         return false;
+       },
 
-
-    var f = capitaliseFirstLetter(event.target.first.value);
-    var l = capitaliseFirstLetter(event.target.last.value);
-    var n = formatPhone(event.target.tel.value);
-
-
-    Members.insert({
-      pic:Session.get("photo"),
-      first: f,
-      last: l,
-      tel: n,
-      project: Session.get("Project").id,
-      createdAt: new Date() // current time
-    });
-
-    // Clear form
-    event.target.first.value = "";
-    event.target.last.value = "";
-    event.target.tel.value = "";
-    Session.set("photo","");
-    // Prevent default form submit
-    return false;
-  },
-
+      'click .female': function (event) {
+         new_member(event,"girl");
+         return false;
+       },
   
   'click .snap': function () {
       var cameraOptions = {
@@ -158,4 +170,4 @@ $(".img-container > img").cropper({
     // Output the result data for cropping image.
   }
 });
-}
+$(".img-container > img").cropper("clear")}
