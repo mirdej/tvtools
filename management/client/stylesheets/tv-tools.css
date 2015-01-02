@@ -15,6 +15,12 @@ ul.home  {list-style-type:none;padding:0;margin:0;}
 .home li {padding-top:10px;display:block;width:120px;height:120px;float:left;border:1px solid black;margin:12px;text-align:center;vertical-align:middle;background-color:#eef;}
 hr  {clear:both;}
 .navbar * i {color:#bbb;width:24px;}
+
+
+div.choosers {display:block;padding:10px;margin:10px;border:1px solid #777;position:absolute;right:20px;top:120px;}
+div.memberchooser_member {display:block;padding:2px;margin:2px;border:1px solid #aaa;background-color:#eee;}
+div.cam {display:block;padding:2px;margin:2px;border:1px solid #aaa;}
+
 /* DROPZONE */
 
 
