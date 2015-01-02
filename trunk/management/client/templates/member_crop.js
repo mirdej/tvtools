@@ -12,6 +12,7 @@ Template.member_crop.helpers({
 Template.member_crop.events({
   'click .cancel': function () {
      Session.set("crop", null);
+     Session.set("photo", null);
         return false;
   },
 
@@ -40,6 +41,36 @@ Template.member_crop.events({
 
 //------------------------------------------------------------------------------------------
 Template.member_crop.rendered = function() {
+
+
+
+    var $inputImage = $("#inputImage");
+
+    if (window.FileReader) {
+      $inputImage.change(function() {
+        var fileReader = new FileReader(),
+            files = this.files,
+            file;
+
+        if (!files.length) {
+          return;
+        }
+
+        file = files[0];
+
+        if (/^image\/\w+$/.test(file.type)) {
+          fileReader.readAsDataURL(file);
+          fileReader.onload = function () {
+            $(".img-container > img").cropper("reset", true).cropper("replace", this.result);
+            $inputImage.val("");
+          };
+        } else {
+          showMessage("Please choose an image file.");
+        }
+      });
+    } else {
+      $inputImage.addClass("hide");
+    }
 
 $(".img-container > img").cropper({
   aspectRatio: 0.777777,
