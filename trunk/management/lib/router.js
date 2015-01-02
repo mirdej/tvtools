@@ -1,11 +1,6 @@
-Router.configure({
-  layoutTemplate: 'ApplicationLayout'
-});
+Router.configure({ layoutTemplate: 'ApplicationLayout'});
 
-Router.route('/', function () {
-   this.render('home');
-});
-
-Router.route('/mitarbeiter', function () {
-   this.render('memberlist');
-});
+Router.route('/', 					function () {this.render( 'home' );});
+Router.route('/mitarbeiter',		function () {this.render( 'memberlist' );});
+Router.route('/mitarbeiter/neu', 	function () {this.render( 'member_new');});
+Router.route('/mitarbeiter/crop', 	function () {this.render( 'member_crop');});

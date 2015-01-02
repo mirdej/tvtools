@@ -1,83 +1,39 @@
-<template name="memberlist">
-{{#if doedit}}
+<template name="memberlist"> 
+{{#if docrop}}{{> member_crop}} {{else}}
 
-<div> 
-{{doedit}}
-              {{#each editmembers}}
- {{> editmemberform}}
-             {{/each}}
-</div>
-{{else}}
-      <h2 class="sub-header">Mitarbeiter ({{member_count}})  <label class="showall">Show All<input type="checkbox" checked="{{show_all}}" /></label>
+<h2 class="sub-header">
+	Mitarbeiter ({{member_count}}) <label class="showall"> Show All
+	<input type="checkbox" checked="{{show_all}}" />
+	</label> 
 </h2>
-          <div class="table-responsive">
-                               <form class="new-member">
+<div class="table-responsive">
+	<form class="new-member">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th> Photo </th>
+					<th> Vorname </th>
+					<th> Name </th>
+					<th> Mobile </th>
+					<th> Gruppe </th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each members}} {{> memberlist_row}} {{/each}} 
+			</tbody>
+		</table>
+	</form>
+</div>
+{{/if}}
+</template> 
 
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>Vorname</th>
-                  <th>Name</th>
-                  <th>Mobile</th>
-                  <th>Gruppe</th>
-                </tr>
-              </thead>
-              <tbody>
-              {{#each members}}
-                 {{> memberlist_row}}
-                {{/each}}
-                
-                  <tr>
- <td><button class="snap">Take a Photo</button>
-
-
-  {{#if photo}}
-    <div>
-      <img alt="{{first}}" src={{photo}}  height="90"/>
-    </div>
-  {{/if}}</td>
-   <td> <input type="text" name="first" placeholder="Vorname" /></td>
-   <td> <input type="text" name="last" placeholder="Nachname" /></td>
-   <td> <input type="text" name="tel" placeholder="Mobil Nummer" /></td>
-   <td> <input type="submit" value="m" class="male" /> <button class="female">f</button>
-</td>
-   </tr>
-               </tbody>
-            </table>
-  </form>
-        </div>
-    {{/if}}
-
-</template>
-    
-<!--  ..................................................................... MEMBER ROW -->    
-<template name="memberlist_row">
+<!--  ..................................................................... MEMBER ROW -->
+<template name="memberlist_row"> 
 <tr class="{{gender}}">
-                  <td><img src={{pic}} height="90"/></td>
-                  <td>{{first}}</td>
-                  <td>{{last}}</td>
-                  <td>{{tel}}</td>
-                  <td class="smalltext">{{group}}{{#if show_all}} | {{project}}
-{{/if}}<button class="delete">&times;</button><button class="edit">edit</button>
-</td>
-                </tr>
-</template>
-
-
-<template name="editmemberform">
-   <div><form><div class="img-container">
-<img src={{pic}}  width="320"/></div>
-
-<input type="text" name="up_first" value="{{first}}" />
- <input type="text" name="up_last" value="{{last}}" />
- <input type="text" name="up_tel" value="{{tel}}" />
-<input type="submit"  class="save" /><button class="cancel">Cancel</button></form></div>   
-</template>
-<!--  ..................................................................... UPLOAD     -->    
-<template name="upload">
-<p style="margin-top:40px"></p>
-          {{> upload_bootstrap contentType='images' fileTypes='.jpg' }}
-
-            <hr />
-</template>
+	<td class="crop"> <img  src="{{pic}}" height="90" /> </td>
+	<td> {{first}} </td>
+	<td> {{last}} </td>
+	<td> {{tel}} </td>
+	<td class="smalltext"> {{group}}{{#if show_all}} | {{project}} {{/if}} <button class="delete"> &times; </button> <button class="edit"> edit </button> </td>
+</tr>
+</template> 

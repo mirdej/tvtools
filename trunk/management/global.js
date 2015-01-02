@@ -14,7 +14,7 @@ Session.set("someakwardname","H");
 
 Template.branding.helpers({
     project_logo: function(){
-         return 'logos/'+Session.get("Project").logo;}
+         return '/logos/'+Session.get("Project").logo;}
 });
 
 }
