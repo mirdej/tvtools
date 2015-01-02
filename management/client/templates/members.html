@@ -40,7 +40,7 @@
    <td> <input type="text" name="first" placeholder="Vorname" /></td>
    <td> <input type="text" name="last" placeholder="Nachname" /></td>
    <td> <input type="text" name="tel" placeholder="Mobil Nummer" /></td>
-   <td><input type="submit" />         
+   <td> <input type="submit" value="m" class="male" /> <button class="female">f</button>
 </td>
    </tr>
                </tbody>
@@ -53,7 +53,7 @@
     
 <!--  ..................................................................... MEMBER ROW -->    
 <template name="memberlist_row">
-<tr class="boy">
+<tr class="{{gender}}">
                   <td><img src={{pic}} height="90"/></td>
                   <td>{{first}}</td>
                   <td>{{last}}</td>

@@ -10,6 +10,11 @@ h1 {font-size:.5em;text-align:right;}
 .smalltext {color:888;font-size:.75em;}
 label.showall {color:888;font-size:.75em;}
 .img-container {height:450px;}
+
+.home ul {list-style-type:none;padding:0;margin:0;}
+.home li {padding-top:10px;display:block;width:120px;height:120px;float:left;border:1px solid black;margin:12px;text-align:center;vertical-align:middle;background-color:#eef;}
+
+.navbar * i {color:#bbb;width:24px;}
 /* DROPZONE */
 
 

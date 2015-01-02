@@ -3,14 +3,9 @@ Router.configure({
 });
 
 Router.route('/', function () {
-   this.render('upload');
+   this.render('home');
 });
 
 Router.route('/mitarbeiter', function () {
    this.render('memberlist');
 });
-
-Router.route('/crop', function () {
-   this.render('crop');
-});
-
