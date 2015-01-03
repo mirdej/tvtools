@@ -1,6 +1,7 @@
  <template name="groups"> 
 <div class="row">
 	<div class="col-xs-8">
+	{{emptySortables}}
 		<h2>
 			Teams 
 		</h2>
@@ -13,6 +14,7 @@
 		</div>
 	</div>
 	<div class="col-xs-4">
+	<h2>&nbsp;</h2>
 		{{> memberchooser}} {{> cams}} 
 	</div>
 </div>
@@ -38,7 +40,11 @@
 		<small>{{description}}</small>
 		{{/if}}
 	</div>
-	<ul class="list-group members">
+	<ul class="list-group members" id="group_{{_id}}>">
+		{{#each members}} 
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label><small class="text-muted">{{_id}}</small><button class="close removeMember"> &times; </button>
+</li>
+		{{/each}} 
 	</ul>
 </div>
 </template> 
@@ -52,9 +58,9 @@
 	</div>
 
 <!-- List group -->
-	<ul id="items" class="list-group members">
+	<ul id="memberlist" class="list-group members">
 		{{#each members}} 
-		<li class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
 </div>
@@ -67,7 +73,7 @@
 	</div>
 	<ul id="cameralist" class="list-group" style="display:block;" >
 		{{#each cams}} 
-		<li id="{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
+		<li id="camera_{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
 		{{/each}} 
 	</ul>
 </div>

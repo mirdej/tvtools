@@ -1,4 +1,10 @@
+
+
 Template.groups.helpers({
+	emptySortables: function() {
+		Session.set("sortables",[]);
+		return "";
+	},
     thegroups: function () {
         return Groups.find({project:Session.get("Project").id}, {sort: {title: 1}});
     }
@@ -11,6 +17,9 @@ Template.group.helpers({
     },
        bodyedit: function () {
         return Session.equals('editing_body',this._id);
+    },
+    members: function () {
+    	return Members.find( {group:this._id}, {sort: {first: 1}});
     }
 });
 //------------------------------------------------------------------------------------------
@@ -51,6 +60,14 @@ Template.group.events({
 		e.preventDefault();
 		Groups.update(this._id, {$set: {project:"deleted"}});
       },
+      	"click .removeMember": function (e,t) {
+		e.stopPropagation();
+		e.preventDefault();
+		var member_id = this._id;
+		var group_id = (e.target.parentElement.parentElement.id).split('_')[1];
+		Members.update(member_id, {$pull:{group: group_id}});
+      },
+
       'dblclick .title': function (e, t) {
         e.stopPropagation();
        	e.preventDefault();
@@ -91,12 +108,33 @@ Template.cams.rendered = function() {
 	this.$('.cam').draggable();
 }
 
+Template.memberchooser.rendered = function() {
+    this.$( ".members" ).sortable({
+      connectWith: ".members",
+      }).disableSelection();}
+
 Template.group.rendered = function() {
 	this.$( ".cameradrop" ).droppable({
       drop: function( event, ui ) {
-        //console.log(event.target.id);
-      //  console.log(event.originalEvent.target.id);
-        Groups.update(event.target.id, {$set: {camera:event.originalEvent.target.id}})
+        var group_id =  event.target.id;  
+        if (event.originalEvent.target.id) {
+        	var dropped = event.originalEvent.target.id; 
+        } else {
+        	var dropped = event.originalEvent.target.parentElement.id;
+        }
+        dropped = dropped.split('_');
+        
+        if (dropped[0] == 'camera') {
+			Groups.update(group_id, {$set: {camera: dropped[1] }});
+		} else if (dropped[0] == 'member') {
+			var member_id = dropped[1];
+			Members.update(member_id, {$push:{group: group_id}});
+		}
       }
     });
+    Session.set("sortables",Session.get("sortables"+
+    this.$( ".members" ).sortable({
+      connectWith: ".members",
+    })
+    ))
 }

@@ -1,0 +1,15 @@
+/*
+div.choosers {display:block;padding:10px;margin:10px;border:1px solid #777;position:absolute;right:20px;top:120px;}
+div.memberchooser_member {display:block;padding:2px;margin:2px;border:1px solid #aaa;background-color:#eee;}
+div.cam {display:block;padding:2px;margin:2px;border:1px solid #aaa;}
+
+
+div.group {display:block;position:relative;padding:10px;margin:10px;border:1px solid #777;width:20em;}
+div.group button.delete {display:block;position:absolute;top:0px;right:0px;}
+div.group h3 {margin:0px;padding:0px;}
+
+*/
+
+cam_Jeanne {background-color:#284D66;}
+
+ul.members {min-height:36px;}
