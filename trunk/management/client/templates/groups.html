@@ -1,0 +1,74 @@
+ <template name="groups"> 
+<div class="row">
+	<div class="col-xs-8">
+		<h2>
+			Teams 
+		</h2>
+		{{#each thegroups}}{{> group}}{{/each}} 
+		<div class="newGroup">
+			<form class="newGroup">
+				<input id="f" type="text" placeholder="Thema"> 
+				<input type="submit" value="Neu"> 
+			</form>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		{{> memberchooser}} {{> cams}} 
+	</div>
+</div>
+</template> 
+<!-- ======================================================================= -->
+<template name="group"> 
+<div class="panel panel-default group cameradrop" id="{{_id}}">
+	<button class="close delete"> &times; </button>
+	<div class="panel-heading cam_{{camera}}">
+			{{#if doedit}}
+			<form class="title"><input type="text" name="title" class="input-sm" value="{{title}}" /><input type="submit" class="hidden"></form>
+			{{else}}
+			<h5 class="title">
+				{{title}}
+				<small>{{camera}}</small>
+			</h5>
+			{{/if}}
+	</div>
+	<div class="panel-body">
+		{{#if bodyedit}}
+			<form class="description"><textarea type="text" name="description" class="input-sm">{{description}}</textarea><input type="submit" value="save"></form>
+		{{else}}
+		<small>{{description}}</small>
+		{{/if}}
+	</div>
+	<ul class="list-group members">
+	</ul>
+</div>
+</template> 
+<!-- ======================================================================= -->
+<template name="memberchooser"> 
+<div class="panel panel-default">
+
+<!-- Default panel contents -->
+	<div class="panel-heading">
+		Mitarbeiter <span class="caret"></span> 
+	</div>
+
+<!-- List group -->
+	<ul id="items" class="list-group members">
+		{{#each members}} 
+		<li class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label></li>
+		{{/each}} 
+	</ul>
+</div>
+</template> 
+<!-- ======================================================================= -->
+<template name="cams"> 
+<div class="camerachooser panel panel-default">
+	<div class="panel-heading">
+		Kameras <span class="caret"></span> 
+	</div>
+	<ul id="cameralist" class="list-group" style="display:block;" >
+		{{#each cams}} 
+		<li id="{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
+		{{/each}} 
+	</ul>
+</div>
+</template> 
