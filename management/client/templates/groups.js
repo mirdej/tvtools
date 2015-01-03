@@ -69,6 +69,7 @@ Template.group.events({
 		var member_id = this._id;
 		var group_id = (e.target.parentElement.parentElement.id).split('_')[1];
 		Members.update(member_id, {$pull:{group: group_id}});
+	
       },
 
       'dblclick .title': function (e, t) {
