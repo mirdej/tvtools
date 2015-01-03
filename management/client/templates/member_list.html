@@ -36,7 +36,7 @@
 	<td> <input type="text" class="form-control firstname" value="{{first}}" /> </td>
 	<td> <input type="text" class="form-control lastname" value="{{last}}" /> </td>
 	<td> <input type="text" class="form-control phone" value="{{tel}}" /> </td>
-	<td class="smalltext"> {{group}}{{#if show_all}} | {{project}} {{/if}} <button class="delete"> &times; </button> <button class="save"><i class="fa fa-save"></i></button> </td>
+	<td class="smalltext"> {{group}}{{#if show_all}} | <input type="text" class="form-control project" value="{{project}}" />  {{/if}} <button class="delete"> &times; </button> <button class="save"><i class="fa fa-save"></i></button> </td>
 {{else}}
 	<td class="crop"> <img  src="{{thumb}}" height="90" /> </td>
 	<td> {{first}} </td>

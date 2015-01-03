@@ -72,11 +72,13 @@ Template.memberlist.events({
 		var f = $(id+ ' .firstname').val()
 		var l = $(id+ ' .lastname').val()
 		var n = $(id+ ' .phone').val()
+		var p = $(id+ ' .project').val()
 
 		Members.update(Session.get("edit"),{$set:{
 			first: f,
 			last: l,
-			tel: n
+			tel: n,
+			project: p
 		}});
 		
 		Session.set("edit", null);
