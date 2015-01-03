@@ -20,6 +20,9 @@ Template.group.helpers({
     },
     members: function () {
     	return Members.find( {group:this._id}, {sort: {first: 1}});
+    },
+    color: function () {
+//    	return "background-color:#892;";
     }
 });
 //------------------------------------------------------------------------------------------

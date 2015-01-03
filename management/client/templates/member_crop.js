@@ -10,20 +10,29 @@ Template.member_crop.helpers({
 
 //------------------------------------------------------------------------------------------
 Template.member_crop.events({
-  'click .cancel': function () {
-     Session.set("crop", null);
-     Session.set("photo", null);
-        return false;
+  'click .cancel': function (e,t) {
+		e.stopPropagation();
+		e.preventDefault();
+		Session.set("crop", null);
+		Session.set("photo", null);
   },
-
-  "submit": function (event) {
-     
- Members.update(Session.get("crop"),{$set:{
-      pic:$(".img-container > img").cropper("getDataURL")
-       }});
-     Session.set("crop", null);
-
-        return false;
+  
+  'click .reset': function (e,t) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(".img-container > img").cropper("reset",true)
+  },
+  
+  'click .save': function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var fullsize  =   	$(".img-container > img").cropper("getDataURL");
+		var thumbnail =    $(".img-container > img").cropper("getDataURL", {width:350, height: 450}, "image/jpeg", 0.6);
+		 Members.update(Session.get("crop"),{$set:{
+     		pic:	fullsize	,
+      		thumb:	thumbnail
+      	 }});
+     	Session.set("crop", null);
   },
   
   'click .snap': function () {

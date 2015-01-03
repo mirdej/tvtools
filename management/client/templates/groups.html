@@ -23,7 +23,7 @@
 <template name="group"> 
 <div class="panel panel-default group cameradrop" id="{{_id}}">
 	<button class="close delete"> &times; </button>
-	<div class="panel-heading cam_{{camera}}">
+	<div class="panel-heading cam_{{camera}}" style="{{color}}">
 			{{#if doedit}}
 			<form class="title"><input type="text" name="title" class="input-sm" value="{{title}}" /><input type="submit" class="hidden"></form>
 			{{else}}
@@ -42,7 +42,7 @@
 	</div>
 	<ul class="list-group members" id="group_{{_id}}>">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label><small class="text-muted">{{_id}}</small><button class="close removeMember"> &times; </button>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><label> {{first}} {{last}} </label><small class="text-muted">{{_id}}</small><button class="close removeMember"> &times; </button>
 </li>
 		{{/each}} 
 	</ul>
@@ -60,7 +60,7 @@
 <!-- List group -->
 	<ul id="memberlist" class="list-group members">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{pic}}" height="36" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
 </div>
