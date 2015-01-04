@@ -40,9 +40,9 @@
 		<small>{{description}}</small>
 		{{/if}}
 	</div>
-	<ul class="list-group members" id="group_{{_id}}">
+	<ul class="list-inline members" id="group_{{_id}}">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><label> {{first}} {{last}} </label><small class="text-muted">{{_id}}</small><button class="close removeMember"> &times; </button>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}} {{last}} </label><br />{{tel}}<br /><small class="text-muted">{{_id}}</small>
 </li>
 		{{/each}} 
 	</ul>
@@ -60,7 +60,7 @@
 <!-- List group -->
 	<ul id="memberlist" class="list-group members">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="64" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
 </div>
