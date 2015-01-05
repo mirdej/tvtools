@@ -6,7 +6,8 @@ if (Meteor.isClient) {
 Session.set("Project", {
    name:"Volketswil",
    id:"volketswil2014",
-   logo:"logo-Volketswil.png"
+   logo:"logo-Volketswil.png",
+   badge:"carte-de-presse-schultv.jpg"
 });
 
   // This code only runs on the client

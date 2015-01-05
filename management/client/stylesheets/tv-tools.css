@@ -17,10 +17,6 @@ hr  {clear:both;}
 .navbar * i {color:#bbb;width:24px;}
 
 
-div.choosers {display:block;padding:10px;margin:10px;border:1px solid #777;position:absolute;right:20px;top:120px;}
-div.memberchooser_member {display:block;padding:2px;margin:2px;border:1px solid #aaa;background-color:#eee;}
-div.cam {display:block;padding:2px;margin:2px;border:1px solid #aaa;}
-
 /* DROPZONE */
 
 
