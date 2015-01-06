@@ -8,3 +8,5 @@ Router.route('/mitarbeiter/lernen', function () {this.render( 'learn');});
 Router.route('/mitarbeiter/ausweis', function () {this.render( 'badge');});
 Router.route('/gruppen', 			function () {this.render( 'groups');});
 Router.route('/lueste', 			function () {this.render( 'lueste');});
+
+Router.route('/abspann', 			function () {this.render( 'abspann');});
