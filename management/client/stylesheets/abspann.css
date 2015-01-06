@@ -1,0 +1,22 @@
+div.abspann {	font-family:"Lucida Grande";
+		width:640px;
+		text-align:left;
+		font-size:36px;
+		letter-spacing:.05em;
+}
+	
+div.abspann h1,h2,h3 {
+font-family:"Lucida Grande";
+font-weight:bold;
+font-variant:normal;
+text-transform:uppercase;
+}
+
+div.abspann h3 {font-size:.65em;}
+
+
+div.abspann .soutien {margin-top:8em;}
+
+div.abspann #copyright {margin-top:3em;font-size:.8em;margin-left:7px;}
+
+div.abspann ul.wrap_postes {margin-left:0px;padding-left:0px;}
