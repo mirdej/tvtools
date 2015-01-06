@@ -23,6 +23,20 @@ entries: function() {
     }
   return result;
 
-}
+},
+ danke: function () {
+ var dank = Session.get('Project').danke;
+ dank = dank.split(',');
+ var result = [];
+ for (var i = 0 ; i < dank.length; i++) {
+   result.push({'name':dank[i]});
+ }
+ return result;
+ console.log(result);
+ },
+ year: function () {
+   var d = new Date();
+   return d.getFullYear();
+ }
 
 })
