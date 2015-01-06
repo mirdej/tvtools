@@ -11,10 +11,14 @@ Template.posten.helpers({
      		 return "";
     },
     hasJob: function (parent){
-    console.log(this.job,parent.posten);
              if (parent.posten === undefined) return "";
      		 if ($.inArray(this.job, parent.posten)!=-1)  return "posten";
      		 return "";
+    },
+    
+    isSet: function() {
+        if (this.posten.length) return "assigned"
+        else return ""
     }
     
 });
