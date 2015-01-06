@@ -1,12 +1,15 @@
 <template name="lueste">
 <table class="table table-condensed listederlueste">
 <h2>Liste der Lüste</h2>
+
 {{#each members}}
-<tr id="{{_id}}"><th >{{first}} {{last}}
-{{lust_0}}{{lust_1}}{{setlust}}</th>
-  {{#each jobs}}
-   <td class="job {{job}} {{lustClass}} "> {{job}}</td>
-  {{/each}}
+<tr id="{{_id}}">
+   <th >{{first}} {{last}}</th>
+
+
+   {{#each jobs}}
+         <td class="job {{lustClass ..}}">{{job}}</td>
+   {{/each}}
 </tr>
 {{/each}}
 </table>
