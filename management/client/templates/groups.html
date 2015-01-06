@@ -27,22 +27,22 @@
 			{{#if doedit}}
 			<form class="title"><input type="text" name="title" class="input-sm" value="{{title}}" /><input type="submit" class="hidden"></form>
 			{{else}}
-			<h5 class="title">
+			<h4 class="title">
 				{{title}}
 				<small>{{camera}}</small>
-			</h5>
+			</h4>
 			{{/if}}
 	</div>
-	<div class="panel-body">
+<!--	<div class="panel-body">
 		{{#if bodyedit}}
 			<form class="description"><textarea type="text" name="description" class="input-sm">{{description}}</textarea><input type="submit" value="save"></form>
 		{{else}}
 		<small>{{description}}</small>
 		{{/if}}
-	</div>
+	</div> -->
 	<ul class="list-inline members" id="group_{{_id}}">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}} {{last}} </label><br />{{tel}}<br /><small class="text-muted">{{_id}}</small>
+		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}}</label>
 </li>
 		{{/each}} 
 	</ul>
@@ -60,7 +60,7 @@
 <!-- List group -->
 	<ul id="memberlist" class="list-group members">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item "> <img src="{{thumb}}" height="64" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item "> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
 </div>
