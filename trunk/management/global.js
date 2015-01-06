@@ -7,7 +7,10 @@ Session.set("Project", {
    name:"Volketswil",
    id:"volketswil2014",
    logo:"logo-Volketswil.png",
-   badge:"carte-de-presse-schultv.jpg"
+   badge:"carte-de-presse-schultv.jpg",
+   abspannVorlauf : "Volketswil Lindenbühl",
+   leitung : "Michael Egger<br />Susanne Kunz",
+   danke: "&nbsp;	Michelle Bauert<br />&nbsp;	Maja Klemm<br />&nbsp;	Barbara Bachmann<br />&nbsp;	Herr  &amp;  Frau Häusler<br />&nbsp;	Rahel Thali<br />&nbsp;	Noëmi Blumenthal<br />&nbsp;	Tanja Stauffer<br />&nbsp;	Catja Loepfe<br />&nbsp;	Annick Perrenoud<br />&nbsp;	Bildungsdirektion<br/>&nbsp;&nbsp;Kanton Zürich<br />&nbsp;	Schule &amp; Kultur<br />&nbsp;	Belluard Bollwerk<br/>&nbsp;&nbsp;International<br />&nbsp;	Telooge<br />"
 });
 
   // This code only runs on the client

@@ -1,0 +1,20 @@
+<template name="abspann">
+<div class="abspann">
+{{vorlauf}}
+
+ <h3>Mit</h3>
+    {{#each all}}  &nbsp;
+{{first}}<br />{{/each}}
+
+ 
+ 
+{{#each entries}}
+  <h3>{{job}}</h3>
+    {{#each members}}  &nbsp;
+{{first}}<br />{{/each}}
+{{/each}}
+
+<h3>Mit einem<br />&nbsp;&nbsp;Dankeschön an</h3>
+
+</div>
+</template>
