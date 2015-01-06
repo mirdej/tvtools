@@ -49,3 +49,7 @@ entries: function() {
 
 }
 })
+
+Template.spick.rendered = function() {
+   Session.set('printLogo',0);
+}
