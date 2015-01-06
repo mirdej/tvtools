@@ -15,3 +15,7 @@ Template.badge.events({
 		e.target.toggle()
 	}
 })
+
+Template.badge.rendered = function() {
+   Session.set('printLogo',0);
+}
