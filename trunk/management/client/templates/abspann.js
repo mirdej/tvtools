@@ -40,3 +40,8 @@ entries: function() {
  }
 
 })
+
+Template.abspann.rendered = function () {
+var d = new Date();
+document.title = "Abspann "+Session.get('Project').name+"-Sendung vom "+d.toLocaleDateString();
+}
