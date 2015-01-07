@@ -96,9 +96,9 @@ void select_cam(unsigned char idx) {
 /*-------------
 
 Cam 1: 1x1
-Cam 2: 1x0
-Cam 3: 01x
-Cam 4: 00x
+Cam 2: 0x1
+Cam 3: 010
+Cam 4: 000
 
 --------------*/
     unsigned char selector;
@@ -107,7 +107,7 @@ Cam 4: 00x
 
     switch (idx) {
            case 0: selector = 0x50; break;
-           case 1: selector = 0x40; break;
+           case 1: selector = 0x10; break;
            case 2: selector = 0x20; break;
            default: selector = 0x00;
     }
@@ -119,22 +119,32 @@ Cam 4: 00x
 	update_tallys();
 }
 
+
 // ------------------------------------------------------------------------------
-// - Interrupt on new video frame (every 40 ms)
+// - Check Buttons
 // ------------------------------------------------------------------------------
 
-ISR(PCI1_vect) {
+void check_buttons(void) {
 	// sample buttons
 	unsigned char temp = PINC & 0x0f;
 	if (temp == old_buttons) return;
-	
-	unsigned char trigger = temp & ~old_buttons;
 	old_buttons = temp;
+	
+	unsigned char trigger = ~temp & 0x0f;
+	if (!trigger) return;
 	
 	if (trigger & 1) select_cam(0);
 	else if (trigger & 2) select_cam(1);
 	else if (trigger & 4) select_cam(2);
-	else select_cam(3);
+	else if (trigger & 8) select_cam(3);
+}
+
+// ------------------------------------------------------------------------------
+// - Interrupt on new video frame (every 40 ms)
+// ------------------------------------------------------------------------------
+
+ISR(PCINT1_vect) {
+ check_buttons();
 }
 
 // ==============================================================================
@@ -161,8 +171,8 @@ int main(void)
 	UCSR0B = ( 1 << UCSZ02); 						
 	UCSR0C = /*( 1 << UPM1) | */( 1 << UCSZ01) | ( 1 << UCSZ00 );		// Even Parity, 9 bit, 1 stop bit
 	UBRR0H = 0;
-	UBRR0L = 11; 												// 5000 baud (F_CPU/16/BAUD - 1)
-	
+	UBRR0L = 249; 												// 5000 baud (F_CPU/16/BAUD - 1)
+	//TODO check speed, we're on 20mhz now!!!
 	
 	// enable Pinchange Interrupt on PC5 -> PCINT13
 	PCICR = (1 << PCIE1);
@@ -180,10 +190,21 @@ int main(void)
 	
 	select_cam(0);
 	
+	unsigned long tt;
+	unsigned char idx;
+	
 	// ------------------------- Main Loop
 	while(1) {
+	/*tt++;
+	if (tt > 100000) {
+	tt = 0;
+	idx++;
+	idx%=4;
+	PORTB = 1 << idx;
+	}*/
         wdt_reset();
 		check_uart();	
+		//check_buttons();
 	}
 	return 0;
 }

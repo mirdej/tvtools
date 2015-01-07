@@ -2,7 +2,7 @@
 # www.anyma.ch
 
 DEVICE     = atmega88
-CLOCK      = 1000000
+CLOCK      = 20000000
 PROGRAMMER = -c usbasp -P usb
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 
@@ -32,7 +32,8 @@ all:	main.hex
 	$(COMPILE) -S $< -o $@
 
 flash:	all
-	$(AVRDUDE) -D -U flash:w:main.hex:i
+#	$(AVRDUDE) -D -U flash:w:main.hex:i
+	$(AVRDUDE) -U flash:w:main.hex:i
 
 clean:
 	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.bin *.o 
