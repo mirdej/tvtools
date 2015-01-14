@@ -122,9 +122,9 @@ Template.ablauf.events({
          else {
          d = 60*parseInt(t[t.length -2]) + parseInt(t[t.length-1]);
          }
-         console.log(d)
-         Groups.update(this._id, {$set: {duration: d}});
 
+         Groups.update(this._id, {$set: {duration: d}});
+$(evt.target).blur();
     }
   }
 });

@@ -17,13 +17,27 @@ ul.members {min-height:36px;}
 li.mem: {padding:0px;margin:0px;}
 
 
+
+.beitrag {position:relative;}
+
+
+.ablauf li {position:relative;background-color:#F5F5F5;border:1px solid rgb(51 ,51 ,51);margin:3px;border-radius:6px; padding: 10px 4px;}
+.ablauf li span.title {font-weight:bold;display:block;width:200px;position:relative;float:left;}
+.ablauf li span.info {display:block;float:left;font-size:.75em;}
+.ablauf li span.duration {position:absolute;right:10px;text-align:left;}
+
+
+.ablauf li.live {background-color:#DFF2E9}
+
+.ablauf * input {    background: transparent;
+    border: none;
+    height:24px;
+    box-shadow:none;
+    padding:0px;margin:0px;
+text-align:right;width:5em;}
+
 .comma-list { list-style-type: none }
-.comma-list li { display: inline }
+.comma-list li { display: inline;border-width:0px;padding:0px;margin:0px;}
 /* Here's the interesting part: */
 .comma-list li:after { content: ", " }
 .comma-list li:last-child:after { content: "" }
-
-.beitrag {position:relative;}
-.live {background-color:#96D696; padding:10px 15px;}
-
-.dauer {position:absolute;right:10px;top:2px;width:4em;text-align:right;}

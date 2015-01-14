@@ -1,58 +1,47 @@
  <template name="ablauf"> 
-<div class="col-xs-8">
+<div>
 	<h2>
-		Sendung vom {{sendungsDate}}
+		Sendung vom {{sendungsDate}} 
 	</h2>
-	<p>Dauer ca {{totalTime}}</p>
-			<div class="panel panel-default beitrag">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					Jingle
-				</h3>
-			<p class="dauer">0:45</p>
-			</div>
-		</div>
-	<div id="sortable">
+	<p>
+		Dauer ca {{totalTime}} 
+	</p>
+	<ol class="ablauf" id="sortable">
+		<li> <span class="title"> 
+
+			Jingle 
+		</span> <span class="duration">0:45</span> </li>
 		{{#each thegroups}} 
-		<div class="panel panel-default beitrag">
-			<div class="{{#if isLive}}live{{else}}panel-heading{{/if}}">
-				<h3 class="panel-title">
-					{{#if isLive}}LIVE: {{/if}}{{title}}
-				</h3>
-				{{#if currentUser}}
-				<input type="time" class="form-control input-sm dauer" placeholder="Dauer" value="{{niceDuration}}" />
-				{{else}}<p class="dauer">{{niceDuration}}</p>
-			    {{/if}}
-			</div>
-			<div class="panel-body">
-				{{#unless noDescription}}{{description}}<br />
-				{{/unless}} {{#unless isLive}}<small>
-				<ul class="comma-list" style="display:inline;margin: 0px 10px;padding:0px;">
-					{{#each members}} 
-					<li> {{first}}</li>
-					{{/each}} 
-				</ul>
-				</small> {{/unless}} 
-			</div>
-		</div>
-     	{{/each}} 
-	</div>
-			<div class="panel panel-default beitrag">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					Abspann
-				</h3>
-			<p class="dauer">1:30</p>
-			</div>
-		</div>
-{{#if currentUser}}
-	<div class="panel newGroup">
+		<li class="{{#if isLive}}live{{/if}}"> <span class="title"> 
+
+			{{#if isLive}}LIVE: {{/if}}{{title}} 
+
+		</span> <span class="info">{{#unless noDescription}}{{description}}{{description}}{{/unless}} 
+		<ul class="comma-list" style="display:inline;margin: 0px 10px;padding:0px;">
+			{{#each members}} 
+			<li> {{first}}</li>
+			{{/each}} 
+		</ul>
+		</span> <span class="duration"> {{#if currentUser}} 
+		<input type="time" class="dauer" placeholder="Dauer" value="{{niceDuration}}" />
+		{{else}} 
+		<p>
+			{{niceDuration}} 
+		</p>
+		{{/if}} </span> </li>
+		{{/each}} 
+		<li> <span class="title"> 
+
+			Abpann 
+		</span> <span class="duration">0:45</span> </li>
+	</ol>
+	{{#if currentUser}} 
+	<div class="panel newGroup dontPrint">
 		<form class="newGroup">
 			<input id="f" type="text" placeholder="Livegast"> 
 			<input type="submit" value="Neu"> 
 		</form>
 	</div>
-	<button class="btn btn-primary alpha">Alphabetisch</button> 
-{{/if}}
+	<button class="btn btn-primary alpha dontPrint">Alphabetisch</button> {{/if}} 
 </div>
 </template>
