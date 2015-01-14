@@ -37,5 +37,6 @@ ul.grouplist {list-style-type:none;}
 .grouplist li span.info {display:block;float:left;font-size:.75em;margin-left:20px;}
 .grouplist li span.duration {position:absolute;right:10px;text-align:left;}
 
+li.mem {padding:1px;margin:0px;min-height:0px;}
 
-li.mem {padding:1px;margin:0px;min-height:0px;height:70px;border:1px solid #999;}
+.grouplist li li.mem {padding:1px;margin:0px;min-height:0px;height:70px;border:1px solid #999;}
