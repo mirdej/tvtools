@@ -1,0 +1,37 @@
+ <template name="ablauf"> 
+<div class="col-xs-5">
+	<h2>
+		Sendung vom {{sendungsDate}}
+	</h2>
+	<p>Dauer ca {{totalTime}}</p>
+	<div id="sortable">
+		{{#each thegroups}} 
+		<div class="panel panel-default beitrag">
+			<div class="{{#if isLive}}live{{else}}panel-heading{{/if}}">
+				<h3 class="panel-title">
+					{{#if isLive}}LIVE: {{/if}}{{title}}
+				</h3>
+				<input type="time" class="form-control input-sm dauer" placeholder="Dauer" value="{{niceDuration}}" />
+			</div>
+			<div class="panel-body">
+				{{#unless noDescription}}{{description}}<br />
+				{{/unless}} {{#unless isLive}}<small>Ein Beitrag von: 
+				<ul class="comma-list" style="display:inline;margin: 0px 10px;padding:0px;">
+					{{#each members}} 
+					<li> {{first}}</li>
+					{{/each}} 
+				</ul>
+				</small> {{/unless}} 
+			</div>
+		</div>
+     	{{/each}} 
+	</div>
+	<div class="panel newGroup">
+		<form class="newGroup">
+			<input id="f" type="text" placeholder="Livegast"> 
+			<input type="submit" value="Neu"> 
+		</form>
+	</div>
+	<button class="btn btn-primary alpha">Alphabetisch</button> 
+</div>
+</template>
