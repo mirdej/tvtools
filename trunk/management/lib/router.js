@@ -15,3 +15,6 @@ Router.route('/spick', 			function () {this.render( 'spick');});
 
 
 Router.route('/ablauf', 			function () {this.render( 'ablauf');});
+
+
+Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'});  });
