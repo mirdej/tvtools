@@ -4,14 +4,14 @@ Groups = new Mongo.Collection("groups");
 if (Meteor.isClient) {
 
 Session.set("Project", {
-   name:"Volketswil",
-   id:"volketswil2014",
-   logo:"logo-Volketswil.png",
+   name:"Oberengstringen",
+   id:"oe2014_1",
+   logo:"logo-OE.png",
    badge:"carte-de-presse-schultv.jpg",
-   begin:"Mon Jan 12 2015 00:00:00 GMT+0100 (CET)",
-   end:"Fri Jan 16 2015 00:00:00 GMT+0100 (CET)",
-   abspannVorlauf : "Volketswil Lindenbühl",
-   leitung : "Michael Egger<br />Susanne Kunz",
+   begin:"Mon Mar 3 2015 00:00:00 GMT+0100 (CET)",
+   end:"Fri Mar 7 2015 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Oberengstringen Goldschmied",
+   leitung : "Michael Egger<br />Maïté Colin",
    danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
 });
 
@@ -40,3 +40,15 @@ Session.set("Project", {
    });
 }
 
+
+
+/*   name:"Volketswil",
+   id:"volketswil2014",
+   logo:"logo-Volketswil.png",
+   badge:"carte-de-presse-schultv.jpg",
+   begin:"Mon Jan 12 2015 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jan 16 2015 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Volketswil Lindenbühl",
+   leitung : "Michael Egger<br />Susanne Kunz",
+   danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
+*/

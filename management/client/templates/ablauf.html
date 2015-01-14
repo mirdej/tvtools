@@ -4,6 +4,14 @@
 		Sendung vom {{sendungsDate}}
 	</h2>
 	<p>Dauer ca {{totalTime}}</p>
+			<div class="panel panel-default beitrag">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					Jingle
+				</h3>
+			<p class="dauer">0:45</p>
+			</div>
+		</div>
 	<div id="sortable">
 		{{#each thegroups}} 
 		<div class="panel panel-default beitrag">
@@ -18,7 +26,7 @@
 			</div>
 			<div class="panel-body">
 				{{#unless noDescription}}{{description}}<br />
-				{{/unless}} {{#unless isLive}}<small>Ein Beitrag von: 
+				{{/unless}} {{#unless isLive}}<small>
 				<ul class="comma-list" style="display:inline;margin: 0px 10px;padding:0px;">
 					{{#each members}} 
 					<li> {{first}}</li>
@@ -29,7 +37,14 @@
 		</div>
      	{{/each}} 
 	</div>
-
+			<div class="panel panel-default beitrag">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					Abspann
+				</h3>
+			<p class="dauer">1:30</p>
+			</div>
+		</div>
 {{#if currentUser}}
 	<div class="panel newGroup">
 		<form class="newGroup">
