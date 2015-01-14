@@ -8,8 +8,8 @@ Session.set("Project", {
    id:"oe2014_1",
    logo:"logo-OE.png",
    badge:"carte-de-presse-schultv.jpg",
-   begin:"Mon Mar 3 2015 00:00:00 GMT+0100 (CET)",
-   end:"Fri Mar 7 2015 00:00:00 GMT+0100 (CET)",
+   begin:"Mon Mar 3 2014 00:00:00 GMT+0100 (CET)",
+   end:"Fri Mar 7 2014 00:00:00 GMT+0100 (CET)",
    abspannVorlauf : "Oberengstringen Goldschmied",
    leitung : "Michael Egger<br />Maïté Colin",
    danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
