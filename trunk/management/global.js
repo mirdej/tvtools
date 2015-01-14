@@ -8,6 +8,8 @@ Session.set("Project", {
    id:"volketswil2014",
    logo:"logo-Volketswil.png",
    badge:"carte-de-presse-schultv.jpg",
+   begin:"Mon Jan 12 2015 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jan 16 2015 00:00:00 GMT+0100 (CET)",
    abspannVorlauf : "Volketswil Lindenbühl",
    leitung : "Michael Egger<br />Susanne Kunz",
    danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
@@ -16,19 +18,24 @@ Session.set("Project", {
   // This code only runs on the client
   Template.cams.helpers({
     cams: [
-      { name: "Aïcha", color: "#111;", textcolor: "#fff;"},
-      { name: "Bella", color: "#0f0;", textcolor: "#000;"},
-      { name: "Djena", color: "#fff;", textcolor: "#000;"},
-      { name: "Jeanne", color: "#00f;", textcolor: "#000;"},
-      { name: "Joséphine", color: "#ff0;", textcolor: "#000;"},
-      { name: "Nikita", color: "#f00;", textcolor: "#000;"},
-      { name: "Zoë", color: "#f0f;", textcolor: "#000;"}
+      { name: "Aïcha", color: "#333;", textcolor: "#fff;"},
+      { name: "Bella", color: "#005000;", textcolor: "#fff;"},
+      { name: "Djena", color: "#f1f1f1;", textcolor: "#000;"},
+      { name: "Jeanne", color: "#000050;", textcolor: "#fff;"},
+      { name: "Joséphine", color: "#b8a411;", textcolor: "#fff;"},
+      { name: "Nikita", color: "#960000;", textcolor: "#fff;"},
+      { name: "Zoë", color: "#ff9d1a;", textcolor: "#fff;"}
      ]
   });
   
   Template.branding.helpers({
     project_logo: function(){
          return '/logos/'+Session.get("Project").logo;
+    },
+    
+    doPrint : function() {
+       if (Session.get('printLogo')==0) return "dontPrint";
+       else return "";
     }
    });
 }

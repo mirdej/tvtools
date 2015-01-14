@@ -16,6 +16,10 @@ ul.home  {list-style-type:none;padding:0;margin:0;}
 hr  {clear:both;}
 .navbar * i {color:#bbb;width:24px;}
 
+@media print {
+    .ausweis {page-break-after: always;}
+    .dontPrint {visibility:hidden;}
+}
 
 /* DROPZONE */
 

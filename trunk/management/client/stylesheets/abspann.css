@@ -20,3 +20,30 @@ div.abspann .soutien {margin-top:8em;}
 div.abspann #copyright {margin-top:3em;font-size:.8em;margin-left:7px;}
 
 div.abspann ul.wrap_postes {margin-left:0px;padding-left:0px;}
+
+
+
+div.spick {	font-family:"Lucida Grande";
+		width:640px;
+		text-align:left;
+		font-size:.75em;
+		letter-spacing:.05em;
+}
+	
+div.spick h1,h2,h3 {
+font-family:"Lucida Grande";
+font-weight:bold;
+font-variant:normal;
+text-transform:uppercase;
+}
+
+div.spick h1,h2 {margin-top:.2em;}
+div.spick h3 { margin-top:.5em;margin-bottom:0em;font-size:9pt;}
+
+div.spick ul {padding:0px;padding-left:1em;margin:0px;}
+
+div.spick li {padding:0px;margin:0px;display:block;list-style:none;}
+
+
+div.spick div.spalte {
+float:left; width:30%;}

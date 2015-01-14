@@ -1,10 +1,6 @@
 
 
 Template.groups.helpers({
-	emptySortables: function() {
-		Session.set("sortables",[]);
-		return "";
-	},
     thegroups: function () {
         return Groups.find({project:Session.get("Project").id}, {sort: {title: 1}});
     }
@@ -21,19 +17,28 @@ Template.group.helpers({
     members: function () {
     	return Members.find( {group:this._id}, {sort: {first: 1}});
     },
-    color: function () {
-//    	return "background-color:#892;";
-    }
-});
+ });
 //------------------------------------------------------------------------------------------
 
 Template.memberchooser.helpers({
 
     members: function () {
            return Members.find({project:Session.get("Project").id}, {sort: {first: 1}});
-    }
+    },
+    
+    done: function() {
+      $('.mem').draggable();
+}
 });
 
+Template.memberchooser.events({
+	'click':function (e,t) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		$('#memberlist').toggle();
+		}
+})
 //------------------------------------------------------------------------------------------
 
 Template.groups.events({
@@ -112,33 +117,33 @@ Template.cams.rendered = function() {
 	this.$('.cam').draggable();
 }
 
-Template.memberchooser.rendered = function() {
-    this.$( ".members" ).sortable({
-      connectWith: ".members",
-      }).disableSelection();}
+Template.groups.rendered = function() {
+}
 
 Template.group.rendered = function() {
 	this.$( ".cameradrop" ).droppable({
       drop: function( event, ui ) {
         var group_id =  event.target.id;  
         if (event.originalEvent.target.id) {
-        	var dropped = event.originalEvent.target.id; 
+        	var item = event.originalEvent.target; 
         } else {
-        	var dropped = event.originalEvent.target.parentElement.id;
+        	var item = event.originalEvent.target.parentElement;
         }
-        dropped = dropped.split('_');
+        var dropped = item.id.split('_');
+        $(item).hide();
         
         if (dropped[0] == 'camera') {
-			Groups.update(group_id, {$set: {camera: dropped[1] }});
+        var c = 'color:'+$(item).css('color')+';background-color:'+$(item).css('background-color')+';';
+        console.log(c);
+			Groups.update(group_id, {$set: {
+			         camera: dropped[1], 
+			         styling: c}}
+			);
 		} else if (dropped[0] == 'member') {
 			var member_id = dropped[1];
 			Members.update(member_id, {$push:{group: group_id}});
 		}
       }
     });
-    Session.set("sortables",Session.get("sortables"+
-    this.$( ".members" ).sortable({
-      connectWith: ".members",
-    })
-    ))
+
 }

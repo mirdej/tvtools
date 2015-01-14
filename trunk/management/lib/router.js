@@ -11,3 +11,7 @@ Router.route('/lueste', 			function () {this.render( 'lueste');});
 Router.route('/jobverteilung', 		function () {this.render( 'posten');});
 
 Router.route('/abspann', 			function () {this.render( 'abspann');});
+Router.route('/spick', 			function () {this.render( 'spick');});
+
+
+Router.route('/ablauf', 			function () {this.render( 'ablauf');});

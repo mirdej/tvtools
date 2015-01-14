@@ -13,3 +13,17 @@ div.group h3 {margin:0px;padding:0px;}
 cam_Jeanne {background-color:#284D66;}
 
 ul.members {min-height:36px;}
+
+li.mem: {padding:0px;margin:0px;}
+
+
+.comma-list { list-style-type: none }
+.comma-list li { display: inline }
+/* Here's the interesting part: */
+.comma-list li:after { content: ", " }
+.comma-list li:last-child:after { content: "" }
+
+.beitrag {position:relative;}
+.live {background-color:#96D696; padding:10px 15px;}
+
+.dauer {position:absolute;right:10px;top:2px;width:4em;text-align:right;}

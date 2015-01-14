@@ -1,7 +1,6 @@
  <template name="groups"> 
 <div class="row">
 	<div class="col-xs-8">
-	{{emptySortables}}
 		<h2>
 			Teams 
 		</h2>
@@ -23,7 +22,7 @@
 <template name="group"> 
 <div class="panel panel-default group cameradrop" id="{{_id}}">
 	<button class="close delete"> &times; </button>
-	<div class="panel-heading cam_{{camera}}" style="{{color}}">
+	<div class="panel-heading cam_{{camera}}" style="{{styling}}">
 			{{#if doedit}}
 			<form class="title"><input type="text" name="title" class="input-sm" value="{{title}}" /><input type="submit" class="hidden"></form>
 			{{else}}
@@ -40,7 +39,7 @@
 		<small>{{description}}</small>
 		{{/if}}
 	</div> -->
-	<ul class="list-inline members" id="group_{{_id}}">
+	<ul class="list-inline members" id="group_{{_id}}" sytle="margin-left:30px;">
 		{{#each members}} 
 		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}}</label>
 </li>
@@ -50,7 +49,7 @@
 </template> 
 <!-- ======================================================================= -->
 <template name="memberchooser"> 
-<div class="panel panel-default">
+<div class="memberchooser panel panel-default">
 
 <!-- Default panel contents -->
 	<div class="panel-heading">
@@ -58,11 +57,12 @@
 	</div>
 
 <!-- List group -->
-	<ul id="memberlist" class="list-group members">
+	<ul id="memberlist" class="list-group members" >
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item "> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item mem" style="padding:2px 10px;margin:0px;"> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
+	{{done}}
 </div>
 </template> 
 <!-- ======================================================================= -->
@@ -71,7 +71,7 @@
 	<div class="panel-heading">
 		Kameras <span class="caret"></span> 
 	</div>
-	<ul id="cameralist" class="list-group" style="display:block;" >
+	<ul id="cameralist" class="list-group cameras" style="display:block;" >
 		{{#each cams}} 
 		<li id="camera_{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
 		{{/each}} 
