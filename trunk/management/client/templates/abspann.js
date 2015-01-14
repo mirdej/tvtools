@@ -11,17 +11,27 @@ all: function () {return Members.find({project:Session.get("Project").id},{sort:
    result.push({'name':dank[i]});
  }
  return result;
- console.log(result);
+
  },
  year: function () {
-   var d = new Date();
+   var d = new Date(Session.get('Project').end);
    return d.getFullYear();
+ },
+ 
+ leitung: function() {
+var dank = Session.get('Project').leitung;
+ dank = dank.split(',');
+ var result = [];
+ for (var i = 0 ; i < dank.length; i++) {
+   result.push({'name':dank[i]});
+ }
+ return result;
  }
 
 })
 
 Template.abspann.rendered = function () {
-var d = new Date();
+var d = new Date(Session.get('Project').end);
 document.title = "Abspann "+Session.get('Project').name+"-Sendung vom "+d.toLocaleDateString();
 }
 
