@@ -8,14 +8,30 @@
 </body>
 
 <template name="ApplicationLayout">
+
+{{#if currentUser}}
   {{> navbar}}
   {{> branding}}
       <div class="container-fluid">
           {{> yield}}
       </div>
+{{else}}
+  {{> yield "loginYield"}}
+  {{> branding}}
+  {{> ablauf}}
+{{/if}}
+
 </template>
 
 
 
 
 <template name="branding"><div id="branding"><img src="{{project_logo}}" width="100" class="{{doPrint}}"/></div></template>
+
+<template name="login">
+        <div class="container-fluid">
+                <div class="panel">
+
+   {{> loginButtons}}</div>
+      </div>
+</template>

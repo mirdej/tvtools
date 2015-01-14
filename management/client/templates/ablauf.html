@@ -1,5 +1,5 @@
  <template name="ablauf"> 
-<div class="col-xs-5">
+<div class="col-xs-8">
 	<h2>
 		Sendung vom {{sendungsDate}}
 	</h2>
@@ -11,7 +11,10 @@
 				<h3 class="panel-title">
 					{{#if isLive}}LIVE: {{/if}}{{title}}
 				</h3>
+				{{#if currentUser}}
 				<input type="time" class="form-control input-sm dauer" placeholder="Dauer" value="{{niceDuration}}" />
+				{{else}}<p class="dauer">{{niceDuration}}</p>
+			    {{/if}}
 			</div>
 			<div class="panel-body">
 				{{#unless noDescription}}{{description}}<br />
@@ -26,6 +29,8 @@
 		</div>
      	{{/each}} 
 	</div>
+
+{{#if currentUser}}
 	<div class="panel newGroup">
 		<form class="newGroup">
 			<input id="f" type="text" placeholder="Livegast"> 
@@ -33,5 +38,6 @@
 		</form>
 	</div>
 	<button class="btn btn-primary alpha">Alphabetisch</button> 
+{{/if}}
 </div>
 </template>

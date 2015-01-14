@@ -47,6 +47,7 @@ if (typeof this.duration !== 'undefined') {
 
 
 Template.ablauf.rendered = function() {
+if (Meteor.userId()) {
    $("#sortable").sortable({
         stop: function(e, ui) {
           // get the dragged html element and the one before
@@ -78,6 +79,7 @@ Template.ablauf.rendered = function() {
           Groups.update({_id: Blaze.getData(el)._id}, {$set: {rank: newRank}})
         }
     });
+}
 }
 
 Template.ablauf.events({
