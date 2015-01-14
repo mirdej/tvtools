@@ -4,7 +4,9 @@
 		<h2>
 			Teams 
 		</h2>
+		<ul class="grouplist">
 		{{#each thegroups}}{{> group}}{{/each}} 
+		</ul>
 		<div class="newGroup">
 			<form class="newGroup">
 				<input id="f" type="text" placeholder="Thema"> 
@@ -20,18 +22,18 @@
 </template> 
 <!-- ======================================================================= -->
 <template name="group"> 
-<div class="panel panel-default group cameradrop" id="{{_id}}">
+<li class="group cameradrop" id="{{_id}}">
 	<button class="close delete"> &times; </button>
-	<div class="panel-heading cam_{{camera}}" style="{{styling}}">
+	<span class="title cam_{{camera}}" style="{{styling}}">
 			{{#if doedit}}
 			<form class="title"><input type="text" name="title" class="input-sm" value="{{title}}" /><input type="submit" class="hidden"></form>
 			{{else}}
 			<h4 class="title">
-				{{title}}
+				{{title}}<br />
 				<small>{{camera}}</small>
 			</h4>
 			{{/if}}
-	</div>
+	</span>
 <!--	<div class="panel-body">
 		{{#if bodyedit}}
 			<form class="description"><textarea type="text" name="description" class="input-sm">{{description}}</textarea><input type="submit" value="save"></form>
@@ -39,13 +41,15 @@
 		<small>{{description}}</small>
 		{{/if}}
 	</div> -->
+	<span class="info">
 	<ul class="list-inline members" id="group_{{_id}}" sytle="margin-left:30px;">
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item"> <img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}}</label>
+		<li id="member_{{_id}}" class="mem"><img src="{{thumb}}" height="36" /><button class="close removeMember"> &times; </button><br /><label> {{first}}</label>
 </li>
 		{{/each}} 
 	</ul>
-</div>
+	</span>
+</li>
 </template> 
 <!-- ======================================================================= -->
 <template name="memberchooser"> 
