@@ -1,4 +1,4 @@
-
+var dragEnabled = 0;
 
 Template.groups.helpers({
     thegroups: function () {
@@ -24,11 +24,7 @@ Template.memberchooser.helpers({
 
     members: function () {
            return Members.find({project:Session.get("Project").id}, {sort: {first: 1}});
-    },
-    
-    done: function() {
-      $('.mem').draggable();
-}
+    }
 });
 
 Template.memberchooser.events({
@@ -37,7 +33,11 @@ Template.memberchooser.events({
 		e.preventDefault();
 
 		$('#memberlist').toggle();
+		if (!dragEnabled) {
+		      $('.mem').draggable();
+             dragEnabled = 1;
 		}
+	}
 })
 //------------------------------------------------------------------------------------------
 

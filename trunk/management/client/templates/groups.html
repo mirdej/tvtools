@@ -57,7 +57,7 @@
 	</div>
 
 <!-- List group -->
-	<ul id="memberlist" class="list-group members" >
+	<ul id="memberlist" class="list-group members" style="display:none;" >
 		{{#each members}} 
 		<li id="member_{{_id}}" class="list-group-item mem" style="padding:2px 10px;margin:0px;"> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
@@ -71,7 +71,7 @@
 	<div class="panel-heading">
 		Kameras <span class="caret"></span> 
 	</div>
-	<ul id="cameralist" class="list-group cameras" style="display:block;" >
+	<ul id="cameralist" class="list-group cameras" style="display:none;" >
 		{{#each cams}} 
 		<li id="camera_{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
 		{{/each}} 

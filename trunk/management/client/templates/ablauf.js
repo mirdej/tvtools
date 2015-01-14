@@ -28,7 +28,8 @@ if (typeof this.duration !== 'undefined') {
     totalTime: function(){
         
         var groups = Groups.find({project:Session.get("Project").id}).fetch();
-        var t = 0;
+        var t = 45; // jingle
+        t += 90; // abspann
         
           for (var i = 0; i < groups.length; i++) {
           if (typeof groups[i].duration !== 'undefined') {
