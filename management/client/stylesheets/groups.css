@@ -32,10 +32,10 @@ text-align:right;width:5em;}
 .comma-list li:last-child:after { content: "" }
 
 ul.grouplist {list-style-type:none;}
-.grouplist li {clear:both;min-height:84px;position:relative;background-color:#F5F5F5;border:1px solid rgb(51 ,51 ,51);margin:8px;border-radius:6px; padding: 10px 4px;}
+.grouplist li {clear:both;min-height:88px;position:relative;background-color:#F5F5F5;border:1px solid rgb(51 ,51 ,51);margin:8px;border-radius:6px; padding: 10px 4px;}
 .grouplist li span.title {font-weight:bold;display:block;width:200px;position:relative;float:left;border-radius:6px;padding:2px;}
 .grouplist li span.info {display:block;float:left;font-size:.75em;margin-left:20px;}
 .grouplist li span.duration {position:absolute;right:10px;text-align:left;}
 
 
-li.mem {padding:0px;margin:0px;min-height:0px;}
+li.mem {padding:1px;margin:0px;min-height:0px;height:70px;border:1px solid #999;}
