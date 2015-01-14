@@ -2,7 +2,7 @@ var dragEnabled = 0;
 
 Template.groups.helpers({
     thegroups: function () {
-        return Groups.find({project:Session.get("Project").id}, {sort: {title: 1}});
+        return Groups.find({project:Session.get("Project").id}, {sort: {isLive:1,title: 1}});
     }
 });
 //------------------------------------------------------------------------------------------
