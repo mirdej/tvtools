@@ -1,15 +1,12 @@
-<template name="memberlist"> 
-{{#if docrop}}{{> member_crop}} {{else}}
-
+<template name="memberlist"> {{#if docrop}}{{> member_crop}} {{else}} 
 <h2 class="sub-header">
-	Mitarbeiter <span class="badge">{{member_count}}</span> 
-	<label class="showall"> Show All
-		<input type="checkbox" data-toggle="toggle" checked="{{show_all}}" />
+	Mitarbeiter <span class="badge">{{member_count}}</span> <label class="showall"> Show All 
+	<input type="checkbox" data-toggle="toggle" checked="{{show_all}}" />
 	</label> 
 </h2>
 <div class="table-responsive">
 	<form class="new-member">
-		<table class="table table-striped .table-condensed">
+		<table class="table .table-condensed">
 			<thead>
 				<tr>
 					<th> Photo </th>
@@ -25,25 +22,36 @@
 		</table>
 	</form>
 </div>
-{{/if}}
-</template> 
-
+{{/if}} </template> 
 <!--  ..................................................................... MEMBER ROW -->
 <template name="memberlist_row"> 
-<tr class="" id="{{_id}}">
-{{#if doedit}}
-	<td class="crop"> <img  src="{{thumb}}" height="90" /> </td>
-	<td> <input type="text" class="form-control firstname" value="{{first}}" /> </td>
-	<td> <input type="text" class="form-control lastname" value="{{last}}" /> </td>
-	<td> <input type="text" class="form-control phone" value="{{tel}}" /> </td>
-	<td class="smalltext"> {{group}}{{#if show_all}} | <input type="text" class="form-control project" value="{{project}}" />  {{/if}} <button class="delete"> &times; </button> <button class="save"><i class="fa fa-save"></i></button> </td>
-{{else}}
-	<td class="crop"> <img  src="{{thumb}}" height="90" /> </td>
+<tr class="{{gender}}" id="{{_id}}">
+	<td class="crop"> <img src="{{thumb}}" height="90" /> </td>
+
+	{{#if doedit}} 
+	<td> 
+	<input type="text" class="form-control firstname" value="{{first}}" />
+	</td>
+	<td> 
+	<input type="text" class="form-control lastname" value="{{last}}" />
+	</td>
+	<td> 
+	<input type="text" class="form-control phone" value="{{tel}}" />
+	</td>
+	
+	
+	<td class="smalltext"> {{group}}
+	   {{#if show_all}} | 
+	       <input type="text" class="form-control project" value="{{project}}" />
+	   {{/if}} 
+	</td>
+	<td><button class="delete"> &times; </button> <button class="save"><i class="fa fa-save"></i></button> </td>
+	{{else}} 
 	<td> {{first}} </td>
 	<td> {{last}} </td>
 	<td> {{tel}} </td>
-	<td class="smalltext"> {{group}}{{#if show_all}} | {{project}} {{/if}} <button class="delete"> &times; </button> <button class="edit"><i class="fa fa-edit"></i></button> </td>
-
-{{/if}}
+	<td class="smalltext"> {{group}}{{#if show_all}} | {{project}} {{/if}}</td>
+	<td><button class="setFemale"><i class="fa fa-female"></i></button> <button class="setMale"><i class="fa fa-male"></i></button> <button class="delete"> &times; </button> <button class="edit"><i class="fa fa-edit"></i></button> </td>
+	{{/if}} 
 </tr>
 </template> 

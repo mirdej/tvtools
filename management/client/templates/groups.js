@@ -82,7 +82,7 @@ Template.group.events({
        	e.preventDefault();
         Session.set('editing_itemname', this._id);
     },
-      'dblclick .panel-body': function (e, t) {
+      'dblclick .description': function (e, t) {
         e.stopPropagation();
        	e.preventDefault();
         Session.set('editing_body', this._id);
