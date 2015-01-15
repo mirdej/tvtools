@@ -1,6 +1,6 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
-
+ProjectID = "oe2014_1";
 
 if (Meteor.isClient) {
 Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
@@ -8,10 +8,10 @@ Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","Septe
 
 Session.set("Project", {
    name:"Oberengstringen",
-   id:"oe2014_1",
+   id:ProjectID,
    logo:"logo-OE.png",
    badge:"carte-de-presse-schultv.jpg",
-   begin:"Mon Mar 3 2014 00:00:00 GMT+0100 (CET)",
+   begin:"Mon Feb 3 2014 00:00:00 GMT+0100 (CET)",
    end:"Fri Mar 7 2014 00:00:00 GMT+0100 (CET)",
    abspannVorlauf : "Oberengstringen Goldschmied",
    leitung : "Michael Egger, Maïté Colin",
