@@ -22,4 +22,44 @@ Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'})
 
 
 Router.route('/import');
-Router.route('/test')
+
+
+
+Router.map(function() {
+  this.route('vcard', {
+    where: 'server',
+    path: '/vcard',
+    action: function() {
+    
+    var members = Members.find({project:ProjectID}, {sort: {first: 1}}).fetch();
+    var s = "";
+    var m,g;
+    
+    for (var i = 0; i < members.length; i++) {
+    m = members[i];
+      if (typeof m.tel != 'undefined') {
+        if (m.tel.length){
+          
+          s += "BEGIN:VCARD\rVERSION:3.0\r";
+          s += "N:"+m.last+";"+m.first+";;;\r";
+          s += "FN:"+m.first+" "+m.last+"\r";
+          s += "ORG:"+ProjectID;
+          if (typeof m.group != 'undefined') {
+                  g = Groups.find(m.group[0]).fetch();
+                s += " Team: "+g[0].title;
+          }
+          s += "\r";
+          s += "TEL;type=CELL;type=VOICE;type=pref:"+m.tel+"\r"
+          s += "PHOTO;ENCODING=b;TYPE=JPEG:"+m.thumb.replace('data:image/jpeg;base64,','')+"\r"
+          s += "END:VCARD\r";
+        }
+
+        }
+      }
+            var headers = {'Content-type': 'text/vcard'};
+//      var headers = {'Content-type': 'text/plain'};
+      this.response.writeHead(200, headers);
+            this.response.end(s);
+
+  }})
+});

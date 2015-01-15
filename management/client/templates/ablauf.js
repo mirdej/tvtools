@@ -22,7 +22,7 @@ if (typeof this.duration !== 'undefined') {
     },
     sendungsDate: function() {
     var d = new Date( Session.get("Project").end)
-    return d.toLocaleDateString();
+    return d.getDate() + ". " + Months[d.getMonth()] + " " +d.getFullYear();
     },
     
     totalTime: function(){
