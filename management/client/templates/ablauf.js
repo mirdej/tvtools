@@ -37,8 +37,6 @@ if (typeof this.duration !== 'undefined') {
           		t += parseInt(groups[i].duration);
           		}
           }
-          
-          console.log(t);
          var myDate = new Date(null,null,null,null,null,t).toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
          
          return myDate;
