@@ -1,7 +1,10 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 
+
 if (Meteor.isClient) {
+Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
 
 Session.set("Project", {
    name:"Oberengstringen",
@@ -14,6 +17,22 @@ Session.set("Project", {
    leitung : "Michael Egger, Maïté Colin",
    danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
 });
+
+
+  var von = new Date(Session.get("Project").begin);
+   var bis = new Date(Session.get("Project").end);   
+   
+   var s = von.getDate() +". ";
+   if (von.getMonth() != bis.getMonth() ) {
+    s+= Months[von.getMonth()]+" ";
+   }
+   s += "bis ";
+   s+=  bis.getDate() +". ";
+   s+= Months[bis.getMonth()]+" ";
+   s += bis.getFullYear();
+   
+   console.log(s);
+   Session.set('ProjectPeriod',s);
 
   // This code only runs on the client
   Template.cams.helpers({
