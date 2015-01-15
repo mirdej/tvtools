@@ -57,7 +57,7 @@ Template.member_new.events({
       first: f,
       last: l,
       tel: n,
-      gender:"unknown",
+      gender:"male",
       project: Session.get("Project").id,
       createdAt: new Date() // current time
     });

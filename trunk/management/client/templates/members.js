@@ -89,7 +89,19 @@ Template.memberlist.events({
        e.preventDefault();
           Session.set("crop", this._id);
       },
-    
+
+      "click .setMale": function (e,t) {
+       e.stopPropagation();
+       e.preventDefault();
+         Members.update(this._id,{$set:{gender:"male"}});
+      },
+
+      "click .setFemale": function (e,t) {
+       e.stopPropagation();
+       e.preventDefault();
+         Members.update(this._id,{$set:{gender:"female"}});
+      },
+      
        "change .showall input": function (e,t) {
          Session.set("show_all", e.target.checked);
 }

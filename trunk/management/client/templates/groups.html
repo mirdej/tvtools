@@ -34,21 +34,23 @@
 			</h4>
 			{{/if}}
 	</span>
-<!--	<div class="panel-body">
+	<span class="info">
+	<ul class="list-inline members" id="group_{{_id}}" sytle="margin-left:30px;">
+		{{#each members}} 
+		<li id="member_{{_id}}" class="mem {{gender}}"><img src="{{thumb}}" height="36" style="float:left"/><button class="close removeMember"> &times; </button><br /><label style="float:left;"> {{first}}<br /><span style="font-weight:normal;font-size:9px;">{{tel}}&nbsp;</span></label>
+</li>
+		{{/each}} 
+	</ul>
+	</span>
+	<span class="info description">
 		{{#if bodyedit}}
 			<form class="description"><textarea type="text" name="description" class="input-sm">{{description}}</textarea><input type="submit" value="save"></form>
 		{{else}}
 		<small>{{description}}</small>
 		{{/if}}
-	</div> -->
-	<span class="info">
-	<ul class="list-inline members" id="group_{{_id}}" sytle="margin-left:30px;">
-		{{#each members}} 
-		<li id="member_{{_id}}" class="mem"><img src="{{thumb}}" height="36" style="float:left"/><button class="close removeMember"> &times; </button><br /><label style="float:left;"> {{first}}<br /><span style="font-weight:normal;font-size:9px;">{{tel}}&nbsp;</span></label>
-</li>
-		{{/each}} 
-	</ul>
 	</span>
+
+
 </li>
 </template> 
 <!-- ======================================================================= -->
@@ -63,7 +65,7 @@
 <!-- List group -->
 	<ul id="memberlist" class="list-group members" style="display:none;" >
 		{{#each members}} 
-		<li id="member_{{_id}}" class="list-group-item mem" style="padding:2px 10px;margin:0px;"> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
+		<li id="member_{{_id}}" class="list-group-item mem {{gender}}" style="padding:2px 10px;margin:0px;"> <img src="{{thumb}}" height="20" /><label> {{first}} {{last}} </label></li>
 		{{/each}} 
 	</ul>
 	{{done}}

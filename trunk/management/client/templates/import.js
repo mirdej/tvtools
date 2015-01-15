@@ -23,7 +23,7 @@ Template.import.events({
       first: n,
       last: l,
       tel: t,
-      gender:"unknown",
+      gender:"male",
       project: Session.get("Project").id,
       createdAt: new Date() // current time
     });
