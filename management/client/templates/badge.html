@@ -1,9 +1,15 @@
 <template name="badge">
+<button class="btn btn-primary alpha showAll dontPrint">Alle zeigen</button> 
+
 {{#each members}}
-<div class="ausweis" style="position:relative;width:85mm;height:53mm;">
+<div class="ausweis" style="clear:both;position:relative;width:85mm;height:53mm;">
+<!--<input type="checkbox" class="doPrint" checked="checked" style="position:absolute;left:9cm;top:1cm;">-->
 <img class="card" src="{{bg}}" style="width:85mm;height:53mm;">
 <img src="{{pic}}" style="width:1.9cm;height:2.5cm;position:absolute;right:3mm;top:2mm;">
-<div clls="name" style="position:absolute;left:2.1mm;top:13mm;"><h2>{{first}}</h2></div>
+<div class="name" style="position:absolute;width:4cm;left:2.5mm;top:16mm;font-size:2em;font-weight:bold;">{{first}}</div>
+<div class="valid" style="position:absolute; left:22mm; bottom:3mm;color:white;">{{valid}}</div>
+<div class="project" style="position:absolute; left:2.5mm; top:9mm;color:#fafafa;;">{{project}}</div>
 </div>
+
 {{/each}}
 </template>
