@@ -50,7 +50,11 @@
 	<td> {{first}} </td>
 	<td> {{last}} </td>
 	<td> {{tel}} </td>
-	<td class="smalltext"> {{group}}{{#if show_all}} | {{project}} {{/if}}</td>
+	<td class="smalltext"> <ul style="list-style-type:none">{{#each groupNames}}
+	<li style="padding:2px"><span class="badge">{{title}}</span></li>
+	{{/each}}
+	</ul>
+	{{#if show_all}} | {{project}} {{/if}}</td>
 	<td><button class="setFemale"><i class="fa fa-female"></i></button> <button class="setMale"><i class="fa fa-male"></i></button> <button class="delete"> &times; </button> <button class="edit"><i class="fa fa-edit"></i></button> </td>
 	{{/if}} 
 </tr>

@@ -38,6 +38,17 @@ Template.memberlist_row.helpers({
     doedit:function() {
  		return Session.equals("edit",this._id);
     },
+    
+    groupNames:function() {
+    var s= [];
+    var g;
+    if (typeof this.group === 'undefined') return;
+        for (var i = 0; i < this.group.length; i++) {
+          g = Groups.find(this.group[i]).fetch();
+           s.push({title:g[0].title});
+        }
+        return s;
+    }
 
   });
   
