@@ -20,7 +20,9 @@ Template.badge.events({
  },
  
  'click .showAll' : function (e,t) {
-    $('div.ausweis').show();
+  e.stopPropagation();
+   e.preventDefault();
+     $('div.ausweis').show();
 
  }
 
