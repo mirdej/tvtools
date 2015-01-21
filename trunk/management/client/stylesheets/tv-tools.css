@@ -17,9 +17,22 @@ hr  {clear:both;}
 .navbar * i {color:#bbb;width:24px;}
 
 @media print {
-    .ausweis {page-break-after: always;}
-    .dontPrint {visibility:hidden;}
+body {margin:0cm;}
+#branding {display:none;}
+.navbar {display:none;}
+.container-fluid {margin:0mm;padding:0mm;}
+    .ausweis {page-break-after: always;margin:0mm;padding:0mm;}
+    .dontPrint {display:none;}
+    .project: {color:#fafafa;}
 }
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 0mm;  
+} 
 
 /* DROPZONE */
 

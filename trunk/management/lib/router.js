@@ -20,6 +20,7 @@ Router.route('/ablauf', 			function () {this.render( 'ablauf');});
 Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'});  });
 
 
+Router.route('/projekt',       function () {this.render( 'project');});
 
 Router.route('/import');
 

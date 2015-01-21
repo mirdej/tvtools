@@ -1,11 +1,24 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
-ProjectID = "oe2014_1";
+Projects = new Mongo.Collection("projects");
+ProjectID = "SchulTV_VW_2014";
 
 if (Meteor.isClient) {
 Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 
+Session.set("Project", {
+   name:"Volketswil",
+   id:ProjectID,
+   logo:"logo-VW.png",
+   badge:"carte-de-presse-schultv.jpg",
+   begin:"Mon Nov 10 2014 00:00:00 GMT+0100 (CET)",
+   end:"Fri Nov 14 2014 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Volketswil Lindenbüel",
+   leitung : "Michael Egger, Susanne Kunz",
+   danke: "Sarah Looser, Reinhard Spross, Emil Huber,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
+});
 
+/*
 Session.set("Project", {
    name:"Oberengstringen",
    id:ProjectID,
@@ -18,6 +31,7 @@ Session.set("Project", {
    danke: "Michelle Bauert,  Maja Klemm,  Barbara Bachmann,  Herr & Frau Häusler,  Rahel Thali,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
 });
 
+*/
 
   var von = new Date(Session.get("Project").begin);
    var bis = new Date(Session.get("Project").end);   
@@ -31,7 +45,7 @@ Session.set("Project", {
    s+= Months[bis.getMonth()]+" ";
    s += bis.getFullYear();
    
-   console.log(s);
+
    Session.set('ProjectPeriod',s);
 
   // This code only runs on the client
