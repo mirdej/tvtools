@@ -22,6 +22,14 @@ function log_clip(starttime,name) {
 }
 
 
+function log_cut(starttime,cam) {
+	if (!isRunning) return;
+	var s;
+	s = parseInt(starttime) +" cut  " + parseInt(cam)
+	logfile.writeline(s);
+}
+
+
 function start() {
 	logfile = new File(logpath+"/tv.titler.log."+getTimeStamp()+".txt","write");
 	post(logpath+"tv.titler.log."+getTimeStamp()+".txt");

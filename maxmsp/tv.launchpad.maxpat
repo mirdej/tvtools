@@ -787,7 +787,7 @@
 							"architecture" : "x86"
 						}
 ,
-						"rect" : [ 428.0, 558.0, 1321.0, 535.0 ],
+						"rect" : [ 25.0, 561.0, 1321.0, 535.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -807,6 +807,103 @@
 						"digest" : "",
 						"tags" : "",
 						"boxes" : [ 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-41",
+									"maxclass" : "newobj",
+									"numinlets" : 0,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 1180.0, 432.0, 59.0, 20.0 ],
+									"text" : "r genlock"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-40",
+									"maxclass" : "newobj",
+									"numinlets" : 3,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 1140.5, 468.0, 98.0, 20.0 ],
+									"text" : "pack log_cut 0 0"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-35",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "bang", "int", "bang" ],
+									"patching_rect" : [ 1206.0, 380.0, 46.0, 20.0 ],
+									"text" : "t b i b"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-36",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "", "int", "int" ],
+									"patching_rect" : [ 1206.0, 351.0, 50.0, 20.0 ],
+									"text" : "change"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-38",
+									"maxclass" : "newobj",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "bang" ],
+									"patching_rect" : [ 1185.0, 293.0, 71.0, 20.0 ],
+									"text" : "qmetro 100"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-39",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "int", "int", "int" ],
+									"patching_rect" : [ 1183.5, 319.0, 64.0, 20.0 ],
+									"text" : "gnuswitch"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-20",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 1257.0, 407.0, 85.0, 20.0 ],
+									"text" : "s get_genlock"
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
@@ -1708,11 +1805,83 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-20", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-35", 2 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-40", 2 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-35", 1 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-40", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-35", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-35", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-36", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-39", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-38", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-36", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-39", 1 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-5", 1 ],
 									"disabled" : 0,
 									"hidden" : 0,
 									"midpoints" : [ 463.5, 282.0, 462.5, 282.0 ],
 									"source" : [ "obj-4", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-63", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-40", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-40", 1 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-41", 0 ]
 								}
 
 							}
@@ -1892,6 +2061,16 @@
 									"disabled" : 0,
 									"hidden" : 0,
 									"source" : [ "obj-95", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-38", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"midpoints" : [ 661.5, 175.5, 1194.5, 175.5 ],
+									"source" : [ "obj-96", 0 ]
 								}
 
 							}
@@ -2643,7 +2822,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 400.0, 771.0, 82.0, 28.0 ],
 					"readonly" : 1,
-					"text" : "02:10:07",
+					"text" : "29:32:19",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -3387,7 +3566,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 669.0, 454.0, 50.0, 34.0 ],
-					"text" : "6 2 53976"
+					"text" : "6 14 1728"
 				}
 
 			}
@@ -6447,13 +6626,13 @@
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
 									"id" : "obj-92",
-									"linecount" : 3,
+									"linecount" : 2,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 17.0, 369.5, 87.0, 45.0 ],
-									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
+									"text" : "Scratch:/sendungVW/"
 								}
 
 							}
@@ -7797,7 +7976,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 279.0, 223.5, 344.0, 18.0 ],
-									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
+									"text" : "Scratch:/sendungVW/"
 								}
 
 							}
@@ -8790,8 +8969,8 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 789.0, 206.0, 347.0, 82.0 ],
 					"readonly" : 1,
-					"text" : "-01:29:23",
-					"textcolor" : [ 0.858824, 0.858824, 0.858824, 1.0 ]
+					"text" : "-00:02:22",
+					"textcolor" : [ 1.0, 0.196078, 0.196078, 1.0 ]
 				}
 
 			}
@@ -9249,7 +9428,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 503.0, 143.0, 239.0, 18.0 ],
-									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
+									"text" : "Scratch:/sendungVW/"
 								}
 
 							}
@@ -10438,7 +10617,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 264.0, 353.0, 289.0, 18.0 ],
-													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
+													"text" : "Scratch:/sendungVW/"
 												}
 
 											}
@@ -10600,7 +10779,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 149.0, 112.0, 289.0, 18.0 ],
-													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
+													"text" : "Scratch:/sendungVW/"
 												}
 
 											}
@@ -11529,7 +11708,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 121.0, 569.0, 28.0 ],
 					"readonly" : 1,
-					"text" : "\"Macintosh HD:/Users/tv/Movies/\"",
+					"text" : "Scratch:/sendungVW/",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -13979,7 +14158,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 966.0, 477.0, 47.0, 18.0 ],
-									"text" : "input 2"
+									"text" : "input 0"
 								}
 
 							}
@@ -16352,7 +16531,7 @@
 					"patching_rect" : [ 346.0, 154.0, 246.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 658.0, 298.0, 480.0, 30.0 ],
-					"setminmax" : [ 0.0, 53976.0 ],
+					"setminmax" : [ 0.0, 1728.0 ],
 					"setstyle" : 1,
 					"settype" : 0,
 					"slidercolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
@@ -16889,7 +17068,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 185.0, 569.0, 589.0 ],
 					"rowheight" : 28,
-					"rows" : 3,
+					"rows" : 15,
 					"selmode" : 3
 				}
 
@@ -17553,6 +17732,13 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "filmlist.txt",
+				"bootpath" : "/Volumes/Scratch/sendungVW",
+				"patcherrelativepath" : "../../../../../Volumes/Scratch/sendungVW",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "whatismyip.maxpat",
 				"bootpath" : "/Users/tv/Documents/tvtools/maxmsp",
 				"patcherrelativepath" : ".",
@@ -17572,6 +17758,10 @@
 			}
 , 			{
 				"name" : "home.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "gnuswitch.mxo",
 				"type" : "iLaX"
 			}
  ]
