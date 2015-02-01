@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 4.0, 45.0, 1233.0, 975.0 ],
+		"rect" : [ 14.0, 55.0, 1233.0, 975.0 ],
 		"bgcolor" : [ 0.078431, 0.078431, 0.078431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -806,7 +806,6 @@
 						"description" : "",
 						"digest" : "",
 						"tags" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontname" : "Arial",
@@ -818,7 +817,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 73.666672, 331.0, 80.0, 60.0 ],
-									"presentation_rect" : [ 83.0, 331.0, 0.0, 0.0 ],
 									"text" : "stop logging when this was the last clip"
 								}
 
@@ -1995,7 +1993,6 @@
 						"description" : "",
 						"digest" : "",
 						"tags" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontname" : "Arial",
@@ -2646,7 +2643,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 400.0, 771.0, 82.0, 28.0 ],
 					"readonly" : 1,
-					"text" : "28:25:06",
+					"text" : "02:10:07",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -3389,8 +3386,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 669.0, 454.0, 52.0, 34.0 ],
-					"text" : "6 0 1338"
+					"patching_rect" : [ 669.0, 454.0, 50.0, 34.0 ],
+					"text" : "6 2 53976"
 				}
 
 			}
@@ -4366,7 +4363,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 1046.0, 771.0, 128.0, 20.0 ],
 					"readonly" : 1,
-					"text" : "192.168.1.101",
+					"text" : "10.0.2.167",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -6456,7 +6453,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 17.0, 369.5, 87.0, 45.0 ],
-									"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -7800,7 +7797,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 279.0, 223.5, 344.0, 18.0 ],
-									"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -8712,7 +8709,7 @@
 					"fontsize" : 36.0,
 					"frgb" : 0.0,
 					"id" : "obj-12",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -8721,7 +8718,7 @@
 					"patching_rect" : [ 490.0, 120.0, 129.0, 277.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 658.0, 121.0, 480.0, 54.0 ],
-					"text" : "00_Jingle.mov",
+					"text" : "untitled.mov",
 					"textcolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
 				}
 
@@ -8793,7 +8790,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 789.0, 206.0, 347.0, 82.0 ],
 					"readonly" : 1,
-					"text" : "-03:36:20",
+					"text" : "-01:29:23",
 					"textcolor" : [ 0.858824, 0.858824, 0.858824, 1.0 ]
 				}
 
@@ -9252,7 +9249,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 503.0, 143.0, 239.0, 18.0 ],
-									"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/"
+									"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 								}
 
 							}
@@ -10441,7 +10438,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 264.0, 353.0, 289.0, 18.0 ],
-													"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/"
+													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 												}
 
 											}
@@ -10603,7 +10600,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 149.0, 112.0, 289.0, 18.0 ],
-													"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/"
+													"text" : "\"Macintosh HD:/Users/tv/Movies/\""
 												}
 
 											}
@@ -11532,7 +11529,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 121.0, 569.0, 28.0 ],
 					"readonly" : 1,
-					"text" : "Volker:/SchulTV-Volketswil-2014/Sendung/",
+					"text" : "\"Macintosh HD:/Users/tv/Movies/\"",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -11610,12 +11607,67 @@
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 12.0,
+									"id" : "obj-71",
+									"maxclass" : "jit.fpsgui",
+									"mode" : 3,
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
+									"patching_rect" : [ 267.0, 475.0, 80.0, 35.0 ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-70",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "jit_gl_texture", "" ],
+									"patching_rect" : [ 194.5, 376.0, 232.0, 20.0 ],
+									"text" : "jit.gl.texture proj @dim 720 576 @adapt 0"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-69",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 157.0, 449.0, 60.0, 20.0 ],
+									"text" : "s rec_out"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
+									"id" : "obj-68",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "jit_matrix", "" ],
+									"patching_rect" : [ 157.0, 420.0, 111.0, 20.0 ],
+									"text" : "jit.matrix @adapt 1"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 12.0,
 									"id" : "obj-65",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 2,
 									"outlettype" : [ "jit_gl_texture", "" ],
-									"patching_rect" : [ 168.0, 490.0, 171.0, 20.0 ],
+									"patching_rect" : [ 157.0, 328.0, 171.0, 20.0 ],
 									"text" : "jit.gl.texture proj @name pppp"
 								}
 
@@ -15703,6 +15755,15 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-65", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-4", 1 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-12", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -15881,6 +15942,42 @@
 									"disabled" : 0,
 									"hidden" : 0,
 									"source" : [ "obj-64", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-70", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-65", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-69", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-68", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-71", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-68", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-68", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-70", 0 ]
 								}
 
 							}
@@ -16255,7 +16352,7 @@
 					"patching_rect" : [ 346.0, 154.0, 246.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 658.0, 298.0, 480.0, 30.0 ],
-					"setminmax" : [ 0.0, 1338.0 ],
+					"setminmax" : [ 0.0, 53976.0 ],
 					"setstyle" : 1,
 					"settype" : 0,
 					"slidercolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
@@ -16792,7 +16889,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 185.0, 569.0, 589.0 ],
 					"rowheight" : 28,
-					"rows" : 11,
+					"rows" : 3,
 					"selmode" : 3
 				}
 
