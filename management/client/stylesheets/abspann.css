@@ -12,7 +12,7 @@ font-variant:normal;
 text-transform:uppercase;
 }
 
-div.abspann h3 {font-size:.65em;margin-top:2.5em;}
+div.abspann h3 {font-size:.65em;margin-top:0em;}
 
 
 div.abspann .soutien {margin-top:8em;}
@@ -45,5 +45,34 @@ div.spick ul {padding:0px;padding-left:1em;margin:0px;}
 div.spick li {padding:0px;margin:0px;display:block;list-style:none;}
 
 
-div.spick div.spalte {
-float:left; width:30%;}
+
+
+
+
+div.klappentext {	font-family:"Lucida Grande";
+		width:640px;
+		text-align:left;
+		font-size:.75em;
+		letter-spacing:.05em;
+}
+	
+div.klappentext * h1,h2,h3 {
+font-family:"Lucida Grande";
+font-weight:bold;
+font-variant:normal;
+text-transform:uppercase;
+}
+
+div.klappentext * h1,h2 {margin-top:.2em;}
+div.klappentext * h3 { margin-top:.5em;margin-bottom:0em;font-size:9pt;}
+
+div.klappentext ul {padding:0px;padding-left:1em;margin:0px;}
+
+div.klappentext li {padding:0px;margin:0px;display:block;list-style:none;}
+
+div.klappentext .soutien {margin-top:8em;}
+
+#copyright {margin-top:3em;font-size:.8em;margin-left:7px;}
+div.spalte {float:left; width:30%;}
+
+

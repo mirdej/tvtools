@@ -1,19 +1,19 @@
 <template name="abspann">
 <div class="abspann">
-{{vorlauf}}
-
+<h2 style="display:block;width:300px;">{{vorlauf}}</h2>
+<br />
  <h3>Mit</h3>
     {{#each all}}  &nbsp;
 {{first}}<br />{{/each}}
 
- 
+ <br />
  <h3>Leitung</h3>
  {{#each leitung}}
 &nbsp;{{name}}<br />
 {{/each}}
  
 {{> postenliste}}
-
+<br />
 <h3>Mit einem<br />&nbsp;&nbsp;Dankeschön an</h3>
 {{#each danke}}
 &nbsp;{{name}}<br />
@@ -26,6 +26,7 @@
 
 <template name="postenliste">
 {{#each entries}}
+<br />
   <h3>{{job}}</h3>
     {{#each members}}  &nbsp;
 {{first}}<br />{{/each}}
