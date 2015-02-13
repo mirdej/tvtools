@@ -1,21 +1,21 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
-ProjectID = "SchulTV_VW_2014";
+ProjectID = "SchulTV_Bülach_2015";
 
 if (Meteor.isClient) {
 Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 
 Session.set("Project", {
-   name:"Volketswil",
+   name:"Bülach",
    id:ProjectID,
-   logo:"logo-VW.png",
+   logo:"logo-BU.png",
    badge:"carte-de-presse-schultv.jpg",
-   begin:"Mon Nov 10 2014 00:00:00 GMT+0100 (CET)",
-   end:"Fri Nov 14 2014 00:00:00 GMT+0100 (CET)",
-   abspannVorlauf : "Volketswil Lindenbüel",
-   leitung : "Michael Egger, Susanne Kunz",
-   danke: "Sarah Looser, Reinhard Spross, Emil Huber,  Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
+   begin:"Mon Feb 2 2015 00:00:00 GMT+0100 (CET)",
+   end:"Fri Feb 6 2015 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Bülach Hinterbirch",
+   leitung : "Michael Egger",
+   danke: "Irina Keller,  Nhi Lê Thuy, Regula Knecht, Fam. Eckert, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International,  Telooge"
 });
 
 /*

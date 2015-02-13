@@ -1,0 +1,35 @@
+<template name="klappentext">
+<div class="klappentext">
+
+<div class="spalte" id="namenliste">
+{{> klappentextpostenliste}}
+</div>
+
+
+<div class="spalte">
+  <h3>Leitung</h3>
+ <ul>{{#each leitung}}
+<li>{{name}}</li>
+{{/each}}
+ </ul>
+ 
+<h3>Mit einem<br />&nbsp;&nbsp;Dankeschön an</h3>
+{{#each danke}}
+&nbsp;{{name}}<br />
+{{/each}}
+</div>
+</div>
+</template>
+
+
+<template name="klappentextpostenliste">
+{{#each entries}}
+
+  <h3>{{job}}</h3>
+   <ul>
+   {{#each members}}
+      <li>{{first}}</li>
+    {{/each}}
+   </ul>
+{{/each}}
+</template>

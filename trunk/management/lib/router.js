@@ -11,6 +11,7 @@ Router.route('/lueste', 			function () {this.render( 'lueste');});
 Router.route('/jobverteilung', 		function () {this.render( 'posten');});
 
 Router.route('/abspann', 			function () {this.render( 'abspann');});
+Router.route('/klappentext', 			function () {this.render( 'klappentext');});
 Router.route('/spick', 			function () {this.render( 'spick');});
 
 
@@ -23,6 +24,21 @@ Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'})
 Router.route('/projekt',       function () {this.render( 'project');});
 
 Router.route('/import');
+
+Router.route('/notizenblatt', {
+  data: function() {
+    templateData = { groups: Groups.find({project:Session.get("Project").id}, {sort: {camera:1,title: 1}}) };
+    return templateData;
+  }
+});
+
+Router.route('/namenliste', {
+  data: function() {
+    templateData = { members: Members.find({project:Session.get("Project").id}, {sort: {first: 1}})};
+    return templateData;
+  }
+});
+
 
 
 
@@ -48,6 +64,7 @@ Router.map(function() {
           if (typeof m.group != 'undefined') {
                   g = Groups.find(m.group[0]).fetch();
                 s += " Team: "+g[0].title;
+                s += " | "+g[0].camera;
           }
           s += "\r";
           s += "TEL;type=CELL;type=VOICE;type=pref:"+m.tel+"\r"
