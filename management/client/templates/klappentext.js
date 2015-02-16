@@ -49,7 +49,7 @@ entries: function() {
         var job = posten[i];
         for (var j = 0; j < allMembers.length; j++) {
               if ($.inArray(job, allMembers[j].posten)!=-1) {
-                m.push({'first':allMembers[j].first});
+                m.push({'first':allMembers[j].first,'last':allMembers[j].last});
               }
         }
         if (m.length) {
