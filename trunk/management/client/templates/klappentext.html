@@ -14,9 +14,11 @@
  </ul>
  
 <h3>Mit einem<br />&nbsp;&nbsp;Dankeschön an</h3>
+<ul>
 {{#each danke}}
-&nbsp;{{name}}<br />
+<li>{{name}}</li>
 {{/each}}
+</ul>
 </div>
 </div>
 </template>
@@ -28,7 +30,7 @@
   <h3>{{job}}</h3>
    <ul>
    {{#each members}}
-      <li>{{first}}</li>
+      <li>{{first}} {{last}}</li>
     {{/each}}
    </ul>
 {{/each}}
