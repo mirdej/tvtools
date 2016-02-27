@@ -167,6 +167,11 @@ uchar usbFunctionSetup(uchar data[8])
 		reply[2] = 0;		
 		usbMsgPtr = reply;
         return 3;
+        
+	} else if(data[1] == SET_TALLY) {			// Start Bootloader for reprogramming the gnusb
+		uint8_t c = data[2];
+		c %= 4;
+		select_cam(c);
 	
 	} else if(data[1] == cmd_StartBootloader) {			// Start Bootloader for reprogramming the gnusb
 		startBootloader();

@@ -62,3 +62,6 @@ disasm:	build/main.bin
 
 cpp:
 	$(COMPILE) -E main.c
+
+terminal:
+	$(AVRDUDE) -t
