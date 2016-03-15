@@ -30,6 +30,9 @@
 // Globals
 // ------------------------------------------------------------------------------
 
+volatile uint32_t lastTime;
+volatile uint32_t	ticks;
+
 volatile unsigned char	on_tally;
 volatile unsigned char	on_tally_idx;
 volatile unsigned char	old_buttons;
@@ -41,6 +44,30 @@ unsigned char 	tx_len,tx_idx;
 tx_state_t		tx_state;
 
 
+// ------------------------------------------------------------------------------
+// Count Milliseconds
+
+ISR(TIMER0_COMPA_vect)
+{
+	ticks++;
+}
+
+
+
+uint32_t millis()
+{
+	uint32_t m;
+	uint8_t oldSREG = SREG;
+
+	// disable interrupts while we read timer0_millis or we might get an
+	// inconsistent value (e.g. in the middle of a write to timer0_millis)
+	cli();
+	m = ticks / 10;
+	SREG = oldSREG;
+	sei();
+	
+	return m;
+}
 // ------------------------------------------------------------------------------
 // - Message to the tally lights out there
 // ------------------------------------------------------------------------------
@@ -56,7 +83,6 @@ void update_tallys(void) {
 			tx_idx = 0;
 			tx_state = sending_tx;
 		}
-
 }
 
 
@@ -133,6 +159,8 @@ Cam 4: 000
 
 void check_buttons(void) {
 	// sample buttons
+
+	cli();
 	unsigned char temp = PINC & 0x0f;
 	if (temp == old_buttons) return;
 	old_buttons = temp;
@@ -144,6 +172,9 @@ void check_buttons(void) {
 	else if (trigger & 2) select_cam(1);
 	else if (trigger & 4) select_cam(2);
 	else if (trigger & 8) select_cam(3);
+	lastTime = millis();
+
+	sei();
 }
 
 // ------------------------------------------------------------------------------
@@ -195,6 +226,7 @@ uchar usbFunctionWrite(uchar* data, uchar len)
 // ------------------------------------------------------------------------------
 int main(void)
 {
+
 	// ------------------------- Initialize Hardware
 	//PORTB: LEDs
 	
@@ -208,7 +240,13 @@ int main(void)
 	// PORTD: 4066 control, interrupt, rx/tx, USB
 	DDRD = 0xf2;
 	
-	
+	// timer 0	-> millisecond clock
+	ticks 	= 0;
+	TCCR0A 	= (1 << WGM01);									// CTC
+	TCCR0B 	= (0 << CS02) | (1 << CS01) | (0 << CS00);		// 8 prescaler @ 20Mhz -> 2'500'000 Hz
+	TIMSK0 	= (1 << OCIE0A);								// enable interrupt
+	OCR0A	= 249;											// 10000 Hz -> 10 ticks / Millisecond
+
 	// init UART
 	UCSR0B = ( 1 << UCSZ02); 						
 	UCSR0C = /*( 1 << UPM1) | */( 1 << UCSZ01) | ( 1 << UCSZ00 );		// Even Parity, 9 bit, 1 stop bit
@@ -242,6 +280,10 @@ int main(void)
         wdt_reset();
 		usbPoll();			// see if there's something going on on the usb bus
         check_uart();	
+        
+        if (millis()-lastTime >= 80) {
+        	 check_buttons();
+        }
 	}
 	return 0;
 }
