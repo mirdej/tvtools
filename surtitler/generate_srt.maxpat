@@ -3,13 +3,13 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 1,
-			"revision" : 0,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 153.0, 243.0, 1144.0, 1000.0 ],
+		"rect" : [ 13.0, 225.0, 1144.0, 1000.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -68,14 +68,14 @@
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
 					"id" : "obj-50",
-					"linecount" : 8,
+					"linecount" : 10,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 942.0, 525.0, 50.0, 116.0 ],
+					"patching_rect" : [ 942.0, 525.0, 50.0, 143.0 ],
 					"style" : "",
-					"text" : "logfile \"Scratch 2:/Surtitles/title_log_2016-01-15.txt\""
+					"text" : "logfile Yamato:/Mozart/Mozart-SURTITLES/title_log_2016-03-03.txt"
 				}
 
 			}
@@ -334,7 +334,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 175.0, 152.0, 77.0, 20.0 ],
 					"style" : "",
-					"text" : "00:01:01:00"
+					"text" : "00:05:53:07"
 				}
 
 			}
@@ -552,7 +552,7 @@
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 370.0, 442.0, 20.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 118.0, 106.5, 20.0, 20.0 ],
+					"presentation_rect" : [ 118.0, 107.5, 20.0, 20.0 ],
 					"style" : ""
 				}
 
@@ -655,7 +655,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 146.0, 78.5, 597.0, 25.0 ],
 					"style" : "",
-					"text" : "\"Scratch 2:/Surtitles/Carlotta.txt\""
+					"text" : "\"Yamato:/Mozart/Mozart-SURTITLES/Übertitel 24.Feb.txt\""
 				}
 
 			}
@@ -732,7 +732,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 146.0, 50.0, 597.0, 25.0 ],
 					"style" : "",
-					"text" : "\"Scratch 2:/Surtitles/title_log_2016-01-15.txt\""
+					"text" : "Yamato:/Mozart/Mozart-SURTITLES/title_log_2016-03-03.txt"
 				}
 
 			}
@@ -819,7 +819,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 74.0, 97.0, 20.0, 20.0 ],
+					"patching_rect" : [ 113.5, 277.0, 20.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 77.5, 226.0, 20.0, 20.0 ],
 					"style" : ""
 				}
 
@@ -1393,13 +1395,13 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "generate_srt.js",
-				"bootpath" : "~/Documents/Max 7/tvtools/surtitler",
+				"bootpath" : "~/Documents/tvtools/surtitler",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "generate_srt_find_gaps.js",
-				"bootpath" : "~/Documents/Max 7/tvtools/surtitler",
+				"bootpath" : "~/Documents/tvtools/surtitler",
 				"type" : "TEXT",
 				"implicit" : 1
 			}

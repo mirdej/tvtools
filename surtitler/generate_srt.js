@@ -125,8 +125,7 @@ function bang() {
 		start= to_srt_time(start);
 		end= to_srt_time(end);
 
-		
-		if ((subs[items[2]] != "BLANC") && (subs[items[2]] != "LEER")) {
+		if (!((subs[items[2]] == "BLANC") || (subs[items[2]] == "LEER") || (subs[items[2]])== "BLANC\nLEER")) {
 			if (i >= first_title) {
 				of.writeline(i+"");
 				of.writeline(start + " --> "+ end);
