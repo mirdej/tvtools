@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 6.0, 45.0, 1176.0, 1139.0 ],
+		"rect" : [ 9.0, 45.0, 1176.0, 1139.0 ],
 		"bgcolor" : [ 0.078431, 0.078431, 0.078431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -1078,6 +1078,55 @@
 						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
+									"id" : "obj-49",
+									"maxclass" : "newobj",
+									"numinlets" : 2,
+									"numoutlets" : 0,
+									"patching_rect" : [ 367.5, 432.0, 37.0, 22.0 ],
+									"style" : "",
+									"text" : "dac~"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-48",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "signal" ],
+									"patching_rect" : [ 365.5, 386.0, 41.0, 22.0 ],
+									"style" : "",
+									"text" : "click~"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-47",
+									"maxclass" : "button",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "bang" ],
+									"patching_rect" : [ 263.5, 293.0, 24.0, 24.0 ],
+									"style" : ""
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-25",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 263.5, 386.0, 77.0, 22.0 ],
+									"style" : "",
+									"text" : "s sync_flash"
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"id" : "obj-37",
 									"maxclass" : "toggle",
 									"numinlets" : 1,
@@ -1228,11 +1277,11 @@
 									"id" : "obj-44",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "int" ],
-									"patching_rect" : [ 39.666672, 331.0, 24.0, 22.0 ],
+									"numoutlets" : 2,
+									"outlettype" : [ "int", "bang" ],
+									"patching_rect" : [ 39.666672, 331.0, 34.0, 22.0 ],
 									"style" : "",
-									"text" : "t 0"
+									"text" : "t 0 b"
 								}
 
 							}
@@ -1309,7 +1358,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 354.5, 186.0, 83.0, 22.0 ],
+									"patching_rect" : [ 365.5, 186.0, 83.0, 22.0 ],
 									"style" : "",
 									"text" : "r get_genlock"
 								}
@@ -1364,7 +1413,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 265.5, 253.0, 61.0, 22.0 ],
+									"patching_rect" : [ 276.5, 259.0, 61.0, 22.0 ],
 									"style" : "",
 									"text" : "s genlock"
 								}
@@ -1510,7 +1559,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 2,
 									"outlettype" : [ "float", "" ],
-									"patching_rect" : [ 265.5, 224.0, 108.0, 22.0 ],
+									"patching_rect" : [ 276.5, 224.0, 108.0, 22.0 ],
 									"style" : "",
 									"text" : "timer"
 								}
@@ -1999,7 +2048,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-2", 1 ],
-									"midpoints" : [ 300.0, 214.5, 364.0, 214.5 ],
+									"midpoints" : [ 300.0, 214.5, 375.0, 214.5 ],
 									"source" : [ "obj-23", 1 ]
 								}
 
@@ -2015,6 +2064,14 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-28", 0 ],
+									"order" : 2,
+									"source" : [ "obj-23", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-47", 0 ],
 									"order" : 1,
 									"source" : [ "obj-23", 0 ]
 								}
@@ -2191,6 +2248,46 @@
 									"destination" : [ "obj-3", 0 ],
 									"midpoints" : [ 49.166672, 391.0, 257.5, 391.0 ],
 									"source" : [ "obj-44", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-47", 0 ],
+									"midpoints" : [ 64.166672, 363.0, 168.583344, 363.0, 168.583344, 282.0, 273.0, 282.0 ],
+									"source" : [ "obj-44", 1 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-25", 0 ],
+									"order" : 1,
+									"source" : [ "obj-47", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-48", 0 ],
+									"order" : 0,
+									"source" : [ "obj-47", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-49", 1 ],
+									"order" : 0,
+									"source" : [ "obj-48", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-49", 0 ],
+									"order" : 1,
+									"source" : [ "obj-48", 0 ]
 								}
 
 							}
@@ -3036,7 +3133,7 @@
 					"presentation_rect" : [ 400.0, 771.0, 82.0, 28.0 ],
 					"readonly" : 1,
 					"style" : "",
-					"text" : "00:59:24",
+					"text" : "01:10:16",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -3764,7 +3861,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 669.0, 454.0, 60.0, 23.0 ],
 					"style" : "",
-					"text" : "6 1 497"
+					"text" : "6 1 3072"
 				}
 
 			}
@@ -9345,7 +9442,7 @@
 					"fontname" : "Lucida Grande Bold",
 					"fontsize" : 36.0,
 					"id" : "obj-12",
-					"linecount" : 3,
+					"linecount" : 5,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -9353,9 +9450,10 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 490.0, 120.0, 129.0, 277.0 ],
 					"presentation" : 1,
+					"presentation_linecount" : 2,
 					"presentation_rect" : [ 658.0, 121.0, 481.0, 54.0 ],
 					"style" : "",
-					"text" : "graph_skate_final",
+					"text" : "2017-06-20-14-23-53.mov",
 					"textcolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
 				}
 
@@ -9407,7 +9505,7 @@
 					"presentation_rect" : [ 662.0, 249.0, 131.0, 34.0 ],
 					"readonly" : 1,
 					"style" : "",
-					"text" : "00:19:21",
+					"text" : "00:05:02",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -16503,7 +16601,7 @@
 					"patching_rect" : [ 346.0, 154.0, 246.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 658.0, 298.0, 480.0, 30.0 ],
-					"setminmax" : [ 0.0, 497.0 ],
+					"setminmax" : [ 0.0, 3072.0 ],
 					"setstyle" : 1,
 					"settype" : 0,
 					"slidercolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ],
@@ -17029,7 +17127,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 185.0, 569.0, 589.0 ],
 					"rowheight" : 28,
-					"rows" : 4,
+					"rows" : 6,
 					"selmode" : 3
 				}
 
