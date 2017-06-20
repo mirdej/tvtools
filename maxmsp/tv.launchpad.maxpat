@@ -3861,7 +3861,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 669.0, 454.0, 60.0, 23.0 ],
 					"style" : "",
-					"text" : "6 1 3072"
+					"text" : "6 0 7212"
 				}
 
 			}
@@ -9442,7 +9442,6 @@
 					"fontname" : "Lucida Grande Bold",
 					"fontsize" : 36.0,
 					"id" : "obj-12",
-					"linecount" : 5,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -9450,10 +9449,8 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 490.0, 120.0, 129.0, 277.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
 					"presentation_rect" : [ 658.0, 121.0, 481.0, 54.0 ],
 					"style" : "",
-					"text" : "2017-06-20-14-23-53.mov",
 					"textcolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ]
 				}
 
@@ -16601,7 +16598,7 @@
 					"patching_rect" : [ 346.0, 154.0, 246.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 658.0, 298.0, 480.0, 30.0 ],
-					"setminmax" : [ 0.0, 3072.0 ],
+					"setminmax" : [ 0.0, 0.0 ],
 					"setstyle" : 1,
 					"settype" : 0,
 					"slidercolor" : [ 0.694118, 0.694118, 0.694118, 1.0 ],
@@ -17127,7 +17124,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 74.0, 185.0, 569.0, 589.0 ],
 					"rowheight" : 28,
-					"rows" : 6,
+					"rows" : 7,
 					"selmode" : 3
 				}
 
@@ -17705,6 +17702,13 @@
 				"name" : "tv.launchpad.movie.maxpat",
 				"bootpath" : "~/Documents/tvtools/maxmsp",
 				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "filmlist.txt",
+				"bootpath" : "~/Movies/MEH2017-Talk",
+				"patcherrelativepath" : "../../../Movies/MEH2017-Talk",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
