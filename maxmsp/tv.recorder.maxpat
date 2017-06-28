@@ -49,7 +49,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 381.0, 40.0, 80.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 138.0, 543.0, 80.0, 35.0 ],
+					"presentation_rect" : [ 147.0, 515.0, 80.0, 35.0 ],
 					"style" : ""
 				}
 
@@ -179,7 +179,6 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-9",
@@ -188,7 +187,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "bang" ],
 									"patching_rect" : [ 421.0, 73.0, 24.0, 24.0 ],
-									"presentation_rect" : [ 421.0, 73.0, 0.0, 0.0 ],
 									"style" : ""
 								}
 
