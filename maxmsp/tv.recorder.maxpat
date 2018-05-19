@@ -56,19 +56,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-17",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 51.0, 539.0, 75.0, 22.0 ],
-					"style" : "",
-					"text" : "speedlim 30"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 0,
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
@@ -80,33 +67,6 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 180.0, 397.0, 80.0, 35.0 ],
 					"style" : ""
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-22",
-					"linecount" : 2,
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 51.0, 609.0, 50.0, 35.0 ],
-					"style" : "",
-					"text" : "connected 1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-14",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 97.0, 566.0, 246.0, 22.0 ],
-					"style" : "",
-					"text" : "jit.net.send @ip 192.168.0.22 @port 874123"
 				}
 
 			}
@@ -641,7 +601,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 143.5, 636.0, 376.0, 30.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/tv/Movies/MEH2017-Talk/\""
+					"text" : "\"Macintosh HD:/Users/tv/Movies/VOLK17-Sendung/\""
 				}
 
 			}
@@ -759,15 +719,16 @@
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
 					"id" : "obj-29",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 148.0, 513.0, 203.0, 22.0 ],
+					"patching_rect" : [ 148.0, 513.0, 205.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 143.5, 479.0, 324.5, 22.0 ],
 					"style" : "",
-					"text" : "write \" 2017-06-20-14-23-53.mov\" 1"
+					"text" : "write REC2017-12-03-18-38-17.mov 1"
 				}
 
 			}
@@ -816,7 +777,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 199.0, 29.0, 85.0, 22.0 ],
 					"style" : "",
-					"text" : "loadmess 160"
+					"text" : "loadmess 245"
 				}
 
 			}
@@ -1082,14 +1043,6 @@
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
-					"order" : 4,
-					"source" : [ "obj-1", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
 					"order" : 1,
 					"source" : [ "obj-1", 0 ]
@@ -1175,13 +1128,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-22", 1 ],
-					"source" : [ "obj-14", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-13", 0 ],
 					"source" : [ "obj-15", 0 ]
 				}
@@ -1191,13 +1137,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-51", 0 ],
 					"source" : [ "obj-16", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 0 ],
-					"source" : [ "obj-17", 0 ]
 				}
 
 			}
