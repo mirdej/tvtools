@@ -601,7 +601,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 143.5, 636.0, 376.0, 30.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/tv/Movies/VOLK17-Sendung/\""
+					"text" : "\"Macintosh HD:/Users/tv/Movies/ADLISWIL-SENDUNG/\""
 				}
 
 			}
@@ -724,11 +724,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 148.0, 513.0, 205.0, 35.0 ],
+					"patching_rect" : [ 96.5, 540.0, 205.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 143.5, 479.0, 324.5, 22.0 ],
 					"style" : "",
-					"text" : "write REC2017-12-03-18-38-17.mov 1"
+					"text" : "write REC2018-05-19-10-59-59.mov 1"
 				}
 
 			}

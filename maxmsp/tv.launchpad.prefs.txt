@@ -1,1 +1,1 @@
-folder Macintosh HD:/Users/tv/Movies/ADLISWIL-SENDUNG/ 
+folder tv:/Movies/ 
