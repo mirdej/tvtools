@@ -1789,7 +1789,7 @@
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 348.0, 774.0, 144.0, 22.0 ],
 													"style" : "",
-													"text" : "text \" \""
+													"text" : "text 00:01"
 												}
 
 											}
@@ -2129,14 +2129,14 @@
 , 											{
 												"box" : 												{
 													"id" : "obj-21",
-													"linecount" : 4,
+													"linecount" : 2,
 													"maxclass" : "message",
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 50.0, 375.0, 50.0, 62.0 ],
 													"style" : "",
-													"text" : "REC2019-04-12-17-45-42"
+													"text" : "00-Skate"
 												}
 
 											}
@@ -5674,6 +5674,33 @@
 						"subpatcher_template" : "tv.regie_template",
 						"boxes" : [ 							{
 								"box" : 								{
+									"id" : "obj-27",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "bang" ],
+									"patching_rect" : [ 602.0, 596.0, 60.0, 22.0 ],
+									"style" : "",
+									"text" : "loadbang"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-62",
+									"linecount" : 2,
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 602.0, 629.0, 199.0, 35.0 ],
+									"style" : "",
+									"text" : "reset, glcolor 1. 0. 0. 1., gllinewidth 10 10"
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"id" : "obj-29",
 									"maxclass" : "toggle",
 									"numinlets" : 1,
@@ -6583,6 +6610,13 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-62", 0 ],
+									"source" : [ "obj-27", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-14", 0 ],
 									"source" : [ "obj-28", 0 ]
 								}
@@ -6670,6 +6704,13 @@
 								"patchline" : 								{
 									"destination" : [ "obj-11", 0 ],
 									"source" : [ "obj-6", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-14", 0 ],
+									"source" : [ "obj-62", 0 ]
 								}
 
 							}
@@ -8198,7 +8239,7 @@
 					"presentation_rect" : [ 1391.0, 903.0, 128.0, 20.0 ],
 					"readonly" : 1,
 					"style" : "",
-					"text" : "192.168.0.106",
+					"text" : "192.168.0.105",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -12151,7 +12192,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 426.0, 892.5, 73.0, 27.0 ],
 					"style" : "",
-					"text" : "12:30",
+					"text" : "00:59",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ],
 					"textjustification" : 2,
 					"underline" : 1
@@ -12807,7 +12848,8 @@
 					"fontname" : "Lucida Grande Bold",
 					"fontsize" : 36.0,
 					"id" : "obj-14",
-					"linecount" : 6,
+					"ignoreclick" : 1,
+					"linecount" : 2,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -12815,10 +12857,9 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 531.5, 333.0, 123.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
 					"presentation_rect" : [ 524.0, 89.0, 481.0, 54.0 ],
 					"style" : "",
-					"text" : "REC2019-04-12-17-45-42",
+					"text" : "00-Skate",
 					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 				}
 
@@ -12830,6 +12871,7 @@
 					"fontname" : "Lucida Grande Bold",
 					"fontsize" : 24.0,
 					"id" : "obj-33",
+					"ignoreclick" : 1,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -12840,7 +12882,7 @@
 					"presentation_rect" : [ 528.0, 217.0, 131.0, 34.0 ],
 					"readonly" : 1,
 					"style" : "",
-					"text" : "00:05",
+					"text" : "00:00",
 					"textcolor" : [ 0.537255, 0.537255, 0.537255, 1.0 ]
 				}
 
@@ -12852,6 +12894,7 @@
 					"fontname" : "Lucida Grande Bold",
 					"fontsize" : 64.0,
 					"id" : "obj-30",
+					"ignoreclick" : 1,
 					"linecount" : 5,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
@@ -12863,7 +12906,7 @@
 					"presentation_rect" : [ 649.0, 174.0, 347.0, 82.0 ],
 					"readonly" : 1,
 					"style" : "",
-					"text" : "00:08",
+					"text" : "00:01",
 					"textcolor" : [ 1.0, 0.196078, 0.196078, 1.0 ],
 					"textjustification" : 2
 				}
@@ -14211,15 +14254,41 @@
 						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
-									"id" : "obj-52",
-									"linecount" : 11,
+									"id" : "obj-37",
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 268.5, 874.0, 50.0, 156.0 ],
+									"patching_rect" : [ 965.0, 425.0, 85.0, 22.0 ],
+									"presentation_rect" : [ 966.0, 425.0, 0.0, 0.0 ],
 									"style" : "",
-									"text" : "movie asyncread tv:/Desktop/Recordings/REC2019-04-14-10-38-26.mov"
+									"text" : "target 0, reset"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-19",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 965.0, 474.0, 59.0, 22.0 ],
+									"style" : "",
+									"text" : "s to_poly"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-52",
+									"linecount" : 10,
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 268.5, 874.0, 50.0, 143.0 ],
+									"style" : "",
+									"text" : "movie asyncread tv:/Movies/SchulTV-Recordings/99-PerfectClap.mov"
 								}
 
 							}
@@ -14231,9 +14300,9 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 203.0, 874.0, 50.0, 22.0 ],
+									"patching_rect" : [ 203.0, 874.0, 48.0, 35.0 ],
 									"style" : "",
-									"text" : "target 13"
+									"text" : "target 3"
 								}
 
 							}
@@ -14397,7 +14466,7 @@
 									"autopopulate" : 1,
 									"fontsize" : 10.0,
 									"id" : "obj-67",
-									"items" : [ "REC2019-04-14-10-36-05.mov", ",", "01_START.mov", ",", "REC2019-04-14-10-00-46.mov", ",", "REC2019-04-12-17-50-17.mov", ",", "REC2019-04-13-16-51-22.mov", ",", "REC2019-04-13-16-14-19.mov", ",", "00_START copy.mov", ",", "REC2019-04-12-17-45-42.mov", ",", "REC2019-04-12-17-59-45.mov", ",", "REC2019-04-14-10-38-26.mov", ",", "REC2019-04-13-14-10-49.mov", ",", "REC2019-04-14-09-55-22.mov", ",", "REC2019-04-13-15-55-13.mov" ],
+									"items" : [ "00-Skate.mov", ",", "01-Scrabble.mov", ",", "99-PerfectClap.mov" ],
 									"maxclass" : "umenu",
 									"numinlets" : 1,
 									"numoutlets" : 3,
@@ -14405,7 +14474,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 191.25, 222.431213, 134.75, 20.0 ],
 									"pattrmode" : 1,
-									"prefix" : "tv:/Desktop/Recordings/",
+									"prefix" : "tv:/Movies/SchulTV-Recordings/",
 									"style" : "",
 									"types" : "MooV",
 									"varname" : "fx2menu[1]"
@@ -14792,7 +14861,7 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-1",
-									"items" : [ "tv:/Desktop/Recordings/00_START copy.mov", ",", "tv:/Desktop/Recordings/01_START.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-45-42.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-50-17.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-59-45.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-14-10-49.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-15-55-13.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-16-14-19.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-16-51-22.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-09-55-22.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-00-46.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-36-05.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-38-26.mov", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix" ],
+									"items" : [ "tv:/Movies/SchulTV-Recordings/00-Skate.mov", ",", "tv:/Movies/SchulTV-Recordings/01-Scrabble.mov", ",", "tv:/Movies/SchulTV-Recordings/99-PerfectClap.mov", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix", ",", "nix" ],
 									"maxclass" : "umenu",
 									"numinlets" : 1,
 									"numoutlets" : 3,
@@ -14922,7 +14991,7 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-11",
-									"items" : [ "tv:/Desktop/Recordings/00_START copy.mov", ",", "tv:/Desktop/Recordings/01_START.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-45-42.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-50-17.mov", ",", "tv:/Desktop/Recordings/REC2019-04-12-17-59-45.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-14-10-49.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-15-55-13.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-16-14-19.mov", ",", "tv:/Desktop/Recordings/REC2019-04-13-16-51-22.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-09-55-22.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-00-46.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-36-05.mov", ",", "tv:/Desktop/Recordings/REC2019-04-14-10-38-26.mov" ],
+									"items" : [ "tv:/Movies/SchulTV-Recordings/00-Skate.mov", ",", "tv:/Movies/SchulTV-Recordings/01-Scrabble.mov", ",", "tv:/Movies/SchulTV-Recordings/99-PerfectClap.mov" ],
 									"maxclass" : "umenu",
 									"numinlets" : 1,
 									"numoutlets" : 3,
@@ -15264,7 +15333,7 @@
 								"patchline" : 								{
 									"destination" : [ "obj-2", 0 ],
 									"midpoints" : [ 624.5, 244.25, 699.5, 244.25 ],
-									"order" : 1,
+									"order" : 2,
 									"source" : [ "obj-33", 0 ]
 								}
 
@@ -15272,7 +15341,16 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-27", 0 ],
-									"order" : 2,
+									"order" : 3,
+									"source" : [ "obj-33", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-37", 0 ],
+									"midpoints" : [ 624.5, 231.0, 974.5, 231.0 ],
+									"order" : 0,
 									"source" : [ "obj-33", 0 ]
 								}
 
@@ -15281,7 +15359,7 @@
 								"patchline" : 								{
 									"destination" : [ "obj-45", 0 ],
 									"midpoints" : [ 624.5, 238.5, 892.5, 238.5 ],
-									"order" : 0,
+									"order" : 1,
 									"source" : [ "obj-33", 0 ]
 								}
 
@@ -15311,6 +15389,13 @@
 								"patchline" : 								{
 									"destination" : [ "obj-109", 0 ],
 									"source" : [ "obj-36", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-19", 0 ],
+									"source" : [ "obj-37", 0 ]
 								}
 
 							}
