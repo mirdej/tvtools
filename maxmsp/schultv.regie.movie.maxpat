@@ -2027,6 +2027,19 @@
 						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
+									"id" : "obj-6",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "jit_matrix", "" ],
+									"patching_rect" : [ 84.0, 135.0, 111.0, 22.0 ],
+									"style" : "",
+									"text" : "jit.matrix @adapt 1"
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"id" : "obj-8",
 									"maxclass" : "message",
 									"numinlets" : 2,
@@ -2304,6 +2317,13 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-38", 1 ],
+									"source" : [ "obj-6", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-25", 0 ],
 									"source" : [ "obj-76", 0 ]
 								}
@@ -2311,7 +2331,7 @@
 							}
 , 							{
 								"patchline" : 								{
-									"destination" : [ "obj-38", 1 ],
+									"destination" : [ "obj-6", 0 ],
 									"source" : [ "obj-77", 0 ]
 								}
 
