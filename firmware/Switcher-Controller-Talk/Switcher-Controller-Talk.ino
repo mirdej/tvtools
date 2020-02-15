@@ -4,7 +4,7 @@
 //
 //  ATEM  Controller by [ a n y m a ]
 //                                          
-//          Target MCU: DOIT ESP32 DEVKIT V1
+//          Target MCU: Olimex ESP32 PoE ISO
 //          Copyright:  2019 Michael Egger, me@anyma.ch
 //          License:        This is FREE software (as in free speech, not necessarily free beer)
 //                                  published under gnu GPL v.3
@@ -565,11 +565,12 @@ void setup() {
     
 	//string_to_addresses(preferences.getString("fixtures"));
 	camera_count = 4;
-	
+
+/*	
 	if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
 		Serial.println("STA Failed to configure");
 	}
-
+*/
 	WiFi.begin(ssid, pwd);
     long start_time = millis();
     while (WiFi.status() != WL_CONNECTED) { 
