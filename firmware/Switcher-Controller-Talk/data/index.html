@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <link rel="stylesheet" href="src/bootstrap.min.css"> <script src="src/jquery-3.4.1.min.js"></script> <script src="src/bootstrap.bundle.min.js"></script> <link href="src/bootstrap4-toggle.min.css" rel="stylesheet"> <script src="src/bootstrap4-toggle.min.js"></script> 
+		<title>
+			ATEM Switcher Configuration 
+		</title>
+<script>
+    function submitMessage() {
+     setTimeout(function(){ document.location.reload(false); }, 1000);   
+    }
+</script> 
+	</head>
+	<body>
+		<div class="container-fluid">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="#">
+					Switchbox v2.0 by [&nbsp;a&nbsp;n&nbsp;y&nbsp;m&nbsp;a&nbsp;] 
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+					</span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="#">
+								Home 
+							<span class="sr-only">
+								(current) 
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#hostname">
+							Hostname 
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="card" id="fixtures">
+			<div class="card-header">
+				Cameras 
+			</div>
+			<div class="card-body">
+				<form class="form-inline my-2 my-lg-0">
+					<div class="col-sm text-muted">
+						Comma separated list of camera addresses
+					</div>
+					<div class="col-sm">
+						<input type="text" name="fixtures" class="form-control" id="fixture_addresses" placeholder="000" value="%FIXT_ADDRESS%">
+									</div>
+					<div class="col-sm text-right">
+						<a href="#" class="btn btn-primary" onclick="setAddresses()">
+							Save 
+						</a>
+					</div>
+				</form>
+			</div>
+			<div class="card" id="hardwaretest">
+				<div class="card-header">
+					Hardware Test 
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm text-muted">
+							Run Hardware Test 
+						</div>
+						<div class="col-sm">
+						</div>
+						<div class="col-sm text-right">
+							<a href="#" class="btn btn-primary">
+								Start 
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="card" id="host">
+			<div class="card-header">
+				Hostname 
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm text-muted">
+						Name of the device on the network 
+					</div>
+					<div class="col-sm">
+						<form class="form-inline my-2 my-lg-0">
+							<input type="text" name="HostName" class="form-control" id="hostname" placeholder="hostname" value="%HOSTNAME%" required>.local 
+						</form>
+					</div>
+					<div class="col-sm text-right">
+						<a href="#" class="btn btn-primary" onclick="setHostname()">
+							Save 
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script>
+
+function setAddresses() {
+    var val = document.getElementById("fixture_addresses").value
+	var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("fixture_addresses").value =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "set?addresses="+val, true);
+  xhttp.send();
+}
+
+function setHostname() {
+   var val = document.getElementById("hostname").value //gets the oninput value
+   //document.getElementById('response').innerHTML = val //displays this value to the html page
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("response").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "get?hostname="+val, true);
+  xhttp.send();
+
+</script>
+</body>
+</html>

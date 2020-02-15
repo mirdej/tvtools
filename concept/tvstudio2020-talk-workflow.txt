@@ -1,0 +1,24 @@
+-- SETUP
+
+(ATEM			-> Activate DSK1)
+
+Jingle1: 	Black in beginning, transparent end
+Jingle2:	Transparent Beginning, Black End
+
+
+-- TALK
+
+Hyperdeck 242 	-> Play First Clip
+Hyperdeck 243	-> Start recording
+(Mac			-> Start Multiview Recording)
+
+Talk....
+
+Hyperdeck 242 	-> Play Second Clip
+on end play
+Hyperdeck 243	-> Stop recording
+
+
+--
+
+

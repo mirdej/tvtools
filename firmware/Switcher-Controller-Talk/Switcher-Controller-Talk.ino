@@ -1,0 +1,640 @@
+#define VERSION "2020-01-27"
+
+//----------------------------------------------------------------------------------------
+//
+//  ATEM  Controller by [ a n y m a ]
+//                                          
+//          Target MCU: DOIT ESP32 DEVKIT V1
+//          Copyright:  2019 Michael Egger, me@anyma.ch
+//          License:        This is FREE software (as in free speech, not necessarily free beer)
+//                                  published under gnu GPL v.3
+//
+//----------------------------------------------------------------------------------------
+
+#include <FastLED.h>
+#include "Timer.h"
+#include <SPI.h>
+#include <ESPmDNS.h>
+#include <SPIFFS.h>
+#include "ESPAsyncWebServer.h"
+#include <Preferences.h>
+#include "Password.h"
+#include <WiFiAP.h>
+#include <ATEMbase.h>
+#include <ATEMmax.h>
+#include <ClientBMDHyperdeckStudio.h>
+
+
+
+// ...........................................................................DEFFINES
+
+
+#define BRIGHTNESS	120
+
+const int PIN_POT    	=   36;
+const int PIN_PIXELS    =   32;
+const int PIN_CS        = 	17;
+
+const int NUM_PIXELS    =   8;
+
+#define WIFI_TIMEOUT		4000
+
+
+
+#define STATE_OFFLINE		0
+#define STATE_WIFI_OK		1
+#define	STATE_SWITCH_OK		2
+//========================================================================================
+//----------------------------------------------------------------------------------------
+//																				GLOBALS
+Preferences                             preferences;
+int 									camera_count = 4;
+int										fixture[8];
+
+int 									connection_state;
+
+CRGB                                    pixels[NUM_PIXELS];
+Timer									t;
+int 									buttons_raw;
+long 									last_ui_interaction;
+String 									hostname;
+AsyncWebServer                          server(80);
+
+
+//IPAddress 						switcherIp(192, 168, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
+IPAddress 						switcherIp(10, 0, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
+IPAddress 						switcher_rec_Ip(10, 0, 0, 240);	 // <= SETUP!  IP address of the ATEM Switcher
+IPAddress 						local_IP(10, 0, 0, 245);
+IPAddress 						gateway(10, 0, 0, 1);
+IPAddress 						subnet(255, 255, 255, 0);
+IPAddress 						primaryDNS(8, 8, 8, 8); //optional
+IPAddress 						secondaryDNS(8, 8, 4, 4); //optional
+IPAddress						player_Ip(10, 0, 0, 242);
+IPAddress						recorder_Ip(10, 0, 0, 243);
+ATEMmax 						AtemSwitcher;
+ATEMmax 						AtemSwitcher_Rec;
+
+ClientBMDHyperdeckStudio player; 
+ClientBMDHyperdeckStudio recorder; 
+
+
+int					on_air 		= -1;
+int					on_preview 	= -1;
+int 				selected;
+int 				fade_rate;
+
+boolean talk_wait_for_finish;
+boolean	players_online = false;
+
+char buf[] = "Hello this is an empty message with, a comma in it";
+
+
+
+void service_BMD() {
+
+	if (!AtemSwitcher.hasInitialized()) { AtemSwitcher.runLoop(); } 
+	else { AtemSwitcher.runLoop(5);}
+	
+	if (!AtemSwitcher_Rec.hasInitialized()) { AtemSwitcher_Rec.runLoop(); } 
+	else { AtemSwitcher_Rec.runLoop(5);}
+
+	if(players_online) {
+		recorder.runLoop();		
+		player.runLoop();
+	}
+}
+
+
+//----------------------------------------------------------------------------------------
+//																		tally
+void check_tally(){
+	on_air = AtemSwitcher.getProgramInputVideoSource(0) - 1;
+	on_preview = AtemSwitcher.getPreviewInputVideoSource(0) - 1;
+	if (on_air > -1) connection_state = STATE_SWITCH_OK;
+}
+
+
+void check_hyperdecks() {
+		// Start Hyperdeck connection:
+	if (!player.hasInitialized()) {
+		Serial.println("Connecting");
+		player.begin(player_Ip);	 // <= SETUP (the IP address of the Hyperdeck Studio)
+		player.serialOutput(1);  // 1= normal, 2= medium verbose, 3=Super verbose
+		player.connect();  // For some reason the first connection attempt seems to fail, but in the runloop it will try to reconnect.
+
+	}
+
+	if (!recorder.hasInitialized()) {
+		Serial.println("Connecting");
+		recorder.begin(recorder_Ip);	 // <= SETUP (the IP address of the Hyperdeck Studio)
+		recorder.serialOutput(1);  // 1= normal, 2= medium verbose, 3=Super verbose
+		recorder.connect();  // For some reason the first connection attempt seems to fail, but in the runloop it will try to reconnect.
+
+	}
+	
+	players_online = true;
+
+}
+//----------------------------------------------------------------------------------------
+//																		Start Talk
+
+void start_talk() {
+	Serial.println("Starting Talk");
+	check_hyperdecks();
+	
+	AtemSwitcher.setAudioMixerInputMixOption(8, 0);
+	recorder.previewEnable(true);
+	service_BMD();
+	
+    AtemSwitcher.setDownstreamKeyerFillSource(0, 7);
+	AtemSwitcher.setDownstreamKeyerKeySource(0, 10);
+	AtemSwitcher.setDownstreamKeyerPreMultiplied(0,true);
+	AtemSwitcher.setDownstreamKeyerOnAir(0,true);
+	
+	player.stop();
+	player.gotoClipID(1);
+	player.gotoClipStart();
+    player.playSingleClip(true);
+    Serial.println("Started Talk");
+
+	recorder.record();
+}
+
+//----------------------------------------------------------------------------------------
+//																		End Talk
+
+void end_talk() {
+	check_hyperdecks();
+	
+	AtemSwitcher.setDownstreamKeyerOnAir(0,true);
+	AtemSwitcher.runLoop();
+	
+	player.gotoClipID(2);
+	player.gotoClipStart();
+    player.playSingleClip(true);
+	for(int i = 0; i < 1000; i++) service_BMD();			// wait a while
+		
+	talk_wait_for_finish = true;
+ 	Serial.println("End Talk");
+}
+
+void talk_finalize() {
+	Serial.println("Finished");
+	recorder.stop();
+}
+
+//----------------------------------------------------------------------------------------
+//																		Watch Talk
+
+void watch_talk() {
+	Serial.println("Watch");
+	/*int n = recorder.getTotalClipCount();
+	int id = recorder.getFileClipId(n);
+	recorder.previewEnable(false);
+	recorder.gotoClipID(id);*/
+	recorder.gotoTimelineEnd();
+	recorder.gotoClipStart();
+    recorder.playSingleClip(true);
+	AtemSwitcher.setProgramInputVideoSource(0,8);
+	AtemSwitcher.setAudioMixerInputMixOption(8, 1);
+}
+
+void toggle_play() {
+	Serial.println("Play-Pause");
+	if (!recorder.isInPreview()) {
+		if (recorder.isPlaying()) recorder.stop();
+		else recorder.play();
+	}
+}
+
+void skip(signed int secs) {
+	Serial.print("Skip ");
+	Serial.println(secs);
+	if (!recorder.isInPreview()) {
+		if (secs < 0) {
+			recorder.goBackwardsInTimecode(0,0,abs(secs),0);
+		} else {
+			recorder.goForwardInTimecode(0,0,abs(secs),0);			
+		}
+	}
+}
+//----------------------------------------------------------------------------------------
+//																		buttons
+
+void set_preview(int i) {
+	if (i < 0) return;
+	if (i < camera_count) {
+		AtemSwitcher.setPreviewInputVideoSource(0, i+1);
+		AtemSwitcher_Rec.setPreviewInputVideoSource(0, i+1);
+	} 
+}
+
+void set_on_air(int i) {
+	if (i < 0) return;
+	if (i < camera_count) {
+		AtemSwitcher.setProgramInputVideoSource(0, i+1);
+	} 
+}
+
+void check_buttons(){
+    static long old_buttons;
+    int temp;
+    SPI.beginTransaction(SPISettings(80000, MSBFIRST, SPI_MODE0));
+    digitalWrite(PIN_CS,LOW);
+    delay(1);
+    digitalWrite(PIN_CS,HIGH);
+    buttons_raw = SPI.transfer(0x00);
+    SPI.endTransaction();
+
+    if (buttons_raw == old_buttons) return;
+	
+    long triggers_press = old_buttons & ~buttons_raw;
+    long triggers_release = ~old_buttons & buttons_raw;
+    old_buttons = buttons_raw;
+    
+    if (triggers_press == 0 && triggers_release == 0) return;
+    
+
+	last_ui_interaction = millis();
+
+    for (int i = 0; i < 8; i++) {
+        if (triggers_press & (1 << i)) {
+			selected = i-1;
+			set_preview(selected);
+			
+			if (i == 6){
+            	AtemSwitcher.setTransitionMixRate(0, fade_rate);
+				AtemSwitcher.setTransitionStyle(0, 0);
+ 			   	AtemSwitcher.performAutoME(0);
+			}
+			
+			if (i == 7) {
+			    AtemSwitcher.performCutME(0);
+			}
+         }
+        if (triggers_release & (1 << i)) {
+        	selected = -1;
+		}
+    }    
+  }
+
+//----------------------------------------------------------------------------------------
+//																		pixels
+void update_pixels() { 
+	if (connection_state == STATE_OFFLINE) {
+		for (int i = 0; i < NUM_PIXELS; i++) {
+			if (selected == i) pixels[i] = CRGB::White;
+			else pixels[i] = CRGB::Purple;
+		}
+	}
+	
+	if (connection_state == STATE_WIFI_OK) {
+		for (int i = 0; i < NUM_PIXELS; i++) {
+			if (selected == i) pixels[i] = CRGB::White;
+			else pixels[i] = CRGB::Navy;
+		}
+	}
+	
+	if (connection_state == STATE_SWITCH_OK) {
+		for (int i = 0; i < NUM_PIXELS; i++) {
+			pixels[i] = 0x201D10;
+			if (on_preview == i) 	pixels[i] = CRGB::Green;
+			if (on_air == i) 		pixels[i] = CRGB::Red;
+			if (selected == i) 		pixels[i] = CRGB::White;
+		}
+	}
+	FastLED.show();
+}
+
+//----------------------------------------------------------------------------------------
+//																		AD
+
+void check_ad() {
+	signed int temp;
+	static int fade_rate_avg;
+
+	temp = analogRead(PIN_POT);
+	temp /= 32;
+	
+	if (temp < 0) temp = 0;
+	if (temp > 100) temp = 100;
+	
+	temp = (3 * fade_rate_avg + temp ) / 4;
+	fade_rate_avg = temp;
+	fade_rate = temp;
+}
+
+void setup_rec_switcher() {
+	AtemSwitcher_Rec.setAudioMixerInputMixOption(5, 0);
+	AtemSwitcher_Rec.setProgramInputVideoSource(0, 5);
+}
+
+//----------------------------------------------------------------------------------------
+//																process webpage template
+
+// Replaces placeholders
+String processor(const String& var){
+  if(var == "HOSTNAME"){
+        return hostname;
+    }
+
+  return String();
+}
+
+String string_to_addresses(String  input) {
+	int addr;
+	char *token;
+	String  response;
+	Serial.println(input);
+	const char s[2] = ",";
+	strcpy(buf,input.c_str());
+
+	/* get the first token */
+	token = strtok(buf, s);
+	int i = 0;
+	/* walk through other tokens */
+	while( token != NULL ) {
+		// printf( " %s\n", token );
+		addr = atoi(token);
+		response += addr;
+		if (addr < 0) addr = 0;
+		if (addr > 496) addr = 496;
+		response += ",";
+		
+		Serial.print("Fixture ");
+		Serial.print(i,DEC);
+		Serial.print(" ");
+		Serial.println(addr,DEC);
+		
+		fixture[i] = addr;
+		
+		token = strtok(NULL, s);
+		i++;
+		if (i > 7) break;
+	}
+
+	response.remove(response.length()-1,1);
+	camera_count = i;
+	Serial.print("Number of fixtures:" );
+ 	Serial.println(camera_count);
+	Serial.println(response);
+
+    preferences.begin("changlier", false);
+	preferences.putString("fixtures",response);
+
+	return response;
+}
+
+void restart() {
+	ESP.restart();
+}
+
+void setup_web_server() {
+	server.on("/talk", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("action")) {
+				inputMessage = request->getParam("action")->value();
+				if(inputMessage == "start" ) start_talk();
+				if(inputMessage == "end" ) end_talk();
+				if(inputMessage == "watch" ) watch_talk();
+				if(inputMessage == "toggleview" ) AtemSwitcher.performCutME(0);
+				if(inputMessage == "toggleplay" ) toggle_play();
+		}
+		if (request->hasParam("skip")) {
+				inputMessage = request->getParam("action")->value();
+				skip(inputMessage.toInt());	
+		}
+		request->send(200, "text/text", String(on_air));
+	});
+	
+	server.on("/air", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("cam")) {
+				inputMessage = request->getParam("cam")->value();
+				set_on_air(inputMessage.toInt() - 1);
+		}
+		request->send(200, "text/text", String(on_air));
+	});
+	server.on("/preview", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("cam")) {
+				inputMessage = request->getParam("cam")->value();
+				set_preview(inputMessage.toInt() - 1);
+		}
+		request->send(200, "text/text", String(on_preview));
+	});
+
+	server.on("/dsk1", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("on")) {
+				inputMessage = request->getParam("on")->value();
+				if (inputMessage.toInt()) {
+					AtemSwitcher.setAudioMixerInputMixOption(7, 1);
+					AtemSwitcher.setDownstreamKeyerFillSource(0, 7);
+					AtemSwitcher.setDownstreamKeyerKeySource(0, 10);
+					AtemSwitcher.setDownstreamKeyerPreMultiplied(0,true);
+					AtemSwitcher.setDownstreamKeyerOnAir(0,true);
+					Serial.println("DSK1 On Air");
+				} else {
+					AtemSwitcher.setDownstreamKeyerOnAir(0,false);
+					Serial.println("DSK1 Off");
+				}
+		}
+		int dsk1_on_air = AtemSwitcher.getDownstreamKeyerOnAir(0);
+		request->send(200, "text/text", String(dsk1_on_air));
+	});
+
+
+	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "/index.html",  String(), false, processor);
+	});
+
+	server.on("/src/bootstrap.bundle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "/src/bootstrap.bundle.min.js", "text/javascript");
+	});
+
+	server.on("/src/jquery-3.4.1.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "/src/jquery-3.4.1.min.js", "text/javascript");
+	});
+
+	server.on("/src/bootstrap.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "/src/bootstrap.min.css", "text/css");
+	});
+
+	server.on("/rc/bootstrap4-toggle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "rc/bootstrap4-toggle.min.js", "text/javascript");
+	});
+
+	server.on("/src/bootstrap4-toggle.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
+		request->send(SPIFFS, "/src/bootstrap4-toggle.min.css", "text/css");
+	});
+
+
+   server.on("/set", HTTP_GET, [] (AsyncWebServerRequest *request) {
+		String inputMessage;
+					
+		inputMessage = "No message sent";
+		//List all parameters
+		int params = request->params();
+		for(int i=0;i<params;i++){
+		  AsyncWebParameter* p = request->getParam(i);
+		  if(p->isFile()){ //p->isPost() is also true
+			Serial.printf("FILE[%s]: %s, size: %u\n", p->name().c_str(), p->value().c_str(), p->size());
+		  } else if(p->isPost()){
+			Serial.printf("POST[%s]: %s\n", p->name().c_str(), p->value().c_str());
+		  } else {
+			Serial.printf("GET[%s]: %s\n", p->name().c_str(), p->value().c_str());
+		  }
+		}
+		
+		if (request->hasParam("addresses")) {
+				inputMessage = request->getParam("addresses")->value();
+				request->send(200, "text/text", string_to_addresses(inputMessage));
+		}
+
+	});
+
+	 server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
+		String inputMessage;
+					
+					
+		//List all parameters
+		int params = request->params();
+		for(int i=0;i<params;i++){
+		  AsyncWebParameter* p = request->getParam(i);
+		  if(p->isFile()){ //p->isPost() is also true
+			Serial.printf("FILE[%s]: %s, size: %u\n", p->name().c_str(), p->value().c_str(), p->size());
+		  } else if(p->isPost()){
+			Serial.printf("POST[%s]: %s\n", p->name().c_str(), p->value().c_str());
+		  } else {
+			Serial.printf("GET[%s]: %s\n", p->name().c_str(), p->value().c_str());
+		  }
+		}
+		if (request->hasParam("HostName")) {
+			inputMessage = request->getParam("HostName")->value();
+			hostname = inputMessage;
+//                writeFile(SPIFFS, "/hostname.txt", inputMessage.c_str());
+			preferences.begin("changlier", false);
+			preferences.putString("hostname", hostname);
+			preferences.end();
+
+		} else if (request->hasParam("ReStart")) {
+			request->send(200, "text/text", "Restarting...");
+			restart();
+		} else if (request->hasParam("HardwareTest")) {
+			request->send(200, "text/text", "Running Hardware test...");
+//                mode = MODE_TEST;
+		}else {
+			inputMessage = "No message sent";
+		}
+		Serial.println(inputMessage);
+		request->send(200, "text/text", inputMessage);
+	});
+
+	server.begin();
+}
+
+//========================================================================================
+//----------------------------------------------------------------------------------------
+//																				SETUP
+
+
+
+void setup() {
+	Serial.begin(115200);
+
+    pinMode(PIN_CS, OUTPUT);
+    digitalWrite(PIN_CS,HIGH);
+    SPI.begin();
+
+    FastLED.addLeds<NEOPIXEL, PIN_PIXELS>(pixels, NUM_PIXELS);
+	FastLED.setBrightness(BRIGHTNESS);
+	
+	
+	 if(!SPIFFS.begin()){
+         Serial.println("An Error has occurred while mounting SPIFFS");
+         return;
+    }
+ 
+    preferences.begin("changlier", false);
+
+    hostname = preferences.getString("hostname");
+    if (hostname == String()) { hostname = "changlier"; }
+    Serial.print("Hostname: ");
+    Serial.println(hostname);
+    
+	//string_to_addresses(preferences.getString("fixtures"));
+	camera_count = 4;
+	
+	if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+		Serial.println("STA Failed to configure");
+	}
+
+	WiFi.begin(ssid, pwd);
+    long start_time = millis();
+    while (WiFi.status() != WL_CONNECTED) { 
+        Serial.print("."); 
+        selected++;
+        selected %= 5;
+        update_pixels();
+        delay(250); 
+        if ((millis()-start_time) > WIFI_TIMEOUT) break;
+	}
+	
+  	if (WiFi.status() == WL_CONNECTED) {  		
+  	    Serial.print("Wifi connected. IP: ");
+        Serial.println(WiFi.localIP());
+
+        if (!MDNS.begin(hostname.c_str())) {
+             Serial.println("Error setting up MDNS responder!");
+        }
+        Serial.println("mDNS responder started");
+        
+        	// Initialize a connection to the switcher:
+		AtemSwitcher.begin(switcherIp);
+	//	AtemSwitcher.serialOutput(1);
+		AtemSwitcher.connect();
+
+		AtemSwitcher_Rec.begin(switcher_rec_Ip);
+		AtemSwitcher_Rec.connect();
+	
+        setup_web_server();
+        connection_state = STATE_WIFI_OK;
+	} else {
+		// set up access point
+		Serial.println();
+  		Serial.println("Configuring access point...");
+
+		// You can remove the password parameter if you want the AP to be open.
+		WiFi.softAP("Switchbox", "tvstudio2020");
+		IPAddress myIP = WiFi.softAPIP();
+		Serial.print("AP IP address: ");
+		Serial.println(myIP);		
+		setup_web_server();
+	}
+
+	Serial.println("Hello");
+	t.every(100, check_tally); 
+	t.every(20, check_buttons);    
+	t.every(50, update_pixels);    
+	t.every(50, check_ad); 
+	t.every(10000,setup_rec_switcher);
+
+}
+//========================================================================================
+//----------------------------------------------------------------------------------------
+//																				loop
+ 
+void loop() {
+	t.update();
+
+	service_BMD();
+	
+	if (talk_wait_for_finish) {
+		if (player.getTransportStatus() == ClientBMDHyperdeckStudio_TRANSPORT_STOPPED) {
+				talk_wait_for_finish = false;
+				talk_finalize();
+		}
+	}
+
+}
