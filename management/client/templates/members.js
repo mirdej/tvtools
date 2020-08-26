@@ -1,4 +1,13 @@
+Template.vornamen.helpers({
 
+    members: function () {
+        if (Session.get("show_all")){
+          return Members.find({}, {sort: {first: 1}});
+      } else {
+          return Members.find({project:Session.get("Project").id}, {sort: {first: 1}});
+      }
+    }
+})
 
 Template.memberlist.helpers({
 
@@ -111,6 +120,17 @@ Template.memberlist.events({
        e.stopPropagation();
        e.preventDefault();
          Members.update(this._id,{$set:{gender:"female"}});
+      },
+
+      "click .setInvisible": function (e,t) {
+       e.stopPropagation();
+       e.preventDefault();
+         Members.update(this._id,{$set:{image_rights:"0"}});
+      },
+      "click .setVisible": function (e,t) {
+       e.stopPropagation();
+       e.preventDefault();
+         Members.update(this._id,{$set:{image_rights:"1"}});
       },
       
        "change .showall input": function (e,t) {

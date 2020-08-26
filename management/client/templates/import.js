@@ -12,10 +12,11 @@ Template.import.events({
     var s,n,l,t;
     for (var i = 0; i < f.length; i++) {
 
+		s = ' ';n=' ';t=' ';
        s =  f[i].split(',');
-       n = s[0].replace(/\"/g,'');
-       l = s[1].replace(/\"/g,'');
-       t = s[2].replace(/\"/g,'');      
+       l = s[0].replace(/\"/g,'');
+       	if ( s[1] != 'undefined' ) {       	n = s[1].replace(/\"/g,''); }
+    	if ( s[2] != 'undefined' ) {		t = s[2].replace(/\"/g,'');  }     
 
 
     Members.insert({

@@ -9,18 +9,19 @@
 
 <template name="ApplicationLayout">
 
-{{#if currentUser}}
+<!--{{#if currentUser}} -->
   {{> navbar}}
   {{> branding}}
       <div class="container-fluid">
           {{> yield}}
       </div>
-{{else}}
+
+<!-- {{else}}
   {{> yield "loginYield"}}
   {{> branding}}
   {{> ablauf}}
 {{/if}}
-
+-->
 </template>
 
 

@@ -6,22 +6,27 @@ h1 {font-size:.5em;text-align:right;}
 .navbar {background-color:#2df;}
 */
 
+.namenliste {border-bottom:1px solid black;}
 #branding {margin-top:1.5cm;margin-right:1cm;text-align:right;}
 .smalltext {color:888;font-size:.75em;}
 label.showall {color:888;font-size:.75em;}
 .img-container {height:450px;}
+#ausweise {margin:-20px;}
+.noimagerights {font-style:italic;}
 
 ul.home  {list-style-type:none;padding:0;margin:0;}
 .home li {padding-top:10px;display:block;width:120px;height:120px;float:left;border:1px solid black;margin:12px;text-align:center;vertical-align:middle;background-color:#eef;}
 hr  {clear:both;}
 .navbar * i {color:#bbb;width:24px;}
 
+
 @media print {
-body {margin:0cm;}
-#branding {display:none;}
-.navbar {display:none;}
-.container-fluid {margin:0mm;padding:0mm;}
-    .ausweis {page-break-after: always;margin:0mm;padding:0mm;}
+	body {margin:0cm;}
+	#branding {display:none;}
+	.navbar {display:none;}
+	.container-fluid {margin:0mm;padding:0mm;}
+	.ausweis:nth-of-type(4) {page-break-after: always;margin:0mm;padding:0mm;} */
+	.ausweis {margin:.5mm;padding:0mm;}
     .dontPrint {display:none;}
     .project: {color:#fafafa;}
 }
@@ -63,3 +68,11 @@ body {margin:0cm;}
     transition: all 0.3s ease-out;
     opacity: 1;
 }
+
+.member_new input {font-size:36px;color:#000;padding:3px;margin:3px;}
+.member_new ::-webkit-input-placeholder  {color:#559;font-size:24px;}
+div.attestation {text-align:center;}
+div.attestation h2 {margin-top: 3cm; margin-bottom:3cm;}
+div.attestation p {text-align:left; margin-left:18mm;}
+div.attestation * ul {list-style:none;margin:0px 0px 0px 0px; padding:0px 0px 0px 0px}
+div.attestation * li {margin:0px 0px 0px 0px; padding:0px 0px 0px 0px}

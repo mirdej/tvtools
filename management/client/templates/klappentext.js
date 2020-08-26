@@ -39,7 +39,7 @@ document.title = "Klappentext "+Session.get('Project').name+"-Sendung vom "+d.to
 Template.klappentextpostenliste.helpers({
 entries: function() {
 
-    var posten		= ["Sendeleitung","Moderation","Kamera","Kameraregie","Bildschnitt","Operateur","Untertitel","Ton","Licht","Fotografie","Making of","Security","Maske","Studiogast"];
+    var posten		= ["Sendeleitung","Moderation","Kamera","Kameraregie","Bildschnitt","Operateur","Untertitel","Ton","Licht","Fotografie","Making of","Security","Maske","Studiogast","Streaming","Stagemanager"];
     var allMembers =  Members.find({project:Session.get("Project").id},{sort: {first: 1}}).fetch();
 
     var result =[];
