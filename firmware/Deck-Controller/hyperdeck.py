@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 ## --------------------------------------------------------------------------------------------------------
 
 ##                  HYPERDECK
@@ -86,10 +86,10 @@ on_air = False
 
 screen_width = 700
 screen_border = 20
-#PLAYER_TCP_ADDRESS = "192.168.0.242"
-PLAYER_TCP_ADDRESS = "10.0.0.242"
+PLAYER_TCP_ADDRESS = "192.168.0.242"
+#PLAYER_TCP_ADDRESS = "10.0.0.242"
 PLAYER_TCP_PORT = 9993
-SWITCHER_TCP_ADDRESS = "10.0.0.245"
+SWITCHER_TCP_ADDRESS = "10.0.0.200"
 
 
 def tc_to_secs(tc):

@@ -1,4 +1,4 @@
-#define VERSION "2020-01-27"
+#define VERSION "2020-03-14"
 
 //----------------------------------------------------------------------------------------
 //
@@ -19,10 +19,15 @@
 #include "ESPAsyncWebServer.h"
 #include <Preferences.h>
 #include "Password.h"
-#include <WiFiAP.h>
+
 #include <ATEMbase.h>
 #include <ATEMmax.h>
 #include <ClientBMDHyperdeckStudio.h>
+
+#define ETH_CLK_MODE ETH_CLOCK_GPIO17_OUT
+#define ETH_PHY_POWER 12
+
+#include <ETH.h>
 
 
 
@@ -30,20 +35,38 @@
 
 
 #define BRIGHTNESS	120
+/*
+const int PIN_POT    	=   0;
+const int PIN_PIXELS    =   1;
+const int PIN_CS        = 	3;
+const int PIN_SCK		= 2;
+const int PIN_MISO		= 4;
+const int PIN_MOSI	= 15;
+*/
 
-const int PIN_POT    	=   36;
-const int PIN_PIXELS    =   32;
-const int PIN_CS        = 	17;
+const int PIN_POT    	=   4;
+const int PIN_PIXELS    =   16;
+const int PIN_CS        = 	5;
+const int PIN_SCK		= 14;
+const int PIN_MISO		= 2;
+const int PIN_MOSI	= 15;
+
 
 const int NUM_PIXELS    =   8;
 
-#define WIFI_TIMEOUT		4000
+#define WIFI_TIMEOUT		40000
 
 
 
 #define STATE_OFFLINE		0
 #define STATE_WIFI_OK		1
 #define	STATE_SWITCH_OK		2
+
+
+#define IP1	192
+#define IP2	168
+#define IP3	0
+
 //========================================================================================
 //----------------------------------------------------------------------------------------
 //																				GLOBALS
@@ -57,20 +80,22 @@ CRGB                                    pixels[NUM_PIXELS];
 Timer									t;
 int 									buttons_raw;
 long 									last_ui_interaction;
-String 									hostname;
+String 									hostname = "switchbox";
 AsyncWebServer                          server(80);
+
+static bool eth_connected = false;
 
 
 //IPAddress 						switcherIp(192, 168, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						switcherIp(10, 0, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						switcher_rec_Ip(10, 0, 0, 240);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						local_IP(10, 0, 0, 245);
-IPAddress 						gateway(10, 0, 0, 1);
-IPAddress 						subnet(255, 255, 255, 0);
-IPAddress 						primaryDNS(8, 8, 8, 8); //optional
-IPAddress 						secondaryDNS(8, 8, 4, 4); //optional
-IPAddress						player_Ip(10, 0, 0, 242);
-IPAddress						recorder_Ip(10, 0, 0, 243);
+IPAddress 						switcherIp			(IP1, IP2, IP3, 241);	 // <= SETUP!  IP address of the ATEM Switcher
+IPAddress 						switcher_rec_Ip		(IP1, IP2, IP3, 240);	 // <= SETUP!  IP address of the ATEM Switcher
+IPAddress 						local_IP			(IP1, IP2, IP3, 200);
+IPAddress 						gateway				(IP1, IP2, IP3, 1);
+IPAddress 						subnet				(255, 255, 255, 0);
+IPAddress 						primaryDNS			(8, 8, 8, 8); //optional
+IPAddress 						secondaryDNS		(8, 8, 4, 4); //optional
+IPAddress						player_Ip			(IP1, IP2, IP3, 242);
+IPAddress						recorder_Ip			(IP1, IP2, IP3, 243);
 ATEMmax 						AtemSwitcher;
 ATEMmax 						AtemSwitcher_Rec;
 
@@ -91,7 +116,7 @@ char buf[] = "Hello this is an empty message with, a comma in it";
 
 
 void service_BMD() {
-
+	if(!eth_connected) return;
 	if (!AtemSwitcher.hasInitialized()) { AtemSwitcher.runLoop(); } 
 	else { AtemSwitcher.runLoop(5);}
 	
@@ -108,6 +133,7 @@ void service_BMD() {
 //----------------------------------------------------------------------------------------
 //																		tally
 void check_tally(){
+	if(!eth_connected) return;
 	on_air = AtemSwitcher.getProgramInputVideoSource(0) - 1;
 	on_preview = AtemSwitcher.getPreviewInputVideoSource(0) - 1;
 	if (on_air > -1) connection_state = STATE_SWITCH_OK;
@@ -115,7 +141,8 @@ void check_tally(){
 
 
 void check_hyperdecks() {
-		// Start Hyperdeck connection:
+	if(!eth_connected) return;
+			// Start Hyperdeck connection:
 	if (!player.hasInitialized()) {
 		Serial.println("Connecting");
 		player.begin(player_Ip);	 // <= SETUP (the IP address of the Hyperdeck Studio)
@@ -139,6 +166,7 @@ void check_hyperdecks() {
 //																		Start Talk
 
 void start_talk() {
+	if(!eth_connected) return;
 	Serial.println("Starting Talk");
 	check_hyperdecks();
 	
@@ -187,6 +215,7 @@ void talk_finalize() {
 //																		Watch Talk
 
 void watch_talk() {
+	if(!eth_connected) return;
 	Serial.println("Watch");
 	/*int n = recorder.getTotalClipCount();
 	int id = recorder.getFileClipId(n);
@@ -248,6 +277,8 @@ void check_buttons(){
 
     if (buttons_raw == old_buttons) return;
 	
+//	Serial.println(buttons_raw,BIN);
+	
     long triggers_press = old_buttons & ~buttons_raw;
     long triggers_release = ~old_buttons & buttons_raw;
     old_buttons = buttons_raw;
@@ -257,18 +288,19 @@ void check_buttons(){
 
 	last_ui_interaction = millis();
 
+	if(!eth_connected) return;
     for (int i = 0; i < 8; i++) {
         if (triggers_press & (1 << i)) {
 			selected = i-1;
 			set_preview(selected);
 			
-			if (i == 6){
+			if (i == 7){
             	AtemSwitcher.setTransitionMixRate(0, fade_rate);
 				AtemSwitcher.setTransitionStyle(0, 0);
  			   	AtemSwitcher.performAutoME(0);
 			}
 			
-			if (i == 7) {
+			if (i == 6) {
 			    AtemSwitcher.performCutME(0);
 			}
          }
@@ -325,6 +357,7 @@ void check_ad() {
 }
 
 void setup_rec_switcher() {
+	if(!eth_connected) return;
 	AtemSwitcher_Rec.setAudioMixerInputMixOption(5, 0);
 	AtemSwitcher_Rec.setProgramInputVideoSource(0, 5);
 }
@@ -534,56 +567,34 @@ void setup_web_server() {
 	server.begin();
 }
 
-//========================================================================================
 //----------------------------------------------------------------------------------------
-//																				SETUP
+//																				WifiEvent
 
-
-
-void setup() {
-	Serial.begin(115200);
-
-    pinMode(PIN_CS, OUTPUT);
-    digitalWrite(PIN_CS,HIGH);
-    SPI.begin();
-
-    FastLED.addLeds<NEOPIXEL, PIN_PIXELS>(pixels, NUM_PIXELS);
-	FastLED.setBrightness(BRIGHTNESS);
-	
-	
-	 if(!SPIFFS.begin()){
-         Serial.println("An Error has occurred while mounting SPIFFS");
-         return;
-    }
- 
-    preferences.begin("changlier", false);
-
-    hostname = preferences.getString("hostname");
-    if (hostname == String()) { hostname = "changlier"; }
-    Serial.print("Hostname: ");
-    Serial.println(hostname);
-    
-	//string_to_addresses(preferences.getString("fixtures"));
-	camera_count = 4;
-
-/*	
-	if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
-		Serial.println("STA Failed to configure");
-	}
-*/
-	WiFi.begin(ssid, pwd);
-    long start_time = millis();
-    while (WiFi.status() != WL_CONNECTED) { 
-        Serial.print("."); 
-        selected++;
-        selected %= 5;
-        update_pixels();
-        delay(250); 
-        if ((millis()-start_time) > WIFI_TIMEOUT) break;
-	}
-	
-  	if (WiFi.status() == WL_CONNECTED) {  		
-  	    Serial.print("Wifi connected. IP: ");
+void WiFiEvent(WiFiEvent_t event)
+{
+  switch (event) {
+    case SYSTEM_EVENT_ETH_START:
+      Serial.println("ETH Started");
+      //set eth hostname here
+      ETH.setHostname(hostname.c_str());
+      break;
+    case SYSTEM_EVENT_ETH_CONNECTED:
+      Serial.println("ETH Connected");
+      break;
+    case SYSTEM_EVENT_ETH_GOT_IP:
+      Serial.print("ETH MAC: ");
+      Serial.print(ETH.macAddress());
+      Serial.print(", IPv4: ");
+      Serial.print(ETH.localIP());
+      if (ETH.fullDuplex()) {
+        Serial.print(", FULL_DUPLEX");
+      }
+      Serial.print(", ");
+      Serial.print(ETH.linkSpeed());
+      Serial.println("Mbps");
+      eth_connected = true;
+      
+		Serial.print("Wifi connected. IP: ");
         Serial.println(WiFi.localIP());
 
         if (!MDNS.begin(hostname.c_str())) {
@@ -601,19 +612,65 @@ void setup() {
 	
         setup_web_server();
         connection_state = STATE_WIFI_OK;
-	} else {
-		// set up access point
-		Serial.println();
-  		Serial.println("Configuring access point...");
 
-		// You can remove the password parameter if you want the AP to be open.
-		WiFi.softAP("Switchbox", "tvstudio2020");
-		IPAddress myIP = WiFi.softAPIP();
-		Serial.print("AP IP address: ");
-		Serial.println(myIP);		
-		setup_web_server();
+
+
+      break;
+    case SYSTEM_EVENT_ETH_DISCONNECTED:
+      Serial.println("ETH Disconnected");
+      eth_connected = false;
+      break;
+    case SYSTEM_EVENT_ETH_STOP:
+      Serial.println("ETH Stopped");
+      eth_connected = false;
+      break;
+    default:
+      break;
+  }
+}
+//========================================================================================
+//----------------------------------------------------------------------------------------
+//																				SETUP
+
+
+
+void setup() {
+
+    FastLED.addLeds<NEOPIXEL, PIN_PIXELS>(pixels, NUM_PIXELS);
+
+	for (int hue = 0; hue < 360; hue++) {
+    	fill_rainbow( pixels, NUM_PIXELS, hue, 7);
+	    delay(3);
+    	FastLED.show(); 
+  	}
+	FastLED.setBrightness(BRIGHTNESS);
+
+	Serial.begin(115200);
+
+    pinMode(PIN_CS, OUTPUT);
+    digitalWrite(PIN_CS,HIGH);
+	SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI);
+	
+	 if(!SPIFFS.begin()){
+         Serial.println("An Error has occurred while mounting SPIFFS");
+         return;
+    }
+ 
+    hostname = "switchbox";
+	camera_count = 4;
+		
+	WiFi.onEvent(WiFiEvent);
+    ETH.begin();
+	ETH.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
+
+	
+	while(!eth_connected) {
+		Serial.print(".");
+		delay(100);
+		
+		if (millis() > WIFI_TIMEOUT) break;
 	}
-
+	
 	Serial.println("Hello");
 	t.every(100, check_tally); 
 	t.every(20, check_buttons);    
