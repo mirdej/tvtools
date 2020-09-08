@@ -1,0 +1,23 @@
+<template name="notizenblatt"> 
+	{{#each groups}} 
+	<hr>
+
+	<span class="title cam_{{camera}}" style="{{styling}}">
+			<h4 class="title">
+				{{camera}}<br />
+				<small>{{title}}</small>
+			</h4>
+	</span>
+	
+	{{/each}}
+</template> 
+
+
+<template name="namenliste">
+<div style="height:4em;">&nbsp;</div>
+{{#each members}}
+<div style="height:3em;border-top:1px solid black;">
+{{first}} {{last}}
+</div>
+{{/each}}
+</template>

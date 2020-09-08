@@ -1,4 +1,4 @@
-Router.configure({ layoutTemplate: 'ApplicationLayout'});
+(function(){Router.configure({ layoutTemplate: 'ApplicationLayout'});
 
 Router.route('/', 					function () {this.render( 'home' );});
 Router.route('/mitarbeiter',		function () {this.render( 'memberlist' );});
@@ -81,3 +81,5 @@ Router.map(function() {
 
   }})
 });
+
+})();

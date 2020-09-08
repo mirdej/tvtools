@@ -1,4 +1,6 @@
 <template name="member_new">
+ 
+ <h1>Neuen Mitarbeiter erfassen</h1>
  <button class="snap"><i class="fa fa-camera-retro fa-2x"></i></button>
 
 
@@ -7,9 +9,10 @@
       <img src={{photo}}  height="360"/>
     </div>
   {{/if}}
- <form class="member_new" style ="margin-top:20px;border 1px solid #666;">
-  <input id="f" type="text" name="first" placeholder="Vorname" />
-<input id="l" type="text" name="last" placeholder="Nachname" />
+  
+ <form class="member_new" style ="margin-top:20px;border 1px solid #666;font-size:36px;">
+  <input id="f" type="text" name="first" placeholder="Vorname"/>
+<input id="l" type="text" name="last" placeholder="Nachname"/>
 <input id="n" type="text" name="tel" placeholder="Mobil Nummer" />
 <input type="submit" value="Sichern" /></form><form class="cancel"><button class="cancel">Annullieren</button>
 </form>

@@ -4,7 +4,7 @@ Template.posten.helpers({
           return Members.find({project:Session.get("Project").id}, {sort: {first: 1}});
     },
     
-    jobs: [{job:"Egal"},{job:"Kamera"},{job:"Kameraregie"},{job:"Bildschnitt"},{job:"Operateur"},{job:"Untertitel"},{job:"Ton"},{job:"Licht"},{job:"Fotografie"},{job:"Making of"},{job:"Security"},{job:"Maske"},{job:"Moderation"},{job:"Sendeleitung"},{job:"Studiogast"}],
+    jobs: [{job:"Egal"},{job:"Kamera"},{job:"Kameraregie"},{job:"Bildschnitt"},{job:"Operateur"},{job:"Untertitel"},{job:"Ton"},{job:"Licht"},{job:"Fotografie"},{job:"Making of"},{job:"Security"},{job:"Maske"},{job:"Moderation"},{job:"Sendeleitung"},{job:"Studiogast"},{job:"Streaming"},{job:"Stagemanager"}],
    lustClass: function (parent){
      		 if (parent.lust_1 == this.job)  return "lust_1";
      		 if (parent.lust_2 == this.job) return "lust_2";

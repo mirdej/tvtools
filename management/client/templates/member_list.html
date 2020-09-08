@@ -39,6 +39,7 @@
 	</td>
 	<td> 
 	<input type="text" class="form-control phone" value="{{tel}}" />
+	<input type="text" class="form-control project" value="{{project}}" />
 	</td>
 	
 	
@@ -49,7 +50,7 @@
 	</td>
 	<td><button class="delete"> &times; </button> <button class="save"><i class="fa fa-save"></i></button> </td>
 	{{else}} 
-	<td> {{first}} </td>
+	<td class="imagerights_{{image_rights}}">{{first}}</td>
 	<td> {{last}} </td>
 	<td> {{tel}} </td>
 	<td class="smalltext"> <ul style="list-style-type:none">{{#each groupNames}}
@@ -57,7 +58,7 @@
 	{{/each}}
 	</ul>
 	{{#if show_all}} | {{project}} {{/if}}</td>
-	<td><button class="setFemale"><i class="fa fa-female"></i></button> <button class="setMale"><i class="fa fa-male"></i></button> <button class="delete"> &times; </button> <button class="edit"><i class="fa fa-edit"></i></button> </td>
+	<td>{{#if image_rights}}<button class="setInvisible"><i class="fa fa-user"></i></button>{{else}}<button class="setVisible"><i class="fa fa-user-o"></i></button>{{/if}}<button class="setFemale"><i class="fa fa-female"></i></button> <button class="setMale"><i class="fa fa-male"></i></button> <button class="delete"> &times; </button> <button class="edit"><i class="fa fa-edit"></i></button> </td>
 	{{/if}} 
 </tr>
 </template> 

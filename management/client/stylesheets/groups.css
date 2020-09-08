@@ -17,7 +17,9 @@ div.group h3 {margin:0px;padding:0px;}
 .ablauf li span.title {font-weight:bold;display:block;width:200px;position:relative;float:left;}
 .ablauf li span.info {display:block;float:left;font-size:.75em;}
 .ablauf li span.duration {position:absolute;right:10px;text-align:left;}
-.ablauf li.live {background-color:#DFF2E9}
+.ablauf li.live {background-color:#88dd88}
+.ablauf li.live span.title {width:100%;}
+
 .ablauf * input {    background: transparent;
     border: none;
     height:24px;
