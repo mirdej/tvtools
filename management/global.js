@@ -1,7 +1,8 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
-ProjectID = "SchulTV-DUB-2019";
+ProjectID = "SchulTV-DI-2020";
+//ProjectID = "SchulTV-DUB-2019";
 
 //ProjectID = "SchulTV-Wattwil-2018";
 //ProjectID = "SchulTV-OE-2018";
@@ -157,7 +158,7 @@ Session.set("Project", {
    leitung : "Michael Egger, Margrit Egger",
    danke: "Barbara Bachmann, Herr & Frau Häusler, Moni Egger, Herr Binggeli, Herr Terrão, Frau Fotsch, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Annick Perrenoud,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur,  Belluard Bollwerk International"
 });
-*/
+
 Session.set("Project", {
    name:"Dübendorf",
    id:ProjectID,
@@ -168,6 +169,19 @@ Session.set("Project", {
    abspannVorlauf : "Dübendorf Grüze B2c",
    leitung : "Michael Egger, Margrit Egger",
    danke: "Claudia Perpinyani, Ursina Kuhn, Mark Lim, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+*/
+
+Session.set("Project", {
+   name:"Dietikon",
+   id:ProjectID,
+   logo:"logo-DI.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Sep 7 2020 00:00:00 GMT+0100 (CET)",
+   end:"Fri Sep 11 2020 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Dietikon Luberzen P6b",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Ladina Gubler, Roman Suter, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
 });
 
 

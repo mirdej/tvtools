@@ -11,6 +11,9 @@
 //
 //----------------------------------------------------------------------------------------
 
+
+
+
 #include <FastLED.h>
 #include "Timer.h"
 #include <SPI.h>
@@ -18,7 +21,6 @@
 #include <SPIFFS.h>
 #include "ESPAsyncWebServer.h"
 #include <Preferences.h>
-#include "Password.h"
 
 #include <ATEMbase.h>
 #include <ATEMmax.h>
@@ -108,8 +110,9 @@ int					on_preview 	= -1;
 int 				selected;
 int 				fade_rate;
 
-boolean talk_wait_for_finish;
-boolean	players_online = false;
+long talk_end;
+boolean	player_online = false;
+boolean	recorder_online = false;
 
 char buf[] = "Hello this is an empty message with, a comma in it";
 
@@ -123,10 +126,8 @@ void service_BMD() {
 	if (!AtemSwitcher_Rec.hasInitialized()) { AtemSwitcher_Rec.runLoop(); } 
 	else { AtemSwitcher_Rec.runLoop(5);}
 
-	if(players_online) {
-		recorder.runLoop();		
-		player.runLoop();
-	}
+	if(recorder_online) {     recorder.runLoop();	}	
+	if(player_online) {		player.runLoop(); }
 }
 
 
@@ -142,24 +143,26 @@ void check_tally(){
 
 void check_hyperdecks() {
 	if(!eth_connected) return;
-			// Start Hyperdeck connection:
+	// Start Hyperdeck connection:
 	if (!player.hasInitialized()) {
-		Serial.println("Connecting");
+		Serial.println("Connecting to PLAYER");
 		player.begin(player_Ip);	 // <= SETUP (the IP address of the Hyperdeck Studio)
 		player.serialOutput(1);  // 1= normal, 2= medium verbose, 3=Super verbose
 		player.connect();  // For some reason the first connection attempt seems to fail, but in the runloop it will try to reconnect.
-
+		player.runLoop();
+    	if (player.hasInitialized()) player_online = true;
 	}
-
+	
+	
 	if (!recorder.hasInitialized()) {
-		Serial.println("Connecting");
+		Serial.println("Connecting to RECORDER");
 		recorder.begin(recorder_Ip);	 // <= SETUP (the IP address of the Hyperdeck Studio)
 		recorder.serialOutput(1);  // 1= normal, 2= medium verbose, 3=Super verbose
 		recorder.connect();  // For some reason the first connection attempt seems to fail, but in the runloop it will try to reconnect.
-
+		recorder.runLoop();
+    	if (recorder.hasInitialized()) recorder_online = true;
 	}
 	
-	players_online = true;
 
 }
 //----------------------------------------------------------------------------------------
@@ -193,18 +196,19 @@ void start_talk() {
 
 void end_talk() {
 	check_hyperdecks();
-	
+
+ 	Serial.println("End Talk called");
+
 	AtemSwitcher.setDownstreamKeyerOnAir(0,true);
 	AtemSwitcher.runLoop();
-	
+
 	player.gotoClipID(2);
 	player.gotoClipStart();
     player.playSingleClip(true);
-	for(int i = 0; i < 1000; i++) service_BMD();			// wait a while
-		
-	talk_wait_for_finish = true;
+
+	talk_end = millis();
  	Serial.println("End Talk");
-}
+}   
 
 void talk_finalize() {
 	Serial.println("Finished");
@@ -217,13 +221,15 @@ void talk_finalize() {
 void watch_talk() {
 	if(!eth_connected) return;
 	Serial.println("Watch");
-	/*int n = recorder.getTotalClipCount();
+    check_hyperdecks();
+/*int n = recorder.getTotalClipCount();
 	int id = recorder.getFileClipId(n);
 	recorder.previewEnable(false);
 	recorder.gotoClipID(id);*/
 	recorder.gotoTimelineEnd();
 	recorder.gotoClipStart();
     recorder.playSingleClip(true);
+    AtemSwitcher.setDownstreamKeyerOnAir(0,false);
 	AtemSwitcher.setProgramInputVideoSource(0,8);
 	AtemSwitcher.setAudioMixerInputMixOption(8, 1);
 }
@@ -423,6 +429,7 @@ void restart() {
 }
 
 void setup_web_server() {
+Serial.println("Setting up wenbserver");
 	server.on("/talk", HTTP_GET, [](AsyncWebServerRequest *request){
 		String inputMessage;
 		if (request->hasParam("action")) {
@@ -434,7 +441,7 @@ void setup_web_server() {
 				if(inputMessage == "toggleplay" ) toggle_play();
 		}
 		if (request->hasParam("skip")) {
-				inputMessage = request->getParam("action")->value();
+				inputMessage = request->getParam("skip")->value();
 				skip(inputMessage.toInt());	
 		}
 		request->send(200, "text/text", String(on_air));
@@ -565,6 +572,7 @@ void setup_web_server() {
 	});
 
 	server.begin();
+	Serial.println("Wenbserver running");
 }
 
 //----------------------------------------------------------------------------------------
@@ -582,6 +590,7 @@ void WiFiEvent(WiFiEvent_t event)
       Serial.println("ETH Connected");
       break;
     case SYSTEM_EVENT_ETH_GOT_IP:
+    Serial.println();
       Serial.print("ETH MAC: ");
       Serial.print(ETH.macAddress());
       Serial.print(", IPv4: ");
@@ -601,15 +610,20 @@ void WiFiEvent(WiFiEvent_t event)
              Serial.println("Error setting up MDNS responder!");
         }
         Serial.println("mDNS responder started");
-        
+
         	// Initialize a connection to the switcher:
+   /*     Serial.print("Begin Switcher IP ");
+        Serial.println(switcherIp.toString());*/
+        
+        
 		AtemSwitcher.begin(switcherIp);
-	//	AtemSwitcher.serialOutput(1);
+		
+        AtemSwitcher.serialOutput(1);
 		AtemSwitcher.connect();
 
 		AtemSwitcher_Rec.begin(switcher_rec_Ip);
 		AtemSwitcher_Rec.connect();
-	
+
         setup_web_server();
         connection_state = STATE_WIFI_OK;
 
@@ -619,6 +633,8 @@ void WiFiEvent(WiFiEvent_t event)
     case SYSTEM_EVENT_ETH_DISCONNECTED:
       Serial.println("ETH Disconnected");
       eth_connected = false;
+      player_online = false;
+      recorder_online = false;
       break;
     case SYSTEM_EVENT_ETH_STOP:
       Serial.println("ETH Stopped");
@@ -686,13 +702,14 @@ void setup() {
 void loop() {
 	t.update();
 
-	service_BMD();
-	
-	if (talk_wait_for_finish) {
-		if (player.getTransportStatus() == ClientBMDHyperdeckStudio_TRANSPORT_STOPPED) {
-				talk_wait_for_finish = false;
-				talk_finalize();
+    service_BMD();
+
+	if (talk_end) {
+	    if(millis() - talk_end > 1000) {
+    		if (player.getTransportStatus() == ClientBMDHyperdeckStudio_TRANSPORT_STOPPED) {
+	                talk_end = 0;
+		    		talk_finalize();
+		    }
 		}
 	}
-
 }

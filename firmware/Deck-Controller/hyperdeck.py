@@ -14,44 +14,6 @@ import RPi.GPIO as GPIO
 import board
 import neopixel
 import requests 
-from flask import Flask
- 
-app = Flask(__name__)
-@app.route('/start_talk')
-def start_talk():
-    payload = {'on': '1'}
-    try:
-        r = requests.get('http://'+SWITCHER_TCP_ADDRESS+'/dsk1', params=payload, timeout=0.1)
-        print(r.text)
-    except:    
-        print ("No connection to switcher")
-
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'goto: clip: id 1' + b'\r\n')
-    tn.write(b'goto: clip: start' + b'\r\n')
-    tn.write(b'play: single clip: true' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-
-    return "Started"
-
-@app.route('/end_talk')
-def end_talk():
-    payload = {'on': '1'}
-    try:
-        r = requests.get('http://'+SWITCHER_TCP_ADDRESS+'/dsk1', params=payload, timeout=0.1)
-        print(r.text)
-    except:    
-        print ("No connection to switcher")
-
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'goto: clip: id 2' + b'\r\n')
-    tn.write(b'goto: clip: start' + b'\r\n')
-    tn.write(b'play: single clip: true' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-
-    return "Ending"
- 
-app.run(host='0.0.0.0', port= 8090)
 
 
 ON_AIR = 26
@@ -89,14 +51,17 @@ screen_border = 20
 PLAYER_TCP_ADDRESS = "192.168.0.242"
 #PLAYER_TCP_ADDRESS = "10.0.0.242"
 PLAYER_TCP_PORT = 9993
-SWITCHER_TCP_ADDRESS = "10.0.0.200"
+SWITCHBOX_TCP_ADDRESS = "192.168.0.200"
 
 
 def tc_to_secs(tc):
     #print (tc)
     try:
         fields = tc.split(":")
-        secs = int(fields[0])*3600 + int(fields[1])*60 + int(fields[2])
+        #if len(fields) >= 3:
+        #    secs = int(fields[0])*3600 + int(fields[1])*60 + int(fields[2])
+        #else:
+        secs = int(fields[1])*60 + int(fields[2])        
         return secs
     except:
         return 0
@@ -253,7 +218,7 @@ def get_transport_info():
     status=""
     try:
         #r = requests.get('http://switchbox.local/dsk1')
-        r = requests.get('http:/'+SWITCHER_TCP_ADDRESS+'/dsk1', timeout=0.1)
+        r = requests.get('http://'+SWITCHBOX_TCP_ADDRESS+'/dsk1', timeout=0.5)
         if(r.text == "1"):
             on_air = True
             pixels[3] = red
@@ -277,7 +242,7 @@ def get_transport_info():
                 playing = False
         if ("display timecode:" in line):
             tc = line.split(" ")[2]
-#            print(tc)
+            print(tc)
             elapsed_time = tc_to_secs(tc)
         if ("clip id:" in line):
             id = line.split(" ")[2]
@@ -362,7 +327,7 @@ def btn_air():
     else: 
         payload = {'on': '1'}
     try:
-        r = requests.get('http://'+SWITCHER_TCP_ADDRESS+'/dsk1', params=payload, timeout=0.1)
+        r = requests.get('http://'+SWITCHBOX_TCP_ADDRESS+'/dsk1', params=payload, timeout=0.5)
         print(r.text)
         print("air")
     except:    
