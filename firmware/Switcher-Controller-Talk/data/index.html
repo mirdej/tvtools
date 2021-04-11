@@ -77,6 +77,20 @@
 					</div>
 			</div>
 		</div>
+	<div class="card" id="talk2">
+		<div class="card-header">
+			Talk 
+		</div>
+		<div class="card-body">
+			<div class="row">
+					<div class="col-1 text-muted">
+						Prepare: 
+					</div>
+					<div class="col-9">
+						<button type="button" id="preptalk" class="btn btn-lg btn-outline-light">New Talk</button> 
+					</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -96,6 +110,10 @@
 	    $.get('http://switchbox.local/talk?skip='+val);
 	   
 	});
+
+	$( "#preptalk" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=prepare');
+	   });
 	
 	$( "#starttalk" ).click(function(e) {
 	        $.get('http://switchbox.local/talk?action=start');

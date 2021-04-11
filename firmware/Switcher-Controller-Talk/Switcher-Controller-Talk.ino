@@ -117,6 +117,13 @@ int					on_preview 	= -1;
 int 				selected;
 int 				fade_rate;
 
+#define MODE_NORMAL     0
+#define MODE_TALK_PREP  1
+#define MODE_TALK       2
+#define MODE_WATCH      3
+
+int mode;
+
 long talk_end;
 boolean	player_online = false;
 boolean	recorder_online = false;
@@ -173,10 +180,32 @@ void check_hyperdecks() {
 
 }
 //----------------------------------------------------------------------------------------
+//																		Prepare Talk
+void prepare_talk() {
+    if (mode == MODE_TALK) return;         // prevent double presses
+    set_preview(0);
+    set_on_air(1);
+    
+    AtemSwitcher.setDownstreamKeyerFillSource(0, 7);
+	AtemSwitcher.setDownstreamKeyerKeySource(0, 10);
+	AtemSwitcher.setDownstreamKeyerPreMultiplied(0,true);
+	AtemSwitcher.setDownstreamKeyerOnAir(0,true);
+    AtemSwitcher.setAudioMixerInputMixOption(7, 1);
+
+	mode = MODE_TALK_PREP;
+}
+
+//----------------------------------------------------------------------------------------
 //																		Start Talk
 
 void start_talk() {
 	if(!eth_connected) return;
+    if (mode == MODE_TALK) {Serial.println("Already talking"); return; };         // prevent double presses
+    
+	if (mode != MODE_TALK_PREP) {
+	    prepare_talk();
+	    return;
+	}
 	Serial.println("Starting Talk");
 	check_hyperdecks();
 	
@@ -184,11 +213,7 @@ void start_talk() {
 	recorder.previewEnable(true);
 	service_BMD();
 	
-    AtemSwitcher.setDownstreamKeyerFillSource(0, 7);
-	AtemSwitcher.setDownstreamKeyerKeySource(0, 10);
-	AtemSwitcher.setDownstreamKeyerPreMultiplied(0,true);
-	AtemSwitcher.setDownstreamKeyerOnAir(0,true);
-	
+  	
 	player.stop();
 	player.gotoClipID(1);
 	player.gotoClipStart();
@@ -196,12 +221,15 @@ void start_talk() {
     Serial.println("Started Talk");
 
 	recorder.record();
+	mode = MODE_TALK;
 }
 
 //----------------------------------------------------------------------------------------
 //																		End Talk
 
 void end_talk() {
+    if (mode != MODE_TALK) {Serial.println("Cannot end talk now"); return; }         // prevent double presses
+
 	check_hyperdecks();
 
  	Serial.println("End Talk called");
@@ -220,6 +248,7 @@ void end_talk() {
 void talk_finalize() {
 	Serial.println("Finished");
 	recorder.stop();
+    prepare_talk();
 }
 
 //----------------------------------------------------------------------------------------
@@ -227,6 +256,9 @@ void talk_finalize() {
 
 void watch_talk() {
 	if(!eth_connected) return;
+
+    mode = MODE_WATCH;
+	
 	Serial.println("Watch");
     check_hyperdecks();
 /*int n = recorder.getTotalClipCount();
@@ -242,6 +274,8 @@ void watch_talk() {
 }
 
 void toggle_play() {
+    if (mode != MODE_WATCH) {Serial.println("Cannot pause now, wriong mode"); return; }         // prevent double presses
+
 	Serial.println("Play-Pause");
 	if (!recorder.isInPreview()) {
 		if (recorder.isPlaying()) recorder.stop();
@@ -250,6 +284,8 @@ void toggle_play() {
 }
 
 void skip(signed int secs) {
+    if (mode != MODE_WATCH) {Serial.println("Cannot pause now, wriong mode"); return; }         // prevent double presses
+
 	Serial.print("Skip ");
 	Serial.println(secs);
 	if (!recorder.isInPreview()) {
@@ -446,6 +482,7 @@ Serial.println("Setting up wenbserver");
 				if(inputMessage == "watch" ) watch_talk();
 				if(inputMessage == "toggleview" ) AtemSwitcher.performCutME(0);
 				if(inputMessage == "toggleplay" ) toggle_play();
+				if(inputMessage == "prepare" ) prepare_talk();
 		}
 		if (request->hasParam("skip")) {
 				inputMessage = request->getParam("skip")->value();
