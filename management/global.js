@@ -1,7 +1,8 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
-ProjectID = "SchulTV-DI-2020";
+ProjectID = "SchulTV-HO-2021";
+//ProjectID = "SchulTV-DI-2020";
 //ProjectID = "SchulTV-DUB-2019";
 
 //ProjectID = "SchulTV-Wattwil-2018";
@@ -14,6 +15,20 @@ ProjectID = "SchulTV-DI-2020";
 
 if (Meteor.isClient) {
 	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+Session.set("Project", {
+   name:"Hottingen",
+   id:ProjectID,
+   logo:"logo-HO.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Apr 19 2021 00:00:00 GMT+0100 (CET)",
+   end:"Fri Apr 23 2021 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Kantonsschule Hottingen, Klasse G1b",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Ina La Serra, Cornelia Heinz, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+
 /*
 Session.set("Project", {
 	   name:"Oberenstringen 5a",
@@ -170,7 +185,6 @@ Session.set("Project", {
    leitung : "Michael Egger, Margrit Egger",
    danke: "Claudia Perpinyani, Ursina Kuhn, Mark Lim, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
 });
-*/
 
 Session.set("Project", {
    name:"Dietikon",
@@ -184,6 +198,7 @@ Session.set("Project", {
    danke: "Ladina Gubler, Roman Suter, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
 });
 
+*/
 
 	var von = new Date(Session.get("Project").begin);
 	var bis = new Date(Session.get("Project").end);   
