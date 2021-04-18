@@ -62,7 +62,7 @@ void Fixture::update(void){
 
 String Fixture::parse(File file) {
       String s=file.readStringUntil('\n');
-        Serial.print("I got: ");
+ //       Serial.print("I got: ");
       float f = s.toFloat();
       if (f > 1.) f = 1;
       if (f < 0) f = 0;

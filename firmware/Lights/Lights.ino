@@ -44,16 +44,17 @@ Timer                                   t;
 AsyncWebServer                          server(80);
 
 Fixture f[NUM_FIXT];
-
+bool checking_fixtures;
 
 //========================================================================================
 //----------------------------------------------------------------------------------------
 
 void update() {
+    if (checking_fixtures) return;
     for (int i = 0; i < NUM_FIXT; i++) {
         f[i].update();
     }
-    Serial.println();
+ //   Serial.println();
 }
 
 
@@ -332,6 +333,8 @@ void setup(){
             String inputMessage;
             
         	if (request->hasParam("channel")) {
+                    checking_fixtures = false;
+
                     int chann;
                 	inputMessage = request->getParam("channel")->value();
                     chann = inputMessage.toInt();
@@ -342,6 +345,18 @@ void setup(){
                        
                     }
                     request->send(200, "text/text", "check");
+            }
+            
+            if (request->hasParam("master")) {
+                inputMessage = request->getParam("master")->value();
+                float level = inputMessage.toFloat()/255.;
+                if (level < 0) level = 0;
+                if (level > 1) level = 1;
+                Serial.println(level);
+                for (int i = 0; i < NUM_FIXT; i++) {
+                    f[i].setMaster(level);
+                }
+                request->send(200, "text/text", inputMessage);
             }
 
         });
@@ -367,10 +382,12 @@ void setup(){
 
   
         server.on("/recall", HTTP_GET, [] (AsyncWebServerRequest *request) {
+                    checking_fixtures=false;
+                   
                    String inputMessage;
                  if (request->hasParam("file")) {
                 	inputMessage = request->getParam("file")->value();
-                	                	inputMessage = "/cameo/"+inputMessage;
+                    inputMessage = "/cameo/"+inputMessage;
 
 
 
@@ -381,6 +398,13 @@ void setup(){
                     }
                         String reply;
                     
+                    float speed = .4;
+                  if (request->hasParam("speed")) {
+                        inputMessage = request->getParam("speed")->value();
+                         speed = inputMessage.toFloat();
+                  }
+                         Serial.printf("Speed: %f\n",speed);
+                    
                      Serial.println(file.name());
                       while(file.available()){
                           String s=file.readStringUntil(',');
@@ -388,7 +412,7 @@ void setup(){
                             Serial.print(idx);
                             Serial.print(",");
                             if (idx >= 0 && idx < NUM_FIXT) {
-                                f[idx].setFadeTime(0.1);
+                                f[idx].setFadeTime(speed);
                                 if (reply != "") reply = reply + ',';
                                 reply = reply  + f[idx].parse(file);
                             }
@@ -435,6 +459,7 @@ void setup(){
             String inputMessage;
             
         	if (request->hasParam("fixture")) {
+            	    checking_fixtures = true;
                     int fixt;
                 	inputMessage = request->getParam("fixture")->value();
                     ESP32DMX.clearSlots();
