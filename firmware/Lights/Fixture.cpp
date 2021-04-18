@@ -15,7 +15,7 @@ void Fixture::setAddress(int a) {
 
 void Fixture::setFadeTime(float f) {
     _fade_time = f;
-    if (_fade_time > 600) _address = 600;
+    if (_fade_time > 600) _fade_time = 600;
     if (_fade_time < 0) _fade_time = 0;
 }
 
