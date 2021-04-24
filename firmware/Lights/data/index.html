@@ -4,16 +4,26 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="src/bootstrap.min.css">
-		<link rel="stylesheet" href="src/jquery-ui.min.css">
-
+	<link rel="stylesheet" href="src/jquery-ui.min.css">
 	<script src="src/jquery-3.4.1.min.js">
 	</script>
-		<script src="src/jquery-ui.min.js"></script>
+	<script src="src/jquery-ui.min.js">
+	</script>
 	<script src="src/bootstrap.bundle.min.js">
 	</script>
-	<style>		.btn {float:clear;width:180px;margin:10px;}
-	.level {position:absolute; left:250px; top:80px;height:360px;}
-	.speed {width:260px;}
+	<style>		.btn {width:180px;margin:10px;}
+			.level {position:absolute; left:250px; top:80px;height:360px;}
+			.colorlevel {position:absolute; right:250px; top:80px;height:360px;}
+			.speed, .colorspeed {position:absolute;bottom:-20px;width:260px;}
+			
+			
+			.ui-slider .ui-slider-handle {
+    width:2em;
+    left:-.6em;
+    text-decoration:none;
+    text-align:center;
+}
+
 	</style>
 	<title> TV.Lights</title>
 </head>
@@ -31,7 +41,7 @@
 			</ul>
 		</div>
 	</nav>
-	<div class="card" id="presets">
+	<div class="card" id="presets" style="width:48%;float:left">
 		<div class="card-header">
 			Presets 
 		</div>
@@ -39,33 +49,64 @@
 			<div style="width:200px;float:left;">
 				<button type="button" class="btn btn-lg btn-outline-light">01-Rücklicht</button> <button type="button" class="btn btn-lg btn-outline-light">02-Frontlicht</button> <button type="button" class="btn btn-lg btn-outline-light">03-Seite</button> <button type="button" class="btn btn-lg btn-outline-light">04-Begrüssung</button> <button type="button" class="btn btn-lg btn-outline-light">05-Konserve</button> <button type="button" class="btn btn-lg btn-outline-light">06-Live</button> 
 			</div>
+			<div class="level">
+			</div>
+			<div class="speed">
+			</div>
 		</div>
-		<div class="level">
+	</div>
+	<div class="card" id="colors" style="width:48%; float:right;">
+		<div class="card-header">
+			Colors 
 		</div>
-		<div class="speed">
+		<div class="card-body">
+			<div class="colorlevel">
+			</div>
+			<div style="width:200px;float:left;">
+				<button type="button" class="btn btn-lg btn-outline-light">01</button> <button type="button" class="btn btn-lg btn-outline-light">02</button> <button type="button" class="btn btn-lg btn-outline-light">03</button> <button type="button" class="btn btn-lg btn-outline-light">04</button> <button type="button" class="btn btn-lg btn-outline-light">05</button> <button type="button" class="btn btn-lg btn-outline-light">06</button> 
+			</div>
+			<div class="colorspeed">
+			</div>
 		</div>
 	</div>
 </div>
 <script>
 	$( document ).ready(function(){
-
-  function refreshLevel() {
+	
+	  function refreshLevel() {
 	    level = $(this).slider( "value" );
 	    $.get('http://lights.local/set?master='+level);
 	};
 	 
-
+	  function refreshcolorLevel() {
+	    level = $(this).slider( "value" );
+	    $.get('http://lights.local/set?colormaster='+level);
+	};
+	
 	$( "#presets * button" ).click(function(e) {
-        var val = $(this).html();
-        var speed= $('.speed').slider( "value" );
-        speed = speed/90.;
-
-	    $( "button" ).removeClass('btn-light');
-	    $( "button" ).removeClass('btn-outline-light');
-	    $( "button" ).addClass('btn-outline-light');
+	        var val = $(this).html();
+	        var speed= $('.speed').slider( "value" );
+	        speed = speed/90.;
+	
+	    $( "#presets * button" ).removeClass('btn-light');
+	    $( "#presets * button" ).removeClass('btn-outline-light');
+	    $( "#presets * button" ).addClass('btn-outline-light');
 	    $(this).removeClass('btn-outline-light');
 	    $(this).addClass('btn-light');
-        $.get('http://lights.local/recall?file='+val+'&speed='+speed);
+	        $.get('http://lights.local/recall?file='+val+'&speed='+speed);
+	});
+	
+	$( "#colors * button" ).click(function(e) {
+	        var val = $(this).html();
+	        var speed= $('.colorspeed').slider( "value" );
+	        speed = speed/30.;
+	
+	    $( "#colors * button" ).removeClass('btn-light');
+	    $( "#colors * button" ).removeClass('btn-outline-light');
+	    $( "#colors * button" ).addClass('btn-outline-light');
+	    $(this).removeClass('btn-outline-light');
+	    $(this).addClass('btn-light');
+	        $.get('http://lights.local/recallpar?file='+val+'&speed='+speed);
 	});
 	
 	$('.level').slider({
@@ -83,8 +124,25 @@
 	                max: 255,
 	                value: 127,
 	         });	  
-
+	
+		$('.colorlevel').slider({
+	                orientation: "vertical",
+	                range: "min",
+	                max: 255,
+	                value: 255,
+	                slide: refreshcolorLevel,
+	                change: refreshcolorLevel
+	         });	
+	           
+	    	$('.colorspeed').slider({
+	                orientation: "horizontal",
+	                range: "min",
+	                max: 255,
+	                value: 127,
+	         });	  
+	
 	});
+	
 </script>
 </body>
 </html>

@@ -19,6 +19,7 @@
 #include <SPIFFS.h>
 #include "ESPAsyncWebServer.h"
 #include "Fixture.h"
+#include "Parled.h"
 #include <LXESP32DMX.h>
 #include "Easing.h"
 
@@ -34,7 +35,8 @@ const int NUM_PIXELS    =   26;
 #define WIFI_TIMEOUT		4000
 String 	hostname;
 
-#define NUM_FIXT 11
+#define NUM_FIXT 12
+#define NUM_PARLED 6
 
 //========================================================================================
 //----------------------------------------------------------------------------------------
@@ -44,6 +46,8 @@ Timer                                   t;
 AsyncWebServer                          server(80);
 
 Fixture f[NUM_FIXT];
+Parled p[NUM_PARLED];
+
 bool checking_fixtures;
 
 //========================================================================================
@@ -53,6 +57,9 @@ void update() {
     if (checking_fixtures) return;
     for (int i = 0; i < NUM_FIXT; i++) {
         f[i].update();
+    }
+    for (int i = 0; i < NUM_PARLED; i++) {
+        p[i].update();
     }
  //   Serial.println();
 }
@@ -262,6 +269,11 @@ void setup(){
     for (int i = 0; i < NUM_FIXT; i++) {
         f[i].setAddress(i+1);
     }
+    f[11].setAddress(16);
+
+    for (int i = 0; i < NUM_PARLED; i++) {
+        p[i].setAddress(3*i+24);
+    }
 
     if(!SPIFFS.begin()){
          Serial.println("An Error has occurred while mounting SPIFFS");
@@ -359,12 +371,48 @@ void setup(){
                 request->send(200, "text/text", inputMessage);
             }
 
+          if (request->hasParam("colormaster")) {
+                inputMessage = request->getParam("colormaster")->value();
+                float level = inputMessage.toFloat()/255.;
+                if (level < 0) level = 0;
+                if (level > 1) level = 1;
+                for (int i = 0; i < NUM_PARLED; i++) {
+                    p[i].setMaster(level);
+                }
+                request->send(200, "text/text", inputMessage);
+            }
+
+       	if (request->hasParam("parled")) {
+                    checking_fixtures = false;
+
+                    int chann;
+                	inputMessage = request->getParam("parled")->value();
+                    chann = inputMessage.toInt() % NUM_PARLED;
+                    
+                    float r,g, b;
+        	        if (request->hasParam("r")) {
+                    	inputMessage = request->getParam("r")->value();
+                           r =inputMessage.toFloat()/255.;                       
+                    }
+        	        if (request->hasParam("g")) {
+                    	inputMessage = request->getParam("g")->value();
+                           g =inputMessage.toFloat()/255.;                       
+                    }
+        	        if (request->hasParam("b")) {
+                    	inputMessage = request->getParam("b")->value();
+                           b =inputMessage.toFloat()/255.;                       
+                    }
+                    p[chann].startFade(r,g,b, 0.);
+                    request->send(200, "text/text", "check");
+            }
+
         });
         server.on("/getcameo", HTTP_GET, [] (AsyncWebServerRequest *request) {
                     request->send(200, "text/text", cuelist("/cameo"));
 
         });
   
+
     server.on("/delete", HTTP_GET, [] (AsyncWebServerRequest *request) {
                    String inputMessage;
                  if (request->hasParam("file")) {
@@ -454,7 +502,81 @@ void setup(){
             }
 
         });
-        
+
+        server.on("/savepar", HTTP_GET, [] (AsyncWebServerRequest *request) {
+            String inputMessage;
+            
+        	if (request->hasParam("file")) {
+                	inputMessage = request->getParam("file")->value();
+                	inputMessage = "/parled/"+inputMessage;
+                    File file = SPIFFS.open(inputMessage.c_str(), FILE_WRITE);
+                	
+                    if(!file){
+                        Serial.println("- failed to open file for writing");
+                        return;
+                    }
+    
+      
+                    for (int i = 0; i < NUM_PARLED; i++) {
+                            file.print(i);
+                            file.print(",");
+                            p[i].dump(file);
+                            file.print("\n");
+                    }
+                    file.close();
+
+
+                    request->send(200, "text/text", "check");
+            }
+
+        });
+
+        server.on("/recallpar", HTTP_GET, [] (AsyncWebServerRequest *request) {
+                    checking_fixtures=false;
+                   
+                   String inputMessage;
+                 if (request->hasParam("file")) {
+                	inputMessage = request->getParam("file")->value();
+                    inputMessage = "/parled/"+inputMessage;
+
+
+
+                    File file = SPIFFS.open(inputMessage.c_str());
+                    if(!file || file.isDirectory()){
+                        Serial.println("- failed to open file for reading");
+                        return;
+                    }
+                        String reply;
+                    
+                    float speed = .4;
+                  if (request->hasParam("speed")) {
+                        inputMessage = request->getParam("speed")->value();
+                         speed = inputMessage.toFloat();
+                  }
+                         Serial.printf("Speed: %f\n",speed);
+                    
+                     Serial.println(file.name());
+                      while(file.available()){
+                          String s=file.readStringUntil(',');
+                            int idx = s.toInt();
+                            Serial.print(idx);
+                            Serial.print(",");
+                            if (idx >= 0 && idx < NUM_PARLED) {
+                                p[idx].setFadeTime(speed);
+                                if (reply != "") reply = reply + '|';
+                                reply = reply  + p[idx].parse(file);
+                            }
+                     }
+                     file.close();
+
+//readFile(SPIFFS, inputMessage.c_str());
+
+
+
+                    request->send(200, "text/text",reply);
+                }
+        });
+
        server.on("/check", HTTP_GET, [] (AsyncWebServerRequest *request) {
             String inputMessage;
             
@@ -504,6 +626,14 @@ void setup(){
     
     ESP32DMX.startOutput(DMX_SERIAL_OUTPUT_PIN);
     
+    
+                          ESP32DMX.setSlot(11 + 2, 255);	
+                            ESP32DMX.setSlot(11 + 3, 240);	
+                            ESP32DMX.setSlot(11 + 4, 255);	
+
+                        ESP32DMX.setSlot(16 + 2, 255);	
+                            ESP32DMX.setSlot(16 + 3, 240);	
+                            ESP32DMX.setSlot(16 + 4, 255);	
 
   //  test();
     t.every(20, update);

@@ -25,7 +25,7 @@ Session.set("Project", {
    end:"Fri Apr 23 2021 00:00:00 GMT+0100 (CET)",
    abspannVorlauf : "Kantonsschule Hottingen, Klasse G1b",
    leitung : "Michael Egger, Margrit Egger",
-   danke: "Ina La Serra, Cornelia Heinz, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+   danke: "Ina La Serra, Cornelia Heinz, Hansjürg Wicki, Hausdienst KSH, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Noëmi Blumenthal,  Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
 });
 
 

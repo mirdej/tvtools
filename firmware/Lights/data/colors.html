@@ -13,8 +13,8 @@
 	<script src="src/bootstrap.bundle.min.js">
 	</script>
 	<style>		
-	
-	.red, .green, .blue {
+			
+			.red, .green, .blue {
 		  float: left;
 		  clear: left;
 		  width: 300px;
@@ -35,8 +35,10 @@
 		.green .ui-slider-handle { border-color: #8ae234; }
 		.blue .ui-slider-range { background: #729fcf; }
 		.blue .ui-slider-handle { border-color: #729fcf; }
-			.card {width:550px;!float:left;margin:6px;}
-
+			.fixture {width:550px;float:left;margin:6px;} 
+		
+		#commands {position:fixed;width:100%;bottom:0px;left:0px;}
+		
 	</style>
 </head>
 <body>
@@ -45,7 +47,7 @@
 		<a class="navbar-brand" href="#"> TV Lights v2.0 by [&nbsp;a&nbsp;n&nbsp;y&nbsp;m&nbsp;a&nbsp;] </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"> </span> </button> 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"> <a class="nav-link" href="/"> Home  </a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="/"> Home </a> </li>
 				<li class="nav-item active"> <a class="nav-link" href="levels"> Presets </a> </li>
 				<li class="nav-item active"> <a class="nav-link" href="colors"> Colors<span class="sr-only"> (current) </span></a> </li>
 				<li class="nav-item active"> <a class="nav-link" href="fixtures"> Fixture check</a> </li>
@@ -53,13 +55,18 @@
 			</ul>
 		</div>
 	</nav>
-	<div class="container">
+	<div class="card-header" id="Cues">
+	</div>
+	<div class="alert alert-warning" id="savingalert" role="alert">
+		Saving.... 
+	</div>
+	<div class="card-body" id="individualcontrol">
 		<div class="header">
 			Colors 
 		</div>
 		<div class="card fixture border-light">
 			<div class="card-header">
-				33 
+				1 
 			</div>
 			<div class="card-body">
 				<div class="red">
@@ -74,7 +81,67 @@
 		</div>
 		<div class="card fixture border-light">
 			<div class="card-header">
-				36 
+				2 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				3 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				4 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				5 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				6 
 			</div>
 			<div class="card-body">
 				<div class="red">
@@ -88,9 +155,15 @@
 			</div>
 		</div>
 	</div>
+	<div class="card-header" id="commands">
+		<button id="savebutton" type="button" class="btn btn-lg btn-outline-light">Save</button> 
+	</div>
+</div>
 </div>
 <script>
 	$( function() {
+	
+		    $('#savingalert').hide();
 	
 	  function hexFromRGB(r, g, b) {
 	    var hex = [
@@ -106,17 +179,51 @@
 	    return hex.join( "" ).toUpperCase();
 	  }
 	  
-	  function refreshSwatch() {
+	  
+	  	    function build_cuelist(data) {
+	    
+	            var items = data.split(',');
+	            var buttons = ""
+	            for (var i = 0; i < items.length; i++) {
+	                    buttons += '<button type="button" class="cue btn btn-lg btn-outline-light">';
+	                    buttons += items[i];
+	                    buttons += '</button> ';
+	
+	            }
+	                $( "#Cues" ).html( buttons );
+	                $('.cue').click(function(e){
+	                   // var val = $(this).prevAll().length;
+	                    
+	                    $( "button" ).removeClass('btn-light');
+	                    $( "button" ).addClass('btn-outline-light');
+	                    $(this).removeClass('btn-outline-light');
+	                    $(this).addClass('btn-light');
+	                    var val = $(this).html()
+	                    $.get('http://lights.local/recallpar?file='+val, function( data ) {
+	                                    var parleds = data.split('|');
+	                                    for (var i = 0; i < parleds.length; i++) {
+	                                        var colors = parleds[i].split(',');
+	                                        $('.red').eq(i).slider('value',parseInt(colors[0] * 255.));
+	                                        $('.green').eq(i).slider('value',parseInt(colors[1] * 255.));
+	                                        $('.blue').eq(i).slider('value',parseInt(colors[2] * 255.));
+	                                    }
+	       	                 });
+	                })
+	                $( "#Cues button" ).first().click();
+	
+	            } 
+	
+	  function refreshSwatch(event) {
 	    var 
 	      red = $(this).parent().children( ".red" ).slider( "value" ),
 	      green = $(this).parent().children( ".green" ).slider( "value" ),
 	      blue = $(this).parent().children( ".blue" ).slider( "value" ),
 	      hex = hexFromRGB( red, green, blue );
 	    $(this).siblings( ".swatch" ).css( "background-color", "#" + hex );
-	       var channel = parseInt($(this).parent().siblings('.card-header').html())
-	    $.get('http://lights.local/set?channel='+channel+'&value='+red);
-	    $.get('http://lights.local/set?channel='+(channel+1)+'&value='+green);
-	    $.get('http://lights.local/set?channel='+(channel+2)+'&value='+blue);
+	       var channel = parseInt($(this).parent().siblings('.card-header').html())-1;
+	           if (event.originalEvent) {
+	     $.get('http://lights.local/set?parled='+channel+'&r='+red+'&g='+green+'&b='+blue);
+	    }
 	  }
 	 
 	  $( ".red, .green, .blue" ).slider({
@@ -127,9 +234,18 @@
 	    slide: refreshSwatch,
 	    change: refreshSwatch
 	  });	  
-	  
+	
+	 $('#savebutton').click(function(e){
+	        $('#savingalert').show();
+	            var name = ($("#Cues .btn-light").html());        
+	    	    $.get('http://lights.local/savepar?file='+name,function(data){
+	              $('#savingalert').html(data);
+	              $('#savingalert').fadeOut(1000);
+	    })
+	 });
+	
+	build_cuelist("01,02,03,04,05,06");
 	} );
-</script>
 </script>
 </body>
 </html>
