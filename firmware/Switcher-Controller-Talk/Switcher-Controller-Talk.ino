@@ -1,4 +1,4 @@
-#define VERSION "2020-03-14"
+#define VERSION "2022-05-02"
 
 //----------------------------------------------------------------------------------------
 //
@@ -25,7 +25,8 @@
 #include "Timer.h"
 #include <SPI.h>
 #include <ESPmDNS.h>
-#include <SPIFFS.h>
+#include "FS.h"
+#include <LittleFS.h>
 #include "ESPAsyncWebServer.h"
 #include <Preferences.h>
 
@@ -96,9 +97,7 @@ static bool eth_connected = false;
 
 
 //IPAddress 						switcherIp(192, 168, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						switcherIp			(IP1, IP2, IP3, 241);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						switcher_rec_Ip		(IP1, IP2, IP3, 240);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						local_IP			(IP1, IP2, IP3, 200);
+IPAddress 						switcherIp			(IP1, IP2, IP3, 241);	 // <= SETUP!  IPAddress 						local_IP			(IP1, IP2, IP3, 200);
 IPAddress 						gateway				(IP1, IP2, IP3, 1);
 IPAddress 						subnet				(255, 255, 255, 0);
 IPAddress 						primaryDNS			(8, 8, 8, 8); //optional
@@ -106,7 +105,6 @@ IPAddress 						secondaryDNS		(8, 8, 4, 4); //optional
 IPAddress						player_Ip			(IP1, IP2, IP3, 242);
 IPAddress						recorder_Ip			(IP1, IP2, IP3, 243);
 ATEMmax 						AtemSwitcher;
-ATEMmax 						AtemSwitcher_Rec;
 
 ClientBMDHyperdeckStudio player; 
 ClientBMDHyperdeckStudio recorder; 
@@ -136,9 +134,6 @@ void service_BMD() {
 	if(!eth_connected) return;
 	if (!AtemSwitcher.hasInitialized()) { AtemSwitcher.runLoop(); } 
 	else { AtemSwitcher.runLoop(5);}
-	
-	if (!AtemSwitcher_Rec.hasInitialized()) { AtemSwitcher_Rec.runLoop(); } 
-	else { AtemSwitcher_Rec.runLoop(5);}
 
 	if(recorder_online) {     recorder.runLoop();	}	
 	if(player_online) {		player.runLoop(); }
@@ -303,7 +298,6 @@ void set_preview(int i) {
 	if (i < 0) return;
 	if (i < camera_count) {
 		AtemSwitcher.setPreviewInputVideoSource(0, i+1);
-		AtemSwitcher_Rec.setPreviewInputVideoSource(0, i+1);
 	} 
 }
 
@@ -405,11 +399,6 @@ void check_ad() {
 	fade_rate = temp;
 }
 
-void setup_rec_switcher() {
-	if(!eth_connected) return;
-	AtemSwitcher_Rec.setAudioMixerInputMixOption(5, 0);
-	AtemSwitcher_Rec.setProgramInputVideoSource(0, 5);
-}
 
 //----------------------------------------------------------------------------------------
 //																process webpage template
@@ -530,27 +519,27 @@ Serial.println("Setting up wenbserver");
 
 
 	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "/index.html",  String(), false, processor);
+		request->send(LittleFS, "/index.html",  String(), false, processor);
 	});
 
 	server.on("/src/bootstrap.bundle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "/src/bootstrap.bundle.min.js", "text/javascript");
+		request->send(LittleFS, "/src/bootstrap.bundle.min.js", "text/javascript");
 	});
 
 	server.on("/src/jquery-3.4.1.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "/src/jquery-3.4.1.min.js", "text/javascript");
+		request->send(LittleFS, "/src/jquery-3.4.1.min.js", "text/javascript");
 	});
 
 	server.on("/src/bootstrap.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "/src/bootstrap.min.css", "text/css");
+		request->send(LittleFS, "/src/bootstrap.min.css", "text/css");
 	});
 
 	server.on("/rc/bootstrap4-toggle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "rc/bootstrap4-toggle.min.js", "text/javascript");
+		request->send(LittleFS, "rc/bootstrap4-toggle.min.js", "text/javascript");
 	});
 
 	server.on("/src/bootstrap4-toggle.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(SPIFFS, "/src/bootstrap4-toggle.min.css", "text/css");
+		request->send(LittleFS, "/src/bootstrap4-toggle.min.css", "text/css");
 	});
 
 
@@ -597,7 +586,7 @@ Serial.println("Setting up wenbserver");
 		if (request->hasParam("HostName")) {
 			inputMessage = request->getParam("HostName")->value();
 			hostname = inputMessage;
-//                writeFile(SPIFFS, "/hostname.txt", inputMessage.c_str());
+//                writeFile(LittleFS, "/hostname.txt", inputMessage.c_str());
 			preferences.begin("changlier", false);
 			preferences.putString("hostname", hostname);
 			preferences.end();
@@ -665,9 +654,6 @@ void WiFiEvent(WiFiEvent_t event)
         AtemSwitcher.serialOutput(1);
 		AtemSwitcher.connect();
 
-		AtemSwitcher_Rec.begin(switcher_rec_Ip);
-		AtemSwitcher_Rec.connect();
-
         setup_web_server();
         connection_state = STATE_WIFI_OK;
 
@@ -711,8 +697,8 @@ void setup() {
     digitalWrite(PIN_CS,HIGH);
 	SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI);
 	
-	 if(!SPIFFS.begin()){
-         Serial.println("An Error has occurred while mounting SPIFFS");
+	 if(!LittleFS.begin()){
+         Serial.println("An Error has occurred while mounting LittleFS");
          return;
     }
  
@@ -736,8 +722,6 @@ void setup() {
 	t.every(20, check_buttons);    
 	t.every(50, update_pixels);    
 	t.every(50, check_ad); 
-	t.every(10000,setup_rec_switcher);
-
 }
 //========================================================================================
 //----------------------------------------------------------------------------------------
