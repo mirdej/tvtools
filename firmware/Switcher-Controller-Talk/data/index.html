@@ -35,8 +35,8 @@
 					Live: 
 				</div>
 				<div class="col-9">
-					<button type="button" class="air btn btn-lg btn-outline-light">1</button> <button type="button" class="air btn btn-lg btn-outline-light">2</button> <button type="button" class="air btn btn-lg btn-outline-light">3</button> <button type="button" class="air btn btn-lg btn-outline-light">4</button> <button id="dsk" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">DSK</button> 
-				</div>
+					<button type="button" class="air btn btn-lg btn-outline-light">1</button> <button type="button" class="air btn btn-lg btn-outline-light">2</button> <button type="button" class="air btn btn-lg btn-outline-light">3</button> <button type="button" class="air btn btn-lg btn-outline-light">4</button> <button id="dsk" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">DSK</button> <button id="dsk2" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">TITLES</button> 
+<button id="computer" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">Computer</button> 				</div>
 			</form>
 		</div>
 	</div>
@@ -135,6 +135,8 @@
 	   });
 	
 	var dsk = 0;
+	var dsk2 = 0;
+	var fcp = 0;
 	
 	$("#dsk").click(function(){
 	    if(dsk){
@@ -143,6 +145,26 @@
 	    } else {
 	        $.get('http://switchbox.local/dsk1?on=1');
 	        dsk=1;
+	    };
+    });
+
+	$("#dsk2").click(function(){
+	    if(dsk2){
+	        $.get('http://switchbox.local/dsk2?on=0');
+	        dsk2 = 0;
+	    } else {
+	        $.get('http://switchbox.local/dsk2?on=1');
+	        dsk2=1;
+	    };
+    });
+
+	$("#computer").click(function(){
+	    if(fcp){
+	        $.get('http://switchbox.local/fcp?on=0');
+	        fcp = 0;
+	    } else {
+	        $.get('http://switchbox.local/fcp?on=1');
+	        fcp=1;
 	    };
 	});
 </script>

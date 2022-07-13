@@ -4,7 +4,7 @@
 //
 //  ATEM  Controller by [ a n y m a ]
 //                                          
-//          Target MCU: Olimex ESP32 PoE ISO
+//          Target MCU: Olimex ESP32 PoE (was Olimex ESP32 PoE ISO)
 //          Copyright:  2019 Michael Egger, me@anyma.ch
 //          License:        This is FREE software (as in free speech, not necessarily free beer)
 //                                  published under gnu GPL v.3
@@ -15,9 +15,9 @@
 //----------------------------------------------------------------------------------------
 // ATTENTION
 // does not work with vanilla Skaarhoj Library en ESP32
-//  #include Ethernet.h must be changed to #include Wifi.h
+//  in ClientBMDHyperdeckStudio.h  #include Ethernet.h must be changed to #include Wifi.h
 //----------------------------------------------------------------------------------------
-
+// As of May 2022: Version 2.0.2 of esp-arduino does not work (ethernet). use 1.0.3
 
 
 
@@ -29,6 +29,8 @@
 #include <LittleFS.h>
 #include "ESPAsyncWebServer.h"
 #include <Preferences.h>
+#include <AsyncElegantOTA.h>
+
 
 #include <ATEMbase.h>
 #include <ATEMmax.h>
@@ -75,7 +77,7 @@ const int NUM_PIXELS    =   8;
 
 #define IP1	192
 #define IP2	168
-#define IP3	0
+#define IP3	252
 
 //========================================================================================
 //----------------------------------------------------------------------------------------
@@ -96,8 +98,8 @@ AsyncWebServer                          server(80);
 static bool eth_connected = false;
 
 
-//IPAddress 						switcherIp(192, 168, 0, 241);	 // <= SETUP!  IP address of the ATEM Switcher
-IPAddress 						switcherIp			(IP1, IP2, IP3, 241);	 // <= SETUP!  IPAddress 						local_IP			(IP1, IP2, IP3, 200);
+IPAddress 						switcherIp			(IP1, IP2, IP3, 241);	
+IPAddress 						local_IP			(IP1, IP2, IP3, 200);
 IPAddress 						gateway				(IP1, IP2, IP3, 1);
 IPAddress 						subnet				(255, 255, 255, 0);
 IPAddress 						primaryDNS			(8, 8, 8, 8); //optional
@@ -128,7 +130,7 @@ boolean	recorder_online = false;
 
 char buf[] = "Hello this is an empty message with, a comma in it";
 
-
+long secret_press_start;
 
 void service_BMD() {
 	if(!eth_connected) return;
@@ -318,6 +320,15 @@ void check_buttons(){
     buttons_raw = SPI.transfer(0x00);
     SPI.endTransaction();
 
+    if (secret_press_start > 0) {
+        if (millis() - secret_press_start > 3000) {
+            Serial.println("SECRET LONGPRESS");
+            AtemSwitcher.setProgramInputVideoSource(0, 6);
+            secret_press_start = 0;
+        }
+    }
+
+
     if (buttons_raw == old_buttons) return;
 	
 //	Serial.println(buttons_raw,BIN);
@@ -334,6 +345,13 @@ void check_buttons(){
 	if(!eth_connected) return;
     for (int i = 0; i < 8; i++) {
         if (triggers_press & (1 << i)) {
+            if (selected == 0) {
+                if (i==5) {
+                    Serial.println("SECRET PRESS");
+                    secret_press_start = millis();
+                }
+            }
+            
 			selected = i-1;
 			set_preview(selected);
 			
@@ -349,7 +367,12 @@ void check_buttons(){
          }
         if (triggers_release & (1 << i)) {
         	selected = -1;
-		}
+        	if (secret_press_start > 0) {
+                Serial.println("SECRET CLEAR");
+        	    secret_press_start = 0;
+        	}
+        	
+ 		}
     }    
   }
 
@@ -517,6 +540,42 @@ Serial.println("Setting up wenbserver");
 		request->send(200, "text/text", String(dsk1_on_air));
 	});
 
+	server.on("/dsk2", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("on")) {
+				inputMessage = request->getParam("on")->value();
+				if (inputMessage.toInt()) {
+					AtemSwitcher.setDownstreamKeyerFillSource(1, 6);
+					AtemSwitcher.setDownstreamKeyerKeySource(1, 6);
+					AtemSwitcher.setDownstreamKeyerPreMultiplied(1,false);
+					AtemSwitcher.setDownstreamKeyerClip(1, 82);
+					AtemSwitcher.setDownstreamKeyerOnAir(1,true);
+					Serial.println("DSK2 On Air");
+				} else {
+					AtemSwitcher.setDownstreamKeyerOnAir(1,false);
+					Serial.println("DSK2 Off");
+				}
+		}
+		int dsk2_on_air = AtemSwitcher.getDownstreamKeyerOnAir(0);
+		request->send(200, "text/text", String(dsk2_on_air));
+	});
+
+	server.on("/fcp", HTTP_GET, [](AsyncWebServerRequest *request){
+		String inputMessage;
+		if (request->hasParam("on")) {
+				inputMessage = request->getParam("on")->value();
+				if (inputMessage.toInt()) {
+		            AtemSwitcher.setProgramInputVideoSource(0, 6);
+					Serial.println("Compi On Air");
+				} else {
+					AtemSwitcher.setDownstreamKeyerOnAir(1,false);
+                    AtemSwitcher.performCutME(0);
+					Serial.println("Compi Off");
+				}
+		}
+		int dsk2_on_air = AtemSwitcher.getDownstreamKeyerOnAir(0);
+		request->send(200, "text/text", String(dsk2_on_air));
+	});
 
 	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
 		request->send(LittleFS, "/index.html",  String(), false, processor);
@@ -604,8 +663,9 @@ Serial.println("Setting up wenbserver");
 		request->send(200, "text/text", inputMessage);
 	});
 
+    AsyncElegantOTA.begin(&server);
 	server.begin();
-	Serial.println("Wenbserver running");
+	Serial.println("Webserver running");
 }
 
 //----------------------------------------------------------------------------------------
@@ -614,15 +674,15 @@ Serial.println("Setting up wenbserver");
 void WiFiEvent(WiFiEvent_t event)
 {
   switch (event) {
-    case SYSTEM_EVENT_ETH_START:
+    case ARDUINO_EVENT_ETH_START:
       Serial.println("ETH Started");
       //set eth hostname here
       ETH.setHostname(hostname.c_str());
       break;
-    case SYSTEM_EVENT_ETH_CONNECTED:
+    case ARDUINO_EVENT_ETH_CONNECTED:
       Serial.println("ETH Connected");
       break;
-    case SYSTEM_EVENT_ETH_GOT_IP:
+    case ARDUINO_EVENT_ETH_GOT_IP:
     Serial.println();
       Serial.print("ETH MAC: ");
       Serial.print(ETH.macAddress());
@@ -643,11 +703,6 @@ void WiFiEvent(WiFiEvent_t event)
              Serial.println("Error setting up MDNS responder!");
         }
         Serial.println("mDNS responder started");
-
-        	// Initialize a connection to the switcher:
-   /*     Serial.print("Begin Switcher IP ");
-        Serial.println(switcherIp.toString());*/
-        
         
 		AtemSwitcher.begin(switcherIp);
 		
@@ -660,13 +715,13 @@ void WiFiEvent(WiFiEvent_t event)
 
 
       break;
-    case SYSTEM_EVENT_ETH_DISCONNECTED:
+    case ARDUINO_EVENT_ETH_DISCONNECTED:
       Serial.println("ETH Disconnected");
       eth_connected = false;
       player_online = false;
       recorder_online = false;
       break;
-    case SYSTEM_EVENT_ETH_STOP:
+    case ARDUINO_EVENT_ETH_STOP:
       Serial.println("ETH Stopped");
       eth_connected = false;
       break;
@@ -674,6 +729,8 @@ void WiFiEvent(WiFiEvent_t event)
       break;
   }
 }
+
+
 //========================================================================================
 //----------------------------------------------------------------------------------------
 //																				SETUP
@@ -692,6 +749,7 @@ void setup() {
 	FastLED.setBrightness(BRIGHTNESS);
 
 	Serial.begin(115200);
+    Serial.println("Setup Start");
 
     pinMode(PIN_CS, OUTPUT);
     digitalWrite(PIN_CS,HIGH);
@@ -704,7 +762,9 @@ void setup() {
  
     hostname = "switchbox";
 	camera_count = 4;
-		
+
+    Serial.println("Looking for network");
+
 	WiFi.onEvent(WiFiEvent);
     ETH.begin();
 	ETH.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
@@ -716,7 +776,7 @@ void setup() {
 		
 		if (millis() > WIFI_TIMEOUT) break;
 	}
-	
+	Serial.println();
 	Serial.println("Hello");
 	t.every(100, check_tally); 
 	t.every(20, check_buttons);    
