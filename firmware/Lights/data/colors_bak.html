@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title> TV.Lights - Colors </title>
+	<link rel="stylesheet" href="src/bootstrap.min.css">
+	<link rel="stylesheet" href="src/jquery-ui.min.css">
+	<script src="src/jquery-3.4.1.min.js">
+	</script>
+	<script src="src/jquery-ui.min.js">
+	</script>
+	<script src="src/bootstrap.bundle.min.js">
+	</script>
+	<style>		
+	
+	.red, .green, .blue {
+		  float: left;
+		  clear: left;
+		  width: 300px;
+		  margin: 15px;
+		}
+		
+		.swatch {
+		  width: 120px;
+		  height: 100px;
+		  margin-top: 18px;
+		  margin-left: 350px;
+		  background-image: none;
+		}
+		
+		  .red .ui-slider-range { background: #ef2929; }
+		.red .ui-slider-handle { border-color: #ef2929; }
+		.green .ui-slider-range { background: #8ae234; }
+		.green .ui-slider-handle { border-color: #8ae234; }
+		.blue .ui-slider-range { background: #729fcf; }
+		.blue .ui-slider-handle { border-color: #729fcf; }
+			.card {width:550px;!float:left;margin:6px;}
+
+	</style>
+</head>
+<body>
+<div class="container-fluid">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"> TV Lights v2.0 by [&nbsp;a&nbsp;n&nbsp;y&nbsp;m&nbsp;a&nbsp;] </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"> </span> </button> 
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> <a class="nav-link" href="/"> Home  </a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="levels"> Presets </a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="colors"> Colors<span class="sr-only"> (current) </span></a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="fixtures"> Fixture check</a> </li>
+				<li class="nav-item active"> <a class="nav-link" href="http://switchbox.local/"> Switcher</a> </li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="header">
+			Colors 
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				33 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+		<div class="card fixture border-light">
+			<div class="card-header">
+				36 
+			</div>
+			<div class="card-body">
+				<div class="red">
+				</div>
+				<div class="green">
+				</div>
+				<div class="blue">
+				</div>
+				<div class="swatch ui-widget-content ui-corner-all">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$( function() {
+	
+	  function hexFromRGB(r, g, b) {
+	    var hex = [
+	      r.toString( 16 ),
+	      g.toString( 16 ),
+	      b.toString( 16 )
+	    ];
+	    $.each( hex, function( nr, val ) {
+	      if ( val.length === 1 ) {
+	        hex[ nr ] = "0" + val;
+	      }
+	    });
+	    return hex.join( "" ).toUpperCase();
+	  }
+	  
+	  function refreshSwatch() {
+	    var 
+	      red = $(this).parent().children( ".red" ).slider( "value" ),
+	      green = $(this).parent().children( ".green" ).slider( "value" ),
+	      blue = $(this).parent().children( ".blue" ).slider( "value" ),
+	      hex = hexFromRGB( red, green, blue );
+	    $(this).siblings( ".swatch" ).css( "background-color", "#" + hex );
+	       var channel = parseInt($(this).parent().siblings('.card-header').html())
+	    $.get('http://lights.local/set?channel='+channel+'&value='+red);
+	    $.get('http://lights.local/set?channel='+(channel+1)+'&value='+green);
+	    $.get('http://lights.local/set?channel='+(channel+2)+'&value='+blue);
+	  }
+	 
+	  $( ".red, .green, .blue" ).slider({
+	    orientation: "horizontal",
+	    range: "min",
+	    max: 255,
+	    value: 127,
+	    slide: refreshSwatch,
+	    change: refreshSwatch
+	  });	  
+	  
+	} );
+</script>
+</script>
+</body>
+</html>

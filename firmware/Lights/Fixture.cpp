@@ -1,6 +1,8 @@
 #include "Fixture.h"
 #include "Easing.h"
-#include <LXESP32DMX.h>
+// #include <LXESP32DMX.h>
+
+extern uint8_t dmx_data[513];
 
 Fixture::Fixture() {
     _address = 1;
@@ -55,7 +57,7 @@ void Fixture::update(void){
     */
   //  if (out_level != _old_output_level) {
     
-        ESP32DMX.setSlot(_address, out_level);	
+        dmx_data[_address] = out_level;	
         old_output_level = out_level;
    // }
 }

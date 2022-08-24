@@ -88,12 +88,13 @@
 	    $('#savingalert').hide();
 	
 	    function build_cuelist(data) {
-	    
 	            var items = data.split(',');
+	            	            console.log(items);
+
 	            var buttons = ""
 	            for (var i = 0; i < items.length; i++) {
 	                    buttons += '<button type="button" class="cue btn btn-lg btn-outline-light">';
-	                    buttons += items[i].split('/')[2];
+	                    buttons += items[i];//.split('/')[2];
 	                    buttons += '</button> ';
 	
 	            }
