@@ -1,16 +1,9 @@
 <script setup>
 import { ErrorCodes, ref, watch } from 'vue'
-
-
-
-
 import axios from 'axios';
-
-
 import { onMounted } from 'vue'
 import AppFrame from "./AppFrame.vue"
-
-
+import { RouterLink, RouterView } from 'vue-router'
 
 //-------------------------------------------------------  GLOBALS
 
@@ -24,8 +17,6 @@ var ip = location.host;
     window.device_url = "http://" + ip + "/";
     window.served_from_device = true;
   }
-
-
 
 //-------------------------------------------------------  REACTIVE
 
@@ -62,12 +53,12 @@ onMounted(() => {
 <template>
   <div class="container">
     <AppFrame title="TV.Lights" :app_version="version"/>
-    
 
   <nav>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/fixtures">Fixtures</RouterLink>
   </nav>
+
   <main>
     <RouterView />
   </main>

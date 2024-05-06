@@ -23,16 +23,14 @@ year.value = new Date().getFullYear();
 
 onMounted(() => {
 
-axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
+/* axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
 
 .then(function (response) {
     window.device_url = "http://" + response.data.ip + "/";
     talking_to.value=window.device_url;
     console .log(window.device_url);
-   /*  chartData.value.labels.push('.');
-   chartData.value.datasets[0].data.push(50);
-    console.log(chartData.value.datasets[0].data); */
-})
+
+}) */
 })
 
 </script>

@@ -19,11 +19,7 @@ import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
 import ColorPicker from 'primevue/colorpicker';
 
-import { createMemoryHistory, createRouter } from 'vue-router'
-import HomeView from './HomeView.vue'
-import FixturesView from './FixturesView.vue'
-
-
+import router from './router'
 
 import './assets/app.css'
 import 'primevue/resources/themes/aura-dark-teal/theme.css'
@@ -33,19 +29,6 @@ window.device_url="http://lalala:8000/";
 window.served_from_device = true;
 
 const app = createApp(App);
-
-
-
-const routes = [
-    { path: '/', component: HomeView },
-    { path: '/fixtures', component: FixturesView },
-  ]
-  
-  const router = createRouter({
-    history: createMemoryHistory(),
-    routes,
-  })
-
 
 
 app.use(VueAxios, axios)
@@ -58,7 +41,6 @@ app.use(router)
 app.component("Button",Button);
 app.component("InputText",InputText);
 app.component("InputNumber",InputNumber);
-app.component("Toast",Toast);
 app.component("FloatLabel",FloatLabel);
 app.component("ColorPicker",ColorPicker);
 
