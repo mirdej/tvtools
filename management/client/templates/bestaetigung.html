@@ -1,0 +1,32 @@
+<template name="bestaetigungen">
+{{#each members}}
+{{> bestaetigung}}
+{{/each}}
+<button class="btn btn-primary alpha showAll dontPrint">Alle zeigen</button> 
+</template> 
+
+<!--  ..................................................................... MEMBER ROW -->
+
+<template name="bestaetigung">
+<div class="attestation" style="clear:both;position:relative;width:210mm;height:290mm;margin:0mm;padding:0mm;">
+<img src="/other/anyma_entete.svg" style="width:187mm;height:12mm;margin-left:12mm;" />
+<img src="/other/productions_stempel.jpg" style="position:absolute;bottom:1cm;right:5cm;z-index:-2;width:3cm;height:3cm;{{rotate}}">
+<img src="{{signature}}" style="{{signaturestyle}}" />
+<h2>PRAKTIKUMSBEST&Auml;TIGUNG</h2>
+<h4>[ a n y m a | productions ] bestätigt hiermit, dass</h4>
+<h1>{{first}} {{last}}</h1>
+<h4>am TV-Workshop “SchulTV”<br />im {{place}} teilgenommen hat</h4>
+<h3>vom {{valid}}</h3>
+<h4>als</h4>
+<h1><ul>{{#each jobs}}<li>{{title}}</li>{{/each}}</ul></h1>
+<div style="margin-top:2cm; width:18cm;">
+<p>In den TV-Workshops von [ a n y m a ] stellen die Teilnehmer von A-Z eine oder mehrere Live Fernsehsendungen her.</p>
+<p>Nach einer Einführung in die journalistischen Grundregeln - angelehnt an die ethischen Grundsätze des Schweizerischen Presserats - und einer Ausbildung in Kameraführung und Tontechnik, erarbeiten die TeilnehmerInnen ihre eigenen Themen welche sie in Gruppen in kurze Fernsehbeiträge umsetzen. Dreharbeiten und Schnitt der Beiträge realisieren die Teilnehmer unter unserer Anleitung selbstständig</p>
+<p>Die Beiträge werden in einer öffentlichen Livesendung dem Publikum präsentiert, während welcher die Teilnehmer sämtliche wichtigen Funktionen selbst wahrnehmen: von der Moderation über Tontechnik zu Kameraführung und Liveschnitt.</p>
+<p>Die Teilnahme bestätigt</p>
+<p style="margin-top:1cm">[ a n y m a | productions ] </p>
+<p>Michael Egger					</p>
+
+</div>
+</div>
+</template> 
