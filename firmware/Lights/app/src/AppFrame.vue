@@ -7,6 +7,8 @@
 import { ref, watch,onMounted } from 'vue'
 import DeviceInfo from "./DeviceInfo.vue"
 import SettingsBrowser from "./SettingsBrowser.vue"
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 import Badge from 'primevue/badge';
 import axios from 'axios';
@@ -51,7 +53,8 @@ axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
     </footer>
     <DeviceInfo />
     <SettingsBrowser />
-
+    <ConfirmDialog/>
+  <Toast />
 </template>
 
 

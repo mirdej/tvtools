@@ -16,10 +16,12 @@ import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
-import Toast from 'primevue/toast';
 import FloatLabel from 'primevue/floatlabel';
 import ColorPicker from 'primevue/colorpicker';
 
+import { createMemoryHistory, createRouter } from 'vue-router'
+import HomeView from './HomeView.vue'
+import FixturesView from './FixturesView.vue'
 
 
 
@@ -32,10 +34,26 @@ window.served_from_device = true;
 
 const app = createApp(App);
 
+
+
+const routes = [
+    { path: '/', component: HomeView },
+    { path: '/fixtures', component: FixturesView },
+  ]
+  
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes,
+  })
+
+
+
 app.use(VueAxios, axios)
 app.use(PrimeVue);
 app.use(ToastService);
 app.use(ConfirmationService);
+app.use(router)
+
 
 app.component("Button",Button);
 app.component("InputText",InputText);
