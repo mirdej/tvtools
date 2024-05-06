@@ -1,40 +1,117 @@
 {
   "name": "meteor-dev-bundle",
   "version": "0.0.0",
+  "lockfileVersion": 1,
+  "requires": true,
   "dependencies": {
+    "ansi-regex": {
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz",
+      "integrity": "sha512-sGwIGMjhYdW26/IhwK2gkWWI8DRCVO6uj3hYgHT+zD+QL1pa37tM3ujhyfcJIYSbsxp7Gxhy7zrRW/1AHm4BmA==",
+      "dev": true
+    },
+    "ansi-styles": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-1.1.0.tgz",
+      "integrity": "sha512-f2PKUkN5QngiSemowa6Mrk9MPCdtFiOSmibjZ+j1qhLGHHYsqZwmBMRF3IRMVXo8sybDqx2fJl2d/8OphBoWkA==",
+      "dev": true
+    },
+    "chalk": {
+      "version": "0.5.1",
+      "resolved": "https://registry.npmjs.org/chalk/-/chalk-0.5.1.tgz",
+      "integrity": "sha512-bIKA54hP8iZhyDT81TOsJiQvR1gW+ZYSXFaZUAvoD4wCHdbHY2actmpTE4x344ZlFqHbvoxKOaESULTZN2gstg==",
+      "dev": true,
+      "requires": {
+        "ansi-styles": "^1.1.0",
+        "escape-string-regexp": "^1.0.0",
+        "has-ansi": "^0.1.0",
+        "strip-ansi": "^0.3.0",
+        "supports-color": "^0.2.0"
+      }
+    },
+    "eachline": {
+      "version": "https://github.com/meteor/node-eachline/tarball/ff89722ff94e6b6a08652bf5f44c8fffea8a21da",
+      "integrity": "sha512-inuhbCNWfPM9wUAXE2OLrMT8+aN3fiLT5mvYIpqxMPeq5A8SGV9A+fmhJQWWORS7YP/NAseLEDxq2zkzbqN6eQ==",
+      "dev": true,
+      "requires": {
+        "type-of": "~2"
+      }
+    },
+    "escape-string-regexp": {
+      "version": "1.0.5",
+      "resolved": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz",
+      "integrity": "sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==",
+      "dev": true
+    },
     "fibers": {
       "version": "1.0.5",
-      "from": "fibers@1.0.5",
-      "resolved": "https://registry.npmjs.org/fibers/-/fibers-1.0.5.tgz"
+      "resolved": "https://registry.npmjs.org/fibers/-/fibers-1.0.5.tgz",
+      "integrity": "sha512-DaO/H/j9iG7aLTAtuU6BATdZtPnbdus0PKTMNWPLyaC8MpldB8BECGS+gckU4xAtA6lnRKe++zAg+cKyb6Loag=="
+    },
+    "has-ansi": {
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/has-ansi/-/has-ansi-0.1.0.tgz",
+      "integrity": "sha512-1YsTg1fk2/6JToQhtZkArMkurq8UoWU1Qe0aR3VUHjgij4nOylSWLWAtBXoZ4/dXOmugfLGm1c+QhuD0JyedFA==",
+      "dev": true,
+      "requires": {
+        "ansi-regex": "^0.2.0"
+      }
     },
     "semver": {
       "version": "4.1.0",
-      "from": "semver@4.1.0",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-4.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/semver/-/semver-4.1.0.tgz",
+      "integrity": "sha512-lLkkQcdd/nO1WKpCh2rljlJ17truE0Bs2x+Nor41/yKwnYeHtyOQJqA97NP4zkez3+gJ1Uh5rUqiEOYgOBMXbw=="
     },
     "source-map-support": {
       "version": "0.2.8",
-      "from": "source-map-support@0.2.8",
       "resolved": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.2.8.tgz",
+      "integrity": "sha512-ldRvn01aMXTZpadLbRhuLqiYuIX9/ih0s+eQntTYtxp0fogRsKQbDOQbkR0e9Nr8onbTBHiGY5zMVP5mbbo+5g==",
+      "requires": {
+        "source-map": "0.1.32"
+      },
       "dependencies": {
         "source-map": {
           "version": "0.1.32",
-          "from": "source-map@0.1.32",
           "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.32.tgz",
+          "integrity": "sha512-htQyLrrRLkQ87Zfrir4/yN+vAUd6DNjVayEjTSHXu29AYQJw57I4/xEL/M6p6E/woPNJwvZt6rVlzc7gFEJccQ==",
+          "requires": {
+            "amdefine": ">=0.0.4"
+          },
           "dependencies": {
             "amdefine": {
               "version": "0.1.0",
-              "from": "amdefine@>=0.0.4",
-              "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-0.1.0.tgz"
+              "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-0.1.0.tgz",
+              "integrity": "sha512-ISSPYm8G96iSe7pu8ffTAbLMevMRx9SFJ0MTIY2OjL9Qohf+oVCfizKrpN7BN29rJXG/opb3B1CO7ZapmMuvzA=="
             }
           }
         }
       }
     },
+    "strip-ansi": {
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.3.0.tgz",
+      "integrity": "sha512-DerhZL7j6i6/nEnVG0qViKXI0OKouvvpsAiaj7c+LfqZZZxdwZtv8+UiA/w4VUJpT8UzX0pR1dcHOii1GbmruQ==",
+      "dev": true,
+      "requires": {
+        "ansi-regex": "^0.2.1"
+      }
+    },
+    "supports-color": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-0.2.0.tgz",
+      "integrity": "sha512-tdCZ28MnM7k7cJDJc7Eq80A9CsRFAAOZUy41npOZCs++qSjfIy7o5Rh46CBk+Dk5FbKJ33X3Tqg4YrV07N5RaA==",
+      "dev": true
+    },
+    "type-of": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/type-of/-/type-of-2.0.1.tgz",
+      "integrity": "sha512-39wxbwHdQ2sTiBB8wAzKfQ9GN+om8w+sjNWzr+vZJR5AMD5J+J7Yc8AtXnU9r/r2c8XiDZ/smxutDmZehX/qpQ==",
+      "dev": true
+    },
     "underscore": {
-      "version": "1.5.2",
-      "from": "underscore@1.5.2",
-      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.5.2.tgz"
+      "version": "1.12.1",
+      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.12.1.tgz",
+      "integrity": "sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw=="
     }
   }
 }
