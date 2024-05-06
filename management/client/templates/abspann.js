@@ -38,7 +38,7 @@ document.title = "Abspann "+Session.get('Project').name+"-Sendung vom "+d.toLoca
 Template.postenliste.helpers({
 entries: function() {
 
-    var posten		= ["Sendeleitung","Moderation","Kamera","Kameraregie","Bildschnitt","Operateur","Untertitel","Ton","Licht","Fotografie","Making of","Security","Maske","Studiogast","Streaming","Stagemanager"];
+    var posten		= ["Sendeleitung","Moderation","Prompter","Kamera","Kameraregie","Bildschnitt","Operateur","Untertitel","Ton","Licht","Fotografie","Making of","Security","Maske","Studiogast","Streaming","Stagemanager"];
     var allMembers =  Members.find({project:Session.get("Project").id},{sort: {first: 1}}).fetch();
 
     var result =[];

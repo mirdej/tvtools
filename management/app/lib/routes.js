@@ -9,6 +9,7 @@ Router.route('/mitarbeiter/crop', 	function () {this.render( 'member_crop');},{n
 Router.route('/mitarbeiter/lernen', function () {this.render( 'learn');},{name:'/mitarbeiter/lernen'});
 Router.route('/mitarbeiter/ausweis', function () {this.render( 'badge');},{name:'/mitarbeiter/ausweis'});
 Router.route('/attestations', 		function () {this.render( 'attestations');},{name:'attestations'});
+Router.route('/bestaetigungen', 		function () {this.render( 'bestaetigungen');},{name:'bestaetigungen'});
 Router.route('/gruppen', 			function () {this.render( 'groups');},{name:'gruppen'});
 Router.route('/lueste', 			function () {this.render( 'lueste');},{name:'lueste'});
 Router.route('/jobverteilung', 		function () {this.render( 'posten');},{name:'jobverteilung'});

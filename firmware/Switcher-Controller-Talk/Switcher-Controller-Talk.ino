@@ -11,15 +11,7 @@
 //
 //----------------------------------------------------------------------------------------
 
-
-//----------------------------------------------------------------------------------------
-// ATTENTION
-// does not work with vanilla Skaarhoj Library en ESP32
-//  in ClientBMDHyperdeckStudio.h  #include Ethernet.h must be changed to #include Wifi.h
-//----------------------------------------------------------------------------------------
-// As of May 2022: Version 2.0.2 of esp-arduino does not work (ethernet). use 1.0.3
-
-
+// ESP2.0.4, Ethernet.h @ 2.0.1.
 
 #include <FastLED.h>
 #include "Timer.h"
@@ -30,6 +22,7 @@
 #include "ESPAsyncWebServer.h"
 #include <Preferences.h>
 #include <AsyncElegantOTA.h>
+#include <ArduinoJson.h>
 
 
 #include <ATEMbase.h>
@@ -40,7 +33,6 @@
 #define ETH_PHY_POWER 12
 
 #include <ETH.h>
-
 
 
 // ...........................................................................DEFFINES
@@ -94,6 +86,8 @@ int 									buttons_raw;
 long 									last_ui_interaction;
 String 									hostname = "switchbox";
 AsyncWebServer                          server(80);
+AsyncWebSocket                          ws("/ws");
+
 
 static bool eth_connected = false;
 
@@ -110,6 +104,8 @@ ATEMmax 						AtemSwitcher;
 
 ClientBMDHyperdeckStudio player; 
 ClientBMDHyperdeckStudio recorder; 
+
+int greenscreen;
 
 
 int					on_air 		= -1;
@@ -140,6 +136,8 @@ void service_BMD() {
 	if(recorder_online) {     recorder.runLoop();	}	
 	if(player_online) {		player.runLoop(); }
 }
+
+
 
 
 //----------------------------------------------------------------------------------------
@@ -299,7 +297,16 @@ void skip(signed int secs) {
 void set_preview(int i) {
 	if (i < 0) return;
 	if (i < camera_count) {
-		AtemSwitcher.setPreviewInputVideoSource(0, i+1);
+	    if (i + 1 == greenscreen) {
+            AtemSwitcher.setPreviewInputVideoSource(0, 8);
+            AtemSwitcher.setKeyerFillSource(0,0,greenscreen);
+            AtemSwitcher.setTransitionNextTransition(0,3);
+            // AtemSwitcher.setKeyerOnAirEnabled(0,0,true);
+	    } else {
+    		AtemSwitcher.setPreviewInputVideoSource(0, i+1);
+            AtemSwitcher.setKeyerOnAirEnabled(0,0,false);
+            AtemSwitcher.setTransitionNextTransition(0,1);
+	    }
 	} 
 }
 
@@ -396,6 +403,10 @@ void update_pixels() {
 	if (connection_state == STATE_SWITCH_OK) {
 		for (int i = 0; i < NUM_PIXELS; i++) {
 			pixels[i] = 0x201D10;
+			if (greenscreen - 1 == i) {
+			    if (on_preview == 7) {pixels[i] = CRGB::Green;}
+			    if (on_air == 7) {pixels[i] = CRGB::Red;    }			    
+			}
 			if (on_preview == i) 	pixels[i] = CRGB::Green;
 			if (on_air == i) 		pixels[i] = CRGB::Red;
 			if (selected == i) 		pixels[i] = CRGB::White;
@@ -426,62 +437,204 @@ void check_ad() {
 //----------------------------------------------------------------------------------------
 //																process webpage template
 
-// Replaces placeholders
-String processor(const String& var){
-  if(var == "HOSTNAME"){
-        return hostname;
+//========================================================================================
+//----------------------------------------------------------------------------------------
+//																				Websocket
+
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+    AwsFrameInfo *info = (AwsFrameInfo*)arg;
+
+    DynamicJsonDocument replyJsonDoc(2048);
+    boolean doReply = false;
+
+    if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
+
+
+        data[len] = 0;
+        StaticJsonDocument<1024> inputJsonDoc;
+
+        DeserializationError err = deserializeJson(inputJsonDoc, data);
+        if (err) {
+            Serial.print(F("deserializeJson() failed with code "));
+            Serial.println(err.c_str());
+            return;
+        }
+        
+        if (inputJsonDoc["message"] == "getInfo") {
+
+    
+            replyJsonDoc["message"] = "info";
+            replyJsonDoc["hostname"] = hostname;
+            replyJsonDoc["ip"] = ETH.localIP().toString();
+            doReply = true;
+
+        } else if (inputJsonDoc["message"] == "getCameras") {
+            get_camera_settings();
+        }
+
     }
 
-  return String();
+    if (doReply) {
+        char data[1024];
+        size_t len = serializeJson(replyJsonDoc, data);
+        Serial.print("Data size: ");
+        Serial.println(len,DEC);
+        ws.textAll(data, len);
+    }        
+
 }
 
-String string_to_addresses(String  input) {
-	int addr;
-	char *token;
-	String  response;
-	Serial.println(input);
-	const char s[2] = ",";
-	strcpy(buf,input.c_str());
 
-	/* get the first token */
-	token = strtok(buf, s);
-	int i = 0;
-	/* walk through other tokens */
-	while( token != NULL ) {
-		// printf( " %s\n", token );
-		addr = atoi(token);
-		response += addr;
-		if (addr < 0) addr = 0;
-		if (addr > 496) addr = 496;
-		response += ",";
-		
-		Serial.print("Fixture ");
-		Serial.print(i,DEC);
-		Serial.print(" ");
-		Serial.println(addr,DEC);
-		
-		fixture[i] = addr;
-		
-		token = strtok(NULL, s);
-		i++;
-		if (i > 7) break;
-	}
 
-	response.remove(response.length()-1,1);
-	camera_count = i;
-	Serial.print("Number of fixtures:" );
- 	Serial.println(camera_count);
-	Serial.println(response);
-
-    preferences.begin("changlier", false);
-	preferences.putString("fixtures",response);
-
-	return response;
+//----------------------------------------------------------------------------------------
+void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
+             void *arg, uint8_t *data, size_t len) {
+  switch (type) {
+    case WS_EVT_CONNECT:
+      Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
+      break;
+    case WS_EVT_DISCONNECT:
+      Serial.printf("WebSocket client #%u disconnected\n", client->id());
+      break;
+    case WS_EVT_DATA:
+      handleWebSocketMessage(arg, data, len);
+      break;
+    case WS_EVT_PONG:
+    case WS_EVT_ERROR:
+      break;
+  }
 }
 
 void restart() {
 	ESP.restart();
 }
+
+void dsk2(int on) {
+    if (on) {
+//		AtemSwitcher.setAudioMixerInputMixOption(7, 1);
+        AtemSwitcher.setDownstreamKeyerFillSource(1, 6);
+        AtemSwitcher.setDownstreamKeyerKeySource(1, 9);
+        AtemSwitcher.setDownstreamKeyerPreMultiplied(1,true);
+        AtemSwitcher.setDownstreamKeyerOnAir(1,true);
+
+        Serial.println("DSK2 On Air");
+    } else {
+        AtemSwitcher.setDownstreamKeyerOnAir(1,false);
+        Serial.println("DSK2 Off");
+    }
+}
+
+void set_camera_settings() {
+/*
+    AtemSwitcher.setCameraControlColorbars(2, 1);
+    return;
+    */
+    
+    File file = LittleFS.open("/settings.json");
+    DynamicJsonDocument doc(2048);
+    DeserializationError error = deserializeJson(doc, file);
+    file.close();
+
+    if (error) {
+        Serial.println(F("Failed to read file, using default configuration"));
+        return;
+    }
+    
+    //AtemSwitcher.setCameraControlGain(1,2048);
+   // return;
+    
+
+    for (int cam = 0; cam < 5; cam++) {
+    
+        AtemSwitcher.setCameraControlGain(cam + 1, doc["camera"][cam]["Gain"].as<int>());
+     //   AtemSwitcher.setCameraControlIris(cam + 1, doc["camera"][cam]["Iris"].as<int>());
+        AtemSwitcher.setCameraControlWhiteBalance(cam + 1, doc["camera"][cam]["Wb"].as<int>());
+  /*      AtemSwitcher.setCameraControlShutter(cam + 1, doc["camera"][cam]["Shutter"].as<int>());
+        AtemSwitcher.setCameraControlLumMix(cam + 1, doc["camera"][cam]["LumMix"].as<int>());
+        AtemSwitcher.setCameraControlContrast(cam + 1,  doc["camera"][cam]["Contrast"].as<int>());
+        AtemSwitcher.setCameraControlSaturation(cam + 1,  doc["camera"][cam]["Saturation"].as<int>());
+
+        AtemSwitcher.setCameraControlLiftY(cam + 1, doc["camera"][cam]["LiftY"].as<int>());
+        AtemSwitcher.setCameraControlGammaY(cam + 1,  doc["camera"][cam]["GammaY"].as<int>());
+        AtemSwitcher.setCameraControlGainY(cam + 1, doc["camera"][cam]["GainY"].as<int>());
+*/
+    }
+
+/*
+       replyJsonDoc["camera"][cam]["Gain"] = AtemSwitcher.getCameraControlGain(cam + 1);
+        replyJsonDoc["camera"][cam]["Iris"] = AtemSwitcher.getCameraControlIris(cam + 1);
+        replyJsonDoc["camera"][cam]["Wb"] = AtemSwitcher.getCameraControlWhiteBalance(cam + 1);
+        replyJsonDoc["camera"][cam]["Shutter"] = AtemSwitcher.getCameraControlShutter(cam + 1);
+     replyJsonDoc["camera"][cam]["LumMix"] = AtemSwitcher.getCameraControlLumMix(cam + 1);
+     replyJsonDoc["camera"][cam]["Contrast"] = AtemSwitcher.getCameraControlContrast(cam + 1);
+          replyJsonDoc["camera"][cam]["Saturation"] = AtemSwitcher.getCameraControlSaturation(cam + 1);
+
+   replyJsonDoc["camera"][cam]["LiftY"] = AtemSwitcher.getCameraControlLiftY(cam + 1);
+   replyJsonDoc["camera"][cam]["GammaY"] = AtemSwitcher.getCameraControlGammaY(cam + 1);
+   replyJsonDoc["camera"][cam]["GainY"] = AtemSwitcher.getCameraControlGainY(cam + 1);
+*/
+
+}
+
+
+
+void get_camera_settings() {
+    DynamicJsonDocument replyJsonDoc(2048);
+
+    replyJsonDoc["message"] = "camera_settings";
+    JsonArray camlist  = replyJsonDoc.createNestedArray("camera");
+    for (int cam = 0; cam < 5; cam++) {
+        replyJsonDoc["camera"][cam]["Gain"] = AtemSwitcher.getCameraControlGain(cam + 1);
+        replyJsonDoc["camera"][cam]["Iris"] = AtemSwitcher.getCameraControlIris(cam + 1);
+        replyJsonDoc["camera"][cam]["Wb"] = AtemSwitcher.getCameraControlWhiteBalance(cam + 1);
+        replyJsonDoc["camera"][cam]["Shutter"] = AtemSwitcher.getCameraControlShutter(cam + 1);
+     replyJsonDoc["camera"][cam]["LumMix"] = AtemSwitcher.getCameraControlLumMix(cam + 1);
+     replyJsonDoc["camera"][cam]["Contrast"] = AtemSwitcher.getCameraControlContrast(cam + 1);
+          replyJsonDoc["camera"][cam]["Saturation"] = AtemSwitcher.getCameraControlSaturation(cam + 1);
+
+   replyJsonDoc["camera"][cam]["LiftY"] = AtemSwitcher.getCameraControlLiftY(cam + 1);
+   replyJsonDoc["camera"][cam]["GammaY"] = AtemSwitcher.getCameraControlGammaY(cam + 1);
+   replyJsonDoc["camera"][cam]["GainY"] = AtemSwitcher.getCameraControlGainY(cam + 1);
+     
+        
+    /*
+                  int16_t getCameraControlFocus(uint8_t input);
+                  int16_t getCameraControlGain(uint8_t input);
+                  int16_t getCameraControlWhiteBalance(uint8_t input);
+                  int16_t getCameraControlSharpeningLevel(uint8_t input);
+                  int16_t getCameraControlZoomNormalized(uint8_t input);
+                  int16_t getCameraControlZoomSpeed(uint8_t input);
+                  int16_t getCameraControlColorbars(uint8_t input);
+                  int16_t getCameraControlLiftR(uint8_t input);
+                  int16_t getCameraControlGammaR(uint8_t input);
+                  int16_t getCameraControlGainR(uint8_t input);
+                  int16_t (uint8_t input);
+                  int16_t getCameraControlHue(uint8_t input);
+                  int16_t getCameraControlShutter(uint8_t input);
+                  int16_t getCameraControlLiftG(uint8_t input);
+                  int16_t getCameraControlGammaG(uint8_t input);
+                  int16_t getCameraControlGainG(uint8_t input);
+                  int16_t getCameraControlContrast(uint8_t input);
+                  int16_t getCameraControlSaturation(uint8_t input);
+                  int16_t getCameraControlLiftB(uint8_t input);
+                  int16_t getCameraControlGammaB(uint8_t input);
+                  int16_t getCameraControlGainB(uint8_t input);
+                  int16_t getCameraControlLiftY(uint8_t input);
+                  int16_t getCameraControlGammaY(uint8_t input);
+                  int16_t getCameraControlGainY(uint8_t input); */
+
+    }
+    
+    
+    
+    char data[2048];
+    size_t len = serializeJson(replyJsonDoc, data);
+    log_v("Data size: %d", len);
+    log_v("Data size: %s", data);
+    ws.textAll(data, len);
+
+}
+
 
 void setup_web_server() {
 Serial.println("Setting up wenbserver");
@@ -544,17 +697,7 @@ Serial.println("Setting up wenbserver");
 		String inputMessage;
 		if (request->hasParam("on")) {
 				inputMessage = request->getParam("on")->value();
-				if (inputMessage.toInt()) {
-					AtemSwitcher.setDownstreamKeyerFillSource(1, 6);
-					AtemSwitcher.setDownstreamKeyerKeySource(1, 6);
-					AtemSwitcher.setDownstreamKeyerPreMultiplied(1,false);
-					AtemSwitcher.setDownstreamKeyerClip(1, 82);
-					AtemSwitcher.setDownstreamKeyerOnAir(1,true);
-					Serial.println("DSK2 On Air");
-				} else {
-					AtemSwitcher.setDownstreamKeyerOnAir(1,false);
-					Serial.println("DSK2 Off");
-				}
+				dsk2(inputMessage.toInt());
 		}
 		int dsk2_on_air = AtemSwitcher.getDownstreamKeyerOnAir(0);
 		request->send(200, "text/text", String(dsk2_on_air));
@@ -577,29 +720,7 @@ Serial.println("Setting up wenbserver");
 		request->send(200, "text/text", String(dsk2_on_air));
 	});
 
-	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "/index.html",  String(), false, processor);
-	});
 
-	server.on("/src/bootstrap.bundle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "/src/bootstrap.bundle.min.js", "text/javascript");
-	});
-
-	server.on("/src/jquery-3.4.1.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "/src/jquery-3.4.1.min.js", "text/javascript");
-	});
-
-	server.on("/src/bootstrap.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "/src/bootstrap.min.css", "text/css");
-	});
-
-	server.on("/rc/bootstrap4-toggle.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "rc/bootstrap4-toggle.min.js", "text/javascript");
-	});
-
-	server.on("/src/bootstrap4-toggle.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
-		request->send(LittleFS, "/src/bootstrap4-toggle.min.css", "text/css");
-	});
 
 
    server.on("/set", HTTP_GET, [] (AsyncWebServerRequest *request) {
@@ -619,9 +740,25 @@ Serial.println("Setting up wenbserver");
 		  }
 		}
 		
-		if (request->hasParam("addresses")) {
-				inputMessage = request->getParam("addresses")->value();
-				request->send(200, "text/text", string_to_addresses(inputMessage));
+		if (request->hasParam("camera_count")) {
+				inputMessage = request->getParam("camera_count")->value();
+				camera_count = inputMessage.toInt();
+				if (camera_count < 1) camera_count = 1;
+				if (camera_count > 5) camera_count = 5;
+				Serial.println("set_count");
+				Serial.println(camera_count);
+                preferences.putInt("camera_count", camera_count);
+				request->send(200, "text/text", String(camera_count));
+		} else 		if (request->hasParam("greenscreen")) {
+				inputMessage = request->getParam("greenscreen")->value();
+				greenscreen = inputMessage.toInt();
+                preferences.putInt("greenscreen", greenscreen);
+				if (greenscreen < 0) greenscreen = 0;
+				if (greenscreen > 5) greenscreen = 5;
+				Serial.println("set_greenscreen");
+				Serial.println(greenscreen);
+                preferences.putInt("greenscreen", greenscreen);
+				request->send(200, "text/text", String(greenscreen));
 		}
 
 	});
@@ -646,24 +783,64 @@ Serial.println("Setting up wenbserver");
 			inputMessage = request->getParam("HostName")->value();
 			hostname = inputMessage;
 //                writeFile(LittleFS, "/hostname.txt", inputMessage.c_str());
-			preferences.begin("changlier", false);
 			preferences.putString("hostname", hostname);
-			preferences.end();
 
 		} else if (request->hasParam("ReStart")) {
 			request->send(200, "text/text", "Restarting...");
 			restart();
 		} else if (request->hasParam("HardwareTest")) {
 			request->send(200, "text/text", "Running Hardware test...");
-//                mode = MODE_TEST;
+			
+		} else if (request->hasParam("camera")) {
+			inputMessage = request->getParam("camera")->value();
+			int cam = inputMessage.toInt() - 1;
+			if (cam < 0) cam = 0;
+			if (cam > 5) cam = 5;
+			
+			if (request->hasParam("gain")) {
+					request->send(200, "text/text", String(AtemSwitcher.getCameraControlGain(cam)));
+			}
 		}else {
 			inputMessage = "No message sent";
 		}
+		
 		Serial.println(inputMessage);
 		request->send(200, "text/text", inputMessage);
 	});
 
+      server.on("/post", HTTP_POST, [] (AsyncWebServerRequest *request) {
+            int params = request->params();
+            for(int i=0;i<params;i++){
+              AsyncWebParameter* p = request->getParam(i);
+              if(p->isFile()){ //p->isPost() is also true
+                Serial.printf("FILE[%s]: %s, size: %u\n", p->name().c_str(), p->value().c_str(), p->size());
+              } else if(p->isPost()){
+                Serial.printf("POST[%s]: %s\n", p->name().c_str(), p->value().c_str());
+            
+                LittleFS.rename("/settings.json","/bak_settings.json");
+                File file = LittleFS.open("/settings.json", FILE_WRITE);
+                if(file.print(p->value().c_str())) {
+                    Serial.println("File was written");
+                }else {
+                    Serial.println("File write failed");
+                }
+                file.close();
+            
+            
+              } else {
+                Serial.printf("GET[%s]: %s\n", p->name().c_str(), p->value().c_str());
+              }
+            }
+    });
+
+
+    server.serveStatic("/", LittleFS, "/").setDefaultFile("index.html");    
+
+
     AsyncElegantOTA.begin(&server);
+    ws.onEvent(onEvent);
+    server.addHandler(&ws);
+
 	server.begin();
 	Serial.println("Webserver running");
 }
@@ -708,7 +885,7 @@ void WiFiEvent(WiFiEvent_t event)
 		
         AtemSwitcher.serialOutput(1);
 		AtemSwitcher.connect();
-
+	        
         setup_web_server();
         connection_state = STATE_WIFI_OK;
 
@@ -760,8 +937,13 @@ void setup() {
          return;
     }
  
+    preferences.begin("anyma", false);
+    camera_count = preferences.getInt("camera_count", 4);
+    greenscreen = preferences.getInt("greenscreen", 3);
+
+    Serial.print("Greenscreen: ");Serial.println(greenscreen);
+
     hostname = "switchbox";
-	camera_count = 4;
 
     Serial.println("Looking for network");
 
@@ -776,12 +958,23 @@ void setup() {
 		
 		if (millis() > WIFI_TIMEOUT) break;
 	}
+	
+	while (!AtemSwitcher.hasInitialized()) { AtemSwitcher.runLoop(); } 
+	
 	Serial.println();
-	Serial.println("Hello");
+	Serial.println("Atem Switcher connected");
+	
+    dsk2(1);
+    set_camera_settings();
+
+	
 	t.every(100, check_tally); 
 	t.every(20, check_buttons);    
 	t.every(50, update_pixels);    
 	t.every(50, check_ad); 
+	
+	
+	//t.every(200,get_camera_settings);
 }
 //========================================================================================
 //----------------------------------------------------------------------------------------

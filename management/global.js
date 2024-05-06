@@ -1,7 +1,29 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
-ProjectID = "SchulTV-HO-2021";
+
+ProjectID = "SchulTV-DUB-2024";
+//ProjectID = "SchulTV-ZH-2023";
+//ProjectID = "SchulTV-OE-2023-2";
+
+//ProjectID = "SchulTV-HO-2023";
+//ProjectID = "SchulTV-DI-2023";
+//ProjectID = "deleted";
+//ProjectID = "ADHESIF-LIVE-2022";
+//ProjectID = "SchulTV-DUB-2022";
+//ProjectID = "SchulTV-SCH-2022";
+//ProjectID = "SchulTV-OE-2022-2";
+
+//ProjectID = "SchulTV-OE-2022-1";
+
+
+//ProjectID = "SchulTV-AD-2022";
+
+//ProjectID = "SchulTV-BW-2022";
+//ProjectID = "SchulTV-OE-2021-1";
+
+
+//ProjectID = "SchulTV-VW-2021";
 //ProjectID = "SchulTV-DI-2020";
 //ProjectID = "SchulTV-DUB-2019";
 
@@ -12,6 +34,238 @@ ProjectID = "SchulTV-HO-2021";
 //ProjectID = "SchulTV-SC-2019";
 //ProjectID = "SchulTV-OE-2019-2";
 
+
+if (Meteor.isClient) {
+	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+
+Session.set("Project", {
+  name:"Dübendorf",
+   place:"Grüze",
+   id:ProjectID,
+   logo:"logo-DUB.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Apr 8 2024 00:00:00 GMT+0100 (CET)",
+   end:"Fri Apr 12 2024 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "#44 Dübendorf Grüze B3d",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Michael Polanski, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+/*
+
+Session.set("Project", {
+   name:"Zürich Feld",
+   id:ProjectID,
+   logo:"logo-Generic.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Oct 2 2023 00:00:00 GMT+0100 (CET)",
+   end:"Fri Oct 6 2023 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Zürich, Feld",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Lukas Kühne, Cali Flores, Moni Egger, Anne-Sophie Cosandey,  Catja Loepfe, Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+Session.set("Project", {
+   name:"Oberengstringen",
+   id:ProjectID,
+   logo:"logo-OE.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Jun 12 2023 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jun 16 2023 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Oberengstringen, Goldschmied, Klasse 6a",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Tanja Todic, Carolina Högger, Leonie Kobelt, Cali Flores, Moni Egger, Anne-Sophie Cosandey,  Catja Loepfe, Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+*/
+/*
+
+
+Session.set("Project", {
+   name:"Oberengstringen",
+   id:ProjectID,
+   logo:"logo-OE.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Jun 5 2023 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jun 9 2023 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Oberengstringen, Goldschmied, Klasse 6c",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Maja Klemm, Cali Flores, Moni Egger, Anne-Sophie Cosandey,  Catja Loepfe, Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+Session.set("Project", {
+   name:"Höngg",
+   id:ProjectID,
+   logo:"logo-HO.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon May 21 2023 00:00:00 GMT+0100 (CET)",
+   end:"Fri May 26 2023 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Höngg, Bläsi 5. Klasse",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Juliana Fischer, Kirsten Mäsch, Cali Flores, Moni Egger, Anne-Sophie Cosandey,  Catja Loepfe,   Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+Session.set("Project", {
+   name:"Dietikon",
+   id:ProjectID,
+   logo:"logo-DI.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Apr 17 2023 00:00:00 GMT+0100 (CET)",
+   end:"Fri Apr 21 2023 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Dietikon Luberzen P5a",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Ladina Gubler, Christelle Lüthi, Cali Flores, Moni Egger, Anne-Sophie Cosandey,  Catja Loepfe,   Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+
+
+Session.set("Project", {
+   name:"ADHESIF LIVE",
+   place:"CAS Schoenberg",
+   id:ProjectID,
+   logo:"logo_adhesif.png",
+   badge:"carte de presse-adhesif.png",
+   begin:"Tue Oct 18 2022 00:00:00 GMT+0100 (CET)",
+   end:"Sat Oct 22 2022 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "#38 Dübendorf Grüze B2c",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Claudia Perpinyani, Ursina Kuhn, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+
+Session.set("Project", {
+   name:"Dübendorf",
+   place:"Grüze",
+   id:ProjectID,
+   logo:"logo-DUB.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Sep 5 2022 00:00:00 GMT+0100 (CET)",
+   end:"Fri Sep 9 2022 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "#38 Dübendorf Grüze B2c",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Claudia Perpinyani, Ursina Kuhn, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+
+Session.set("Project", {
+	   name:"Schlieren A3a, A3b",
+	   place:"Kalktarren",
+	   id:ProjectID,
+	   logo:"logo-Schlieren.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Jun 27 2022 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Jul 1 2022 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "#37 Schlieren, Kalktarren\nKlassen A3a und A3b",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Gina Furter, Urs Giezendanner, Anne-Sophie Cosandey,  Moni Egger, Cali Flores, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+	
+	
+
+if (Meteor.isClient) {
+	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+Session.set("Project", {
+	   name:"Oberengstringen 6a",
+	   place:"GSHL",
+	   id:ProjectID,
+	   logo:"logo-OE.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Jun 20 2022 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Jun 24 2022 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "#36 Oberengstringen, Sunnerai\nKlasse 6a\Golomb",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Annette Golomb, Anne-Sophie Cosandey,  Moni Egger, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+	
+	
+if (Meteor.isClient) {
+	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+Session.set("Project", {
+	   name:"Oberengstringen 6c",
+	   place:"GSHL",
+	   id:ProjectID,
+	   logo:"logo-OE.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Jun 13 2022 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Jun 17 2022 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "#35 Oberengstringen, Sunnerai\nKlasse 6c\nMedved",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Vanesa Medved, Anne-Sophie Cosandey,  Moni Egger, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+	
+
+	/*
+
+
+Session.set("Project", {
+	   name:"Adliswil 3a",
+	   place:"Schulhaus Zentrum Adliswil",
+	   id:ProjectID,
+	   logo:"logo-AD.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon May 09 2022 00:00:00 GMT+0100 (CET)",
+	   end:"Fri May 13 2022 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "Adliswil, Zentrum\nKlasse 3a\nEnder",
+	   leitung : "Michael Egger, Margrit Egger, Vanessa Hüppin",
+	   danke: "Alle uns im Crowdfunding unterstützt haben, Alle unsere Interviewpartner, Meggie Ender Kaplan, Beatrix Jeanneret-Grosjean, Cali Flores, Anne-Sophie Cosandey, Martin Pfister, Moni Egger, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+	
+Session.set("Project", {
+	   name:"Bungertwies\n5. Klasse",
+	   place:"Schulhaus Bungertwies",
+	   id:ProjectID,
+	   logo:"logo-BW.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Mar 28 2022 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Apr 1 2022 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "Zürich, Bungertwies\n5. Klasse Gränicher/Rodrigues",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Alle Studiogäste , Isabelle Gränicher, Michel Rodrigues, Anne-Sophie Cosandey, Cali Flores, Moni Egger, Laurent Magnin,  Catja Loepfe, Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+
+
+Session.set("Project", {
+	   name:"Oberenstringen 6a",
+	   place:"Schulhaus Goldschmied Oberengstringen",
+	   id:ProjectID,
+	   logo:"logo-OE.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Jun 14 2021 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Jun 18 2021 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "Oberengstringen, Goldschmied\nKlasse 6a\nBachmann",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Alle Studiogäste , Barbara Bachmann, Anne-Sophie Cosandey, Cali Flores, Moni Egger, Laurent Magnin,  Catja Loepfe, Nico Grüninger, Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+
+
+
+Session.set("Project", {
+	   name:"Oberenstringen 6c",
+	   place:"Schulhaus Goldschmied Oberengstringen",
+	   id:ProjectID,
+	   logo:"logo-OE.png",
+	   badge:"carte-de-presse-schultv2.jpg",
+	   begin:"Mon Jun 07 2021 00:00:00 GMT+0100 (CET)",
+	   end:"Fri Jun 11 2021 00:00:00 GMT+0100 (CET)",
+	   abspannVorlauf : "Oberengstringen, Goldschmied\nKlasse 6c\nSchmid",
+	   leitung : "Michael Egger, Margrit Egger",
+	   danke: "Alle unsere Interviewpartner, Alle Studiogäste , Anne-Sophie Cosandey, Cali Flores, Moni Egger, Noëmi Blumenthal, Tanja Stauffer,  Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+	});
+
+Session.set("Project", {
+   name:"Volketswil",
+   id:ProjectID,
+   logo:"logo-VW.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon May 31 2021 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jun 4 2021 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "Lindenbüel Volketswil, Klasse A2B",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Sarah Wilhelm, Marc Isenring, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Laurent Magnin, Catja Loepfe,  Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+/*
 
 if (Meteor.isClient) {
 	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
@@ -200,6 +454,7 @@ Session.set("Project", {
 
 */
 
+
 	var von = new Date(Session.get("Project").begin);
 	var bis = new Date(Session.get("Project").end);   
    
@@ -225,7 +480,7 @@ Session.set("Project", {
 		{ name: "Joséphine", color: "#DACB00;", textcolor: "#fff;"},
 		{ name: "Nikita", color: "#dd0000;", textcolor: "#fff;"},
 		{ name: "Maja", color: "#765849;", textcolor: "#fff;"},
-		{ name: "Zoë", color: "#ff9d1a;", textcolor: "#fff;"},
+		{ name: "Vanessa", color: "#ff9d1a;", textcolor: "#fff;"},
 		{ name: "Désirée", color: "#CC4394;", textcolor: "#fff;"},
 		{ name: "Hannah", color: "#BEE8FD;", textcolor: "#000;"}
      ]

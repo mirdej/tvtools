@@ -15,25 +15,27 @@ Template.attestation.helpers({
 	jobs:function() {
 	var posten		= ["Sendeleitung","Moderation","Kamera","Kameraregie","Bildschnitt","Operateur","Untertitel","Ton","Licht","Fotografie","Making of","Security","Maske","Studiogast","Streaming"];
 	var dict= {	"Sendeleitung":	{"female":"Sendeleiterin",	"male":"Sendeleiter"},
-				"Moderation":	{"female":"Moderatorin",	"male":"Moderator"},
-				"Kamera":		{"female":"Kamerafrau",		"male":"Kameramann"},
-				"Kameraregie":	{"female":"Kameraregie",	"male":"Kameraregie"},
+				"Moderation":	{"female":"Présentatrice",	"male":"Présentateur"},
+				"Kamera":		{"female":"Camérawoman",	"male":"Caméraman"},
+				"Kameraregie":	{"female":"Régisseur caméra",	"male":"Régisseur caméra"},
 				"Bildschnitt":	{"female":"Bildschnitt",	"male":"Bildschnitt"},
 				"Operateur":	{"female":"Operateurin",	"male":"Operateur"},
-				"Untertitel":	{"female":"Untertitlerin",	"male":"Untertitler"},
-				"Ton":			{"female":"Tonmeisterin",	"male":"Tonmeister"},
+				"Untertitel":	{"female":"Untertitlerin",	"male":"Surtitreur"},
+				"Ton":			{"female":"Ingénieure son",	"male":"Tonmeister"},
 				"Licht":		{"female":"Lichtmeisterin",	"male":"Lichtmeister"},
 				"Fotografie":	{"female":"Fotografin",		"male":"Fotograf"},
 				"Making of":	{"female":"Kamerafrau",		"male":"Kameramann"},
 				"Security":		{"female":"Security",		"male":"Security"},
-				"Maske":		{"female":"Maske",			"male":"Maske"},
+				"Maske":		{"female":"Maquilleuse",			"male":"Maske"},
 				"Studiogast":	{"female":"Studiogast",		"male":"Studiogast"},
-				"Streaming":	{"female":"Streaming Controller",	"male":"Streaming Controller"},
-				"Stagemanager":	{"female":"Stage Managerin",	"male":"Stage Manager"}}
+				"Streaming":	{"female":"Streaming Controllerin",	"male":"Streaming Controller"},
+				"Stagemanager":	{"female":"Stage Managerin",	"male":"Stage Manager"},
+				"Prompter":	{"female":"Teleprompter Controllerin",		"male":"Teleprompter Controller"}
+				}
 				
     var s= [];
-    if (this.gender == "female") s.push({title:"Journalistin"});
-    else s.push({title:"Journalist"});
+    if (this.gender == "female") s.push({title:"Journaliste"});
+    else s.push({title:"Journaliste"});
     
     var g;
     if (typeof this.posten === 'undefined') return s;

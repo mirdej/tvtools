@@ -162,21 +162,24 @@ def add_clip(str):
 def read_files():
     global clips,clip_idx,clip_count
     status=""
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+    try:
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
 
-    tn.write(b'clips get' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
+        tn.write(b'clips get' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
 
-    lines = status.split('\r\n')
-    clip_idx = 0;
+        lines = status.split('\r\n')
+        clip_idx = 0;
 
-    for line in lines:
-        if clip_count:
-            if (clip_idx < clip_count):
-                add_clip(line)
-        if "clip count" in line:
-            clip_count = int(line.split(":")[1])
+        for line in lines:
+            if clip_count:
+                if (clip_idx < clip_count):
+                    add_clip(line)
+            if "clip count" in line:
+                clip_count = int(line.split(":")[1])
+    except Exception:
+        print("Something went wrong")
         
 
 ## --------------------------------------------------------------------------------------------------------
@@ -214,7 +217,7 @@ def redraw():
 ## --------------------------------------------------------------------------------------------------------
 
 def get_transport_info():
-    global playing,elapsed_time,on_air
+    global playing,elapsed_time,on_air,clips,clip_count
     status=""
     try:
         #r = requests.get('http://switchbox.local/dsk1')
@@ -225,51 +228,62 @@ def get_transport_info():
         else:
             on_air = False
             pixels[3] = color_fill
-    except:    
+    except Exception:
         print ("No connection to switcher")
     
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'transport info' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
-    lines = status.split('\r\n')
- #   print(status)
-    for line in lines:
-        if ("status" in line):
-            if ("play" in line):
-                playing = True
-            else:
-                playing = False
-        if ("display timecode:" in line):
-            tc = line.split(" ")[2]
-            print(tc)
-            elapsed_time = tc_to_secs(tc)
-        if ("clip id:" in line):
-            id = line.split(" ")[2]
-            id = int(id)
-            check_id(id)
-
+    try:
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+        tn.write(b'transport info' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
+        lines = status.split('\r\n')
+     #   print(status)
+        for line in lines:
+            if ("status" in line):
+                if ("play" in line):
+                    playing = True
+                else:
+                    playing = False
+            if ("display timecode:" in line):
+                tc = line.split(" ")[2]
+                print(tc)
+                elapsed_time = tc_to_secs(tc)
+            if ("clip id:" in line):
+                id = line.split(" ")[2]
+                id = int(id)
+                check_id(id)
+    except Exception:
+        clip_count = 0
+        clips = []
+        print ("No connection to Hyperdesk")
+        
 
 ## --------------------------------------------------------------------------------------------------------
 def goto_start():
-    status = ""
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'goto: clip: start' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
+    try:
+        status = ""
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+        tn.write(b'goto: clip: start' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
+    except Exception:
+        print ("No connection to Hyperdesk")
     
 ## --------------------------------------------------------------------------------------------------------
 def goto_end():
-    status = ""
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'goto: clip: end' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    tn.write(b'goto: timecode: -00:00:20:00' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
-    
+    try:
+        status = ""
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+        tn.write(b'goto: clip: end' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+        tn.write(b'goto: timecode: -00:00:20:00' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
+    except Exception:
+        print ("No connection to Hyperdesk")
+   
     
 
 ## --------------------------------------------------------------------------------------------------------
@@ -277,16 +291,19 @@ def goto_end():
 
 def play_pause():
     global playing
-    get_transport_info()
-    status = ""
-    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-    if (playing):
-        tn.write(b'stop' + b'\r\n')
-    else:
-        tn.write(b'play: single clip: true' + b'\r\n')
-    tn.write(b'quit' + b'\r\n')
-    status += tn.read_all().decode('ascii')
-    #print(status)
+    try:
+        get_transport_info()
+        status = ""
+        tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+        if (playing):
+            tn.write(b'stop' + b'\r\n')
+        else:
+            tn.write(b'play: single clip: true' + b'\r\n')
+        tn.write(b'quit' + b'\r\n')
+        status += tn.read_all().decode('ascii')
+    except Exception:
+        print ("No connection to Hyperdesk")
+   
 
 
 def btn_up():
@@ -362,10 +379,13 @@ clips = []
 read_files()
 redraw()
 
-
-tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
-tn.write(b'preview: enable: false' + b'\r\n')
-tn.write(b'quit' + b'\r\n')
+try:
+    tn = Telnet(PLAYER_TCP_ADDRESS, PLAYER_TCP_PORT)
+    tn.write(b'preview: enable: false' + b'\r\n')
+    tn.write(b'quit' + b'\r\n')
+except Exception:
+    print ("No connection to Hyperdesk")
+   
 
 
 #========================================================================================
@@ -376,7 +396,11 @@ while 1:
     clock.tick(60)
     time = pygame.time.get_ticks()
     if (time - last_update > 500):
-        get_transport_info()
+        if (clip_count)
+            get_transport_info()
+        else
+            read_files()
+            redraw()
         last_update = time
         clips[selected_clip].draw_header()
     if (time - last_redraw > 1000):
