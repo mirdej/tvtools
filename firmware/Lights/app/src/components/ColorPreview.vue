@@ -36,20 +36,24 @@ const gradientString = computed(() => {
     border: 1px solid black;
     border-radius: 20px;
     padding: 4px;
-    position: relative;
+    position: relatstickyive;
     left:1em;
-    width: auto;
-    min-width: 80px;
+    width: 120px;
     height: 2em;
     display: inline-block;
 }
 
 .colorPreviewName {
     display: inline-block;
+    position: sticky;
+    left:5px;
+    border: 1px solid black;
+margin-left:1em;
 
 }
 
 .colorPreviewButton {
-
+display:flex;
+align-items: center;
 }
 </style>

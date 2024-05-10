@@ -3,8 +3,6 @@ import axios from 'axios';
 import Sidebar from 'primevue/sidebar';
 import Knob from 'primevue/knob';
 import Dialog from 'primevue/dialog';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import Chart from 'primevue/chart';
 
 
