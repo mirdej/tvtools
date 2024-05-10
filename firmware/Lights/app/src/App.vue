@@ -53,11 +53,12 @@ onMounted(() => {
 <template>
   <div class="container">
     <AppFrame title="TV.Lights" :app_version="version"/>
-
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/fixtures">Fixtures</RouterLink>
+    <nav>
+    <RouterLink class="routerlink" to="/">Home</RouterLink>
+    <RouterLink class="routerlink" to="/fixtures">Fixtures</RouterLink>
+    <RouterLink class="routerlink" to="/check">Fixture Check</RouterLink>
   </nav>
+  
 
   <main>
     <RouterView />
@@ -73,6 +74,8 @@ onMounted(() => {
 
 <style scoped>
 /* "that's probably the only CSS you'll need to know about"  Cagatay Civici, PrimeVue */
+nav {position:absolute;top:4em;left:20px;}
+.routerlink {margin-right:2em;}
 .container {
   display: flex;
   align-items: center;

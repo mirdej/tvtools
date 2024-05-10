@@ -45,6 +45,8 @@ onMounted(() => {
     <header>
         <img class="logo_img" src="/logo_anyma_black.svg" alt="anyma" />
         {{title}} <span style=" font-size:.7em;padding:2px;color:#888"> @ {{talking_to}} <Badge v-if="is_local" value="LOCALLY SERVED" severity="warning" /></span>
+    
+
     </header>
     <footer>
         Version {{app_version}} © {{ year }} Michael Egger <a href="https://www.anyma.ch/">[ a n y m a ]</a>
