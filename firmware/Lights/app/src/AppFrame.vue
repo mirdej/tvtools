@@ -76,9 +76,6 @@ footer {
 
 header {
     top: 0;
-    display: flex;
-    align-items: center;
-
     font-size: 1em;
 }
 

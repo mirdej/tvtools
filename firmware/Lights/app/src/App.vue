@@ -74,7 +74,7 @@ onMounted(() => {
 
 <style scoped>
 /* "that's probably the only CSS you'll need to know about"  Cagatay Civici, PrimeVue */
-nav {position:absolute;top:4em;left:20px;}
+nav {position:absolute;top:2em;right:20px;}
 .routerlink {margin-right:2em;}
 .container {
   display: flex;

@@ -4,10 +4,10 @@ import Card from 'primevue/card';
 
 const fixt_buttons = ref([]);
 const is_active = ref(0);
-const max_id = 0;
+var max_id = 0;
 
 const generate_fixt_buttons = () =>{
-    var temp = [{label:"CameoWW",items:[]}]
+     var temp = [{label:"CameoWW",items:[]}]
     var btn_id = 0;
     for (var i = 1; i < 11; i++) {
         temp[0].items.push({id:btn_id++,addr:i});
@@ -20,7 +20,6 @@ const generate_fixt_buttons = () =>{
     max_id = btn_id;
     console.log (temp)
     fixt_buttons.value = temp;
-   
 }
 
 const check = (a) => {
