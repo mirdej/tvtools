@@ -1,6 +1,6 @@
 {
   "name": "tv-lights",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
+    "nprogress": "^0.2.0",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
     "vue": "^3.2.47",

@@ -31,7 +31,7 @@ const version = __APP_VERSION__
 
 
 onMounted(() => {
-
+NProgress.done();
  /*  axios
     .get(window.device_url + 'api/settings')
     .then(response => {

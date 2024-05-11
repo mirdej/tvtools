@@ -22,6 +22,7 @@
 
 #define ANYMA_ESP_SERVICE_NAME "anyma_esp32"
 #define ANYMA_ESP_SERVICE_PORT 3101
+#define MAX_CLIENT_CONNECTIONS 4
 
 #define WEBROOT "/webroot"
 #define READ_BUFFER_SIZE 512
@@ -69,7 +70,7 @@ const char *indexFile = "/index.html";
  */
 void fileServer(Request &req, Response &res)
 {
-
+long timestamp;
     if (req.method() != Request::GET)
     {
         return;
@@ -101,6 +102,7 @@ void fileServer(Request &req, Response &res)
         return;
     }
 
+timestamp = millis();
     uint8_t readBuffer[READ_BUFFER_SIZE];
     const char *mimeType = MimeTypes::getType(file.name());
     res.set("Content-Type", mimeType);
@@ -113,8 +115,11 @@ void fileServer(Request &req, Response &res)
         file.read(readBuffer, toRead);
         res.write(readBuffer, toRead);
         length = length - toRead;
+        //log_v("%d",length);
+       // vTaskDelay(pdMS_TO_TICKS(1));
         taskYIELD();
     }
+    log_v("Took: %dms",millis()-timestamp);
     file.close();
     res.end();
 }
@@ -261,12 +266,24 @@ void wifi_task(void *)
             ftp.handle();
 
             WiFiClient client = server.available();
-            if (client)
+
+            if (client.connected())
             {
-                xTaskCreatePinnedToCore(
-                    TaskClientSocket, "TaskClientSocket", 8192, &client, 2, NULL, ARDUINO_RUNNING_CORE);
-            }
-            taskYIELD();
+                app.process(&client);
+            } 
+            
+            vTaskDelay(pdMS_TO_TICKS(1));
+           // taskYIELD();
+            
+            
+            /*
+                       WiFiClient client = server.available();
+                       if (client && networking.num_client_connections < MAX_CLIENT_CONNECTIONS)
+                       {
+                           xTaskCreatePinnedToCore(
+                               TaskClientSocket, "TaskClientSocket", 8192, &client, 2, NULL, ARDUINO_RUNNING_CORE);
+                       }
+                       taskYIELD(); */
         }
         else
         {
@@ -279,12 +296,17 @@ void wifi_task(void *)
 
 void AnymaEspNetworking::begin()
 {
-    xTaskCreate(
+
+   /*  xTaskCreatePinnedToCore(
+                               wifi_task, "WIFI", 16384, NULL, 1, NULL, 0); */
+
+
+ xTaskCreate(
         wifi_task,    // Function that implements the task.
         "WIFI-Setup", // Text name for the task.
         8192,         // Stack size in words, not bytes.
         NULL,         // Parameter passed into the task.
         0,            // Priority at which the task is created.
-        NULL);
+        NULL); 
 }
 #endif
