@@ -47,8 +47,8 @@ const gradientString = computed(() => {
     display: inline-block;
     position: sticky;
     left:5px;
-    border: 1px solid black;
-margin-left:1em;
+/*     border: 1px solid black;
+ */margin-left:1em;
 
 }
 

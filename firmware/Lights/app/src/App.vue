@@ -11,7 +11,7 @@ var host;
 
 var ip = location.host;
   if (ip.startsWith('127') || ip.startsWith('localhost')) {
-    window.device_url = "http://baby-s3.local/";
+    window.device_url = "http://lights.local/";
     window.served_from_device = false;
   } else {
     window.device_url = "http://" + ip + "/";
@@ -31,7 +31,6 @@ const version = __APP_VERSION__
 
 
 onMounted(() => {
-NProgress.done();
  /*  axios
     .get(window.device_url + 'api/settings')
     .then(response => {

@@ -1,12 +1,15 @@
 <script setup>
-import { reactive, ref } from "vue"
+import { reactive, ref, onMounted } from "vue"
 import ColorPreview from "../components/ColorPreview.vue"
 import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
 import { useConfirm } from "primevue/useconfirm";
+import axios from 'axios';
+import { useToast } from 'primevue/usetoast';
 
 //-------------------------------------------------------  REACTIVE
 const confirm = useConfirm();
+const toast = useToast();
 
 const selectedSet = ref(0);
 const dialogVisible = ref(false)
@@ -14,13 +17,7 @@ var oldName = null;
 const inputRef = ref(null)
 
 
-const colorsets = ref([{
-    name: 'John Doe',
-    colors: ['ff0033', '00dddd', 'dd66ff', 'ff0000', '00dddd', 'dd66ff']
-}, {
-    name: 'Schnabi Du',
-    colors: ['000033', '00dd00', 'dd66ff', 'ff00ff', '0000ff', '00dd00']
-}])
+const colorsets = ref([{ name: "Rot", colors: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'] }]);
 
 function editSet(theSet) {
     selectedSet.value = theSet;
@@ -51,19 +48,50 @@ function removeColorset() {
 
 function editName() {
     oldName = colorsets.value[selectedSet.value].name;
-    dialogVisible.value = true;    
+    dialogVisible.value = true;
     setTimeout(() => {
         document.getElementById("colorSetName").focus()
     }, 100);
 
-   
- }
+
+}
 
 function cancelEditName() {
     colorsets.value[selectedSet.value].name = oldName;
     dialogVisible.value = false;
 
 }
+
+function saveSet() {
+    axios.put(window.device_url + 'api/colorsets', {
+        params: colorsets.value, timeout: 2000
+    })
+        .then(function (response) {
+            console.log(response);
+            toast.add({ severity: 'success', summary: "Colorsets updated", life: 1000 });
+        })
+        .catch(function (error) {
+            console.log(error);
+            toast.add({ severity: 'error', summary: 'An error occured', detail: error, life: 4000 });
+        })
+}
+
+onMounted(() => {
+
+    axios.get(window.device_url + 'api/colorsets', { timeout: 5000 })
+
+        .then(function (response) {
+            try {
+                var m = response.data[0].colors.length
+                if (m > 5) {
+                    //console.log(response.data)
+                    colorsets.value = response.data
+                }
+            } catch (e) {
+                toast.add({ severity: 'error', summary: 'An error occured', detail: e, life: 4000 });
+            }
+        })
+})
 
 </script>
 
@@ -93,31 +121,33 @@ function cancelEditName() {
     </div>
     <Toolbar>
         <template #start>
-            <Button @click="" severity="secondary"><i class="pi pi-save"
+            <Button @click="saveSet()" severity="secondary"><i class="pi pi-save"
                     style="font-size: 1.5rem"></i></Button>
         </template>
-        <template #end> 
+        <template #end>
             <Button @click="removeColorset" v-if="selectedSet > -1" severity="secondary"><i class="pi pi-trash"
                     style="font-size: 1.5rem"></i></Button>
-            <Button @click="addColorset" severity="secondary"  v-if="colorsets.length < 11"><i class="pi pi-plus-circle"
+            <Button @click="addColorset" severity="secondary" v-if="colorsets.length < 11"><i class="pi pi-plus-circle"
                     style="font-size: 1.5rem"></i></Button>
         </template>
     </Toolbar>
 
     <div class="swatch-container" style="margin-top: 2em;">
-        <Button class="bigBtn" severity="secondary">Konserve</Button>       <Button class="bigBtn" severity="info">Live</Button>
-    
+        <Button class="bigBtn" severity="secondary">Konserve</Button> <Button class="bigBtn"
+            severity="info">Live</Button>
+
     </div>
 
-    
 
 
-   
+
+
     <Dialog v-model:visible="dialogVisible" modal header="Edit colorSetName" :style="{ width: '25rem' }">
         <span class="p-text-secondary block mb-5">Enter a new name</span>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="colorSetName" class="font-semibold w-6rem">Name</label>
-            <InputText ref="inputRef" id="colorSetName" v-model="colorsets[selectedSet].name" class="flex-auto" autocomplete="off" />
+            <InputText ref="inputRef" id="colorSetName" v-model="colorsets[selectedSet].name" class="flex-auto"
+                autocomplete="off" />
         </div>
         <div class="flex justify-content-end gap-2">
             <Button type="button" label="Cancel" severity="secondary" @click="cancelEditName()"></Button>
@@ -149,5 +179,9 @@ function cancelEditName() {
 
 }
 
-.bigBtn {width:50%;text-align: center;margin:8px;}
+.bigBtn {
+    width: 50%;
+    text-align: center;
+    margin: 8px;
+}
 </style>

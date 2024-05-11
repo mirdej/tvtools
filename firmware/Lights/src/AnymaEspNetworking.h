@@ -70,7 +70,7 @@ const char *indexFile = "/index.html";
  */
 void fileServer(Request &req, Response &res)
 {
-long timestamp;
+    long timestamp;
     if (req.method() != Request::GET)
     {
         return;
@@ -102,7 +102,7 @@ long timestamp;
         return;
     }
 
-timestamp = millis();
+    timestamp = millis();
     uint8_t readBuffer[READ_BUFFER_SIZE];
     const char *mimeType = MimeTypes::getType(file.name());
     res.set("Content-Type", mimeType);
@@ -115,11 +115,11 @@ timestamp = millis();
         file.read(readBuffer, toRead);
         res.write(readBuffer, toRead);
         length = length - toRead;
-        //log_v("%d",length);
-       // vTaskDelay(pdMS_TO_TICKS(1));
+        // log_v("%d",length);
+        // vTaskDelay(pdMS_TO_TICKS(1));
         taskYIELD();
     }
-    log_v("Took: %dms",millis()-timestamp);
+    log_v("Took: %dms", millis() - timestamp);
     file.close();
     res.end();
 }
@@ -270,12 +270,11 @@ void wifi_task(void *)
             if (client.connected())
             {
                 app.process(&client);
-            } 
-            
+            }
+
             vTaskDelay(pdMS_TO_TICKS(1));
-           // taskYIELD();
-            
-            
+            // taskYIELD();
+
             /*
                        WiFiClient client = server.available();
                        if (client && networking.num_client_connections < MAX_CLIENT_CONNECTIONS)
@@ -297,16 +296,15 @@ void wifi_task(void *)
 void AnymaEspNetworking::begin()
 {
 
-   /*  xTaskCreatePinnedToCore(
-                               wifi_task, "WIFI", 16384, NULL, 1, NULL, 0); */
+    /*  xTaskCreatePinnedToCore(
+                                wifi_task, "WIFI", 16384, NULL, 1, NULL, 0); */
 
-
- xTaskCreate(
+    xTaskCreate(
         wifi_task,    // Function that implements the task.
         "WIFI-Setup", // Text name for the task.
-        16384,         // Stack size in words, not bytes.
+        16384,        // Stack size in words, not bytes.
         NULL,         // Parameter passed into the task.
         0,            // Priority at which the task is created.
-        NULL); 
+        NULL);
 }
 #endif

@@ -4,7 +4,7 @@
 
 
 <script setup>
-import { ref, watch,onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import DeviceInfo from "./DeviceInfo.vue"
 import SettingsBrowser from "./SettingsBrowser.vue"
 import ConfirmDialog from 'primevue/confirmdialog';
@@ -15,7 +15,7 @@ import axios from 'axios';
 
 
 //-------------------------------------------------------  REACTIVE
-const props = defineProps(['title','app_version']);
+const props = defineProps(['title', 'app_version']);
 const is_local = ref(!window.served_from_device);
 const talking_to = ref(window.device_url)
 const year = ref(0);
@@ -23,14 +23,14 @@ year.value = new Date().getFullYear();
 
 onMounted(() => {
 
-/* axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
+    axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
 
-.then(function (response) {
-    window.device_url = "http://" + response.data.ip + "/";
-    talking_to.value=window.device_url;
-    console .log(window.device_url);
+        .then(function (response) {
+            window.device_url = "http://" + response.data.ip + "/";
+            talking_to.value = window.device_url;
+            console.log(window.device_url);
 
-}) */
+        })
 })
 
 </script>
@@ -44,17 +44,19 @@ onMounted(() => {
 <template>
     <header>
         <img class="logo_img" src="/logo_anyma_black.svg" alt="anyma" />
-        {{title}} <span style=" font-size:.7em;padding:2px;color:#888"> @ {{talking_to}} <Badge v-if="is_local" value="LOCALLY SERVED" severity="warning" /></span>
-    
+        {{ title }} <span style=" font-size:.7em;padding:2px;color:#888"> @ {{ talking_to }}
+            <Badge v-if="is_local" value="LOCALLY SERVED" severity="warning" />
+        </span>
+
 
     </header>
     <footer>
-        Version {{app_version}} © {{ year }} Michael Egger <a href="https://www.anyma.ch/">[ a n y m a ]</a>
+        Version {{ app_version }} © {{ year }} Michael Egger <a href="https://www.anyma.ch/">[ a n y m a ]</a>
     </footer>
     <DeviceInfo />
     <SettingsBrowser />
-    <ConfirmDialog/>
-  <Toast />
+    <ConfirmDialog />
+    <Toast />
 </template>
 
 

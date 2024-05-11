@@ -1,0 +1,10 @@
+[
+    {
+        "name": "From Server",
+        "colors": ["ff0033", "00dddd", "dd66ff", "ff0000", "00dddd", "dd66ff"]
+    },
+    {
+        "name": "With Love",
+        "colors": ["000033", "00dd00", "dd66ff", "ff00ff", "0000ff", "00dd00"]
+    }
+]
