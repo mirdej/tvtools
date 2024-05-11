@@ -25,7 +25,7 @@
 #define MAX_CLIENT_CONNECTIONS 4
 
 #define WEBROOT "/webroot"
-#define READ_BUFFER_SIZE 1024
+#define READ_BUFFER_SIZE 4096
 const char *NTP_SERVER = "pool.ntp.org";
 const char *TZ_STRING = "CET-1CEST,M3.5.0/2,M10.5.0/3";
 
@@ -304,7 +304,7 @@ void AnymaEspNetworking::begin()
  xTaskCreate(
         wifi_task,    // Function that implements the task.
         "WIFI-Setup", // Text name for the task.
-        8192,         // Stack size in words, not bytes.
+        16384,         // Stack size in words, not bytes.
         NULL,         // Parameter passed into the task.
         0,            // Priority at which the task is created.
         NULL); 
