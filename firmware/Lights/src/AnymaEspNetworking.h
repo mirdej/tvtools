@@ -25,7 +25,7 @@
 #define MAX_CLIENT_CONNECTIONS 4
 
 #define WEBROOT "/webroot"
-#define READ_BUFFER_SIZE 512
+#define READ_BUFFER_SIZE 1024
 const char *NTP_SERVER = "pool.ntp.org";
 const char *TZ_STRING = "CET-1CEST,M3.5.0/2,M10.5.0/3";
 
