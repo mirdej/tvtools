@@ -22,7 +22,6 @@
 
 #define ANYMA_ESP_SERVICE_NAME "anyma_esp32"
 #define ANYMA_ESP_SERVICE_PORT 3101
-#define MAX_CLIENT_CONNECTIONS 4
 
 #define WEBROOT "/webroot"
 #define READ_BUFFER_SIZE 4096
@@ -134,11 +133,10 @@ String escapedMac()
 
 void findFriends()
 {
-
     int n = MDNS.queryService(ANYMA_ESP_SERVICE_NAME, "tcp");
     if (n == 0)
     {
-        Serial.println("no services found");
+        Serial.println("no friends found");
     }
     else
     {
@@ -161,9 +159,6 @@ void findFriends()
 
         char data[2084];
         size_t len = serializeJson(doc, Serial);
-        /*   Serial.print("Data size: ");
-          Serial.println(len,DEC);
-          ws.textAll(data, len); */
     }
 }
 //----------------------------------------------------------------------------------------
@@ -246,43 +241,24 @@ void wifi_task(void *)
 
     while (1)
     {
-
         if (WiFi.status() == WL_CONNECTED)
         {
 
             if (millis() - last_mdns_lookup > 60000)
             {
                 findFriends();
-                /*
-                IPAddress shouldBeMyIP = MDNS.queryHost(settings.hostname + ".local",1000);
-                if (WiFi.localIP() == shouldBeMyIP) {
-                    log_v("MDNS still working");
-                } else {
-                    log_e("I have disappeared from mDNS? (Probe returned %s). Am I still alive??? (My IP: %s)",shouldBeMyIP,WiFi.localIP().toString().c_str());
-                } */
                 last_mdns_lookup = millis();
             }
 
             ftp.handle();
 
             WiFiClient client = server.available();
-
             if (client.connected())
             {
                 app.process(&client);
             }
 
             vTaskDelay(pdMS_TO_TICKS(1));
-            // taskYIELD();
-
-            /*
-                       WiFiClient client = server.available();
-                       if (client && networking.num_client_connections < MAX_CLIENT_CONNECTIONS)
-                       {
-                           xTaskCreatePinnedToCore(
-                               TaskClientSocket, "TaskClientSocket", 8192, &client, 2, NULL, ARDUINO_RUNNING_CORE);
-                       }
-                       taskYIELD(); */
         }
         else
         {

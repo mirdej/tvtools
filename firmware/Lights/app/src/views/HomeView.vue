@@ -20,6 +20,7 @@ const inputRef = ref(null)
 const colorsets = ref([{ name: "Rot", colors: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'] }]);
 
 function editSet(theSet) {
+    axios.get(window.device_url + 'api/colorset/load/'+theSet, { timeout: 5000 })
     selectedSet.value = theSet;
 }
 
