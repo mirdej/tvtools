@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 0)
+  (lib (name "5port-headphone-belkin-clone-schnittplatz17-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/5port-headphone-belkin-clone-schnittplatz17-eagle-import.kicad_sym")(options "")(descr ""))
+)

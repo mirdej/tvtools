@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "5port-headphone-belkin-clone-schnittplatz17")(type "KiCad")(uri "$(KIPRJMOD)/5port-headphone-belkin-clone-schnittplatz17.pretty")(options "")(descr ""))
+)

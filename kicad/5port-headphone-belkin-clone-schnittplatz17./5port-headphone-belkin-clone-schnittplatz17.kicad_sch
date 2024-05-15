@@ -1,0 +1,2487 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "702d58ec-536d-48c7-9aac-eb552e3df52f")
+	(paper "User" 297.002 218.973)
+	(lib_symbols
+		(symbol "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#GND"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" ""
+				(at -2.54 -2.54 0)
+				(effects
+					(font
+						(size 1.778 1.5113)
+					)
+					(justify left bottom)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "SUPPLY SYMBOL"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GND_1_0"
+				(polyline
+					(pts
+						(xy -1.905 0) (xy 1.905 0)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 2.54 270)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "MINIJACK-SMD_1_0"
+				(polyline
+					(pts
+						(xy -12.7 -7.62) (xy -12.7 22.86)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -12.7 22.86) (xy -12.7 25.4)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -12.7 25.4) (xy 12.7 25.4)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -7.62 -7.62) (xy -7.62 10.16)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -7.62 10.16) (xy -2.54 15.24)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -7.62) (xy -2.54 0)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -5.08 0)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 15.24) (xy -7.62 20.32)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 7.62 7.62)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -7.62) (xy 2.54 0)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 5.08 0)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 7.62 -7.62) (xy 7.62 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 7.62 2.54) (xy 0 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 12.7 22.86) (xy -12.7 22.86)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 12.7 25.4) (xy 12.7 22.86)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 -12.7 90)
+					(length 5.08)
+					(name "P$1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -7.62 -12.7 90)
+					(length 5.08)
+					(name "P$2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -12.7 90)
+					(length 5.08)
+					(name "P$5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -2.54 -12.7 90)
+					(length 5.08)
+					(name "P$3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 2.54 -12.7 90)
+					(length 5.08)
+					(name "P$4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at -3.81 1.4986 0)
+				(effects
+					(font
+						(size 1.778 1.5113)
+					)
+					(justify left bottom)
+				)
+			)
+			(property "Value" ""
+				(at -3.81 -3.302 0)
+				(effects
+					(font
+						(size 1.778 1.5113)
+					)
+					(justify left bottom)
+				)
+			)
+			(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "RESISTOR, European symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R-EU_R1206_1_0"
+				(polyline
+					(pts
+						(xy -2.54 -0.889) (xy -2.54 0.889)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -0.889) (xy 2.54 -0.889)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -0.889) (xy 2.54 0.889)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0.889) (xy -2.54 0.889)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 177.8 149.86) (xy 144.78 149.86)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "07ced04f-07cf-40a4-95b4-b386ae74b0d1")
+	)
+	(wire
+		(pts
+			(xy 157.48 60.96) (xy 157.48 22.86)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "1bd2d337-2c52-4efe-9444-aa3e2268b62c")
+	)
+	(wire
+		(pts
+			(xy 177.8 111.76) (xy 144.78 111.76)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "1e0f98ce-bbb3-416e-b444-a48985602ffd")
+	)
+	(wire
+		(pts
+			(xy 144.78 38.1) (xy 144.78 76.2)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "22c5f5f1-3881-487b-9536-042f6c4f07c1")
+	)
+	(wire
+		(pts
+			(xy 177.8 60.96) (xy 157.48 60.96)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "23692fff-f317-4895-94fb-bfcff6dc599a")
+	)
+	(wire
+		(pts
+			(xy 157.48 96.52) (xy 157.48 60.96)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "35f52fd1-237a-4bba-84c6-20f43434538c")
+	)
+	(wire
+		(pts
+			(xy 114.3 38.1) (xy 144.78 38.1)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "382d05ab-5db4-42a7-b7f5-72a134812416")
+	)
+	(wire
+		(pts
+			(xy 177.8 76.2) (xy 144.78 76.2)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "42211bed-0991-428f-9283-671dde73c054")
+	)
+	(wire
+		(pts
+			(xy 157.48 172.72) (xy 157.48 134.62)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "4a719730-a1bf-49db-849b-f14bf2ad3e6d")
+	)
+	(wire
+		(pts
+			(xy 114.3 22.86) (xy 157.48 22.86)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "4e814293-0e2b-475b-8654-e9f6b8191d00")
+	)
+	(wire
+		(pts
+			(xy 157.48 22.86) (xy 180.34 22.86)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "5c60b2f1-8f7d-497d-ad07-ee2e7e3983ca")
+	)
+	(wire
+		(pts
+			(xy 144.78 38.1) (xy 180.34 38.1)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "6c12c290-7214-4f13-89b6-161e13ad164b")
+	)
+	(wire
+		(pts
+			(xy 144.78 187.96) (xy 177.8 187.96)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "8574bc81-7c12-4c15-ae01-42cd7768a2dd")
+	)
+	(wire
+		(pts
+			(xy 177.8 96.52) (xy 157.48 96.52)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "884ba9e8-6af0-47fd-9a6e-e92fc2dd705d")
+	)
+	(wire
+		(pts
+			(xy 177.8 172.72) (xy 157.48 172.72)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "8da42dc5-e6aa-466b-b199-98a5600969ab")
+	)
+	(wire
+		(pts
+			(xy 177.8 134.62) (xy 157.48 134.62)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "8e878f90-5946-4670-b436-90d3bd392027")
+	)
+	(wire
+		(pts
+			(xy 144.78 111.76) (xy 144.78 149.86)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "95876594-f0ce-4a56-b61e-a1d3eddf9b03")
+	)
+	(wire
+		(pts
+			(xy 144.78 76.2) (xy 144.78 111.76)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "c5905940-a97a-4e57-82bc-a6620129b735")
+	)
+	(wire
+		(pts
+			(xy 144.78 149.86) (xy 144.78 187.96)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "e6f1e19a-449a-42d1-a4e1-3b3221be749d")
+	)
+	(wire
+		(pts
+			(xy 157.48 134.62) (xy 157.48 96.52)
+		)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(uuid "ef950e44-fdac-4656-bf8a-a5cadf190281")
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 109.22 22.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "012ae1d8-0ca6-4d32-838e-d16b7fde6ebc")
+		(property "Reference" "R11"
+			(at 105.41 21.3614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 105.41 26.162 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 109.22 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "752608bd-16b0-4f0b-b930-15bcda75ed74")
+		)
+		(pin "2"
+			(uuid "89d426d6-bfc6-4f10-98e1-06da6a12aee1")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 187.96 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "026d87b0-c1c5-40af-9e35-ec78e49a6250")
+		(property "Reference" "R10"
+			(at 186.69 186.4614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 191.262 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7060e554-389d-4ce1-9e59-1c976f696e1f")
+		)
+		(pin "1"
+			(uuid "85111e84-2813-449f-92ac-02d19909d8a0")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 60.96 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "139dffd3-a175-4155-bc66-08598d2f487d")
+		(property "Reference" "R3"
+			(at 186.69 59.4614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 64.262 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "19ee12c8-0035-49b0-b4e7-f79f15125a9d")
+		)
+		(pin "2"
+			(uuid "3ee9d4e8-9b3a-4b5f-850a-3c9c5eb69454")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 149.86 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "21682995-0434-48d6-ac2c-531c114d2b34")
+		(property "Reference" "R8"
+			(at 186.69 148.3614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 153.162 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cac6057a-46c2-4196-96ec-8238afd7dd7b")
+		)
+		(pin "2"
+			(uuid "55e5180a-dd41-4a40-9fad-3ddb2dc98870")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 91.44 30.48 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2194bde6-eb83-4504-aa13-6b11702a1b72")
+		(property "Reference" "IN0"
+			(at 91.44 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 91.44 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 91.44 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 91.44 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 91.44 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P1"
+			(uuid "8bf65942-3934-4e96-a81c-dc30e0e28f68")
+		)
+		(pin "P2"
+			(uuid "6077357a-1a0b-4bb9-882d-e668b5ca7847")
+		)
+		(pin "P3"
+			(uuid "3a188d13-df46-4a78-bdc1-a6f00b66d084")
+		)
+		(pin "P4"
+			(uuid "7a330590-2677-48a3-a748-380d37a39b18")
+		)
+		(pin "P5"
+			(uuid "092fa95c-8719-4bbc-9213-9a6dc587ebbd")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "IN0")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 185.42 38.1 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2fd4d5d2-5ff6-441d-88b6-9e17ef29bbd7")
+		(property "Reference" "R2"
+			(at 189.23 36.6014 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 189.23 41.402 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 185.42 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 185.42 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "a928ff41-0d9f-4324-ae49-c8ffb29e91a9")
+		)
+		(pin "1"
+			(uuid "cd17387f-e129-431e-9862-a82d81c45ef1")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 200.66 180.34 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3a7f5c0e-fa07-4208-8b23-f6a9dc28459a")
+		(property "Reference" "U$5"
+			(at 200.66 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 200.66 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 200.66 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P1"
+			(uuid "55e7d064-f0e9-470f-873d-ce16378c4000")
+		)
+		(pin "P2"
+			(uuid "9fc21288-8ce5-4118-96b6-67b19333f194")
+		)
+		(pin "P3"
+			(uuid "97710d84-e4e3-4b17-9296-973776bdeb8c")
+		)
+		(pin "P4"
+			(uuid "d3da7aa1-830b-411d-bdd6-1548998bc3cb")
+		)
+		(pin "P5"
+			(uuid "3aa2b79f-9e94-495d-9bc1-291b42069e1c")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "U$5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 187.96 157.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "476162fa-77d4-4f3d-9439-3eceb1f20f1a")
+		(property "Reference" "#GND4"
+			(at 187.96 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 160.02 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 187.96 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 187.96 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5324a9fb-dd9f-414a-aa42-8105364ca034")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 185.42 22.86 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "47c8c688-90c3-40aa-bb5c-8027d662c6d0")
+		(property "Reference" "R1"
+			(at 189.23 21.3614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 189.23 26.162 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 185.42 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 185.42 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "53bc3e1e-4604-4d13-b578-aa30362ff7f4")
+		)
+		(pin "1"
+			(uuid "4b853e5e-174f-415b-9290-e131711faba5")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 134.62 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "499e9cc2-067b-46ca-aeaa-aa7ac6448b84")
+		(property "Reference" "R7"
+			(at 186.69 133.1214 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 137.922 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3cf36094-3f60-4e09-b0a3-9e8ed0191162")
+		)
+		(pin "1"
+			(uuid "ecba10fa-ae72-454e-b23e-f31b0c48e468")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 172.72 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4dcf56e2-872b-4376-9cac-5a0b881afdc2")
+		(property "Reference" "R9"
+			(at 186.69 171.2214 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 176.022 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 172.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 172.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 172.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "8d56c0c1-39f6-44f4-b678-f4394e463164")
+		)
+		(pin "1"
+			(uuid "ce60555e-211f-4228-ac10-ac2b0b7a6258")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 111.76 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "51ac225f-d729-4312-81e8-a5b76de29603")
+		(property "Reference" "R6"
+			(at 186.69 110.2614 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 115.062 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "052adf20-d6e0-4a0f-ad64-9f0ae9a0eda5")
+		)
+		(pin "1"
+			(uuid "bd0727bf-6947-444e-b252-b739ba44281f")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 104.14 45.72 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5ed992db-d669-49be-974c-acd84c262818")
+		(property "Reference" "#GND6"
+			(at 104.14 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 106.68 48.26 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "735cef74-63aa-48cf-be8b-e2d46b0d47a2")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 187.96 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "73c74a49-5913-4c10-9557-8e843309c150")
+		(property "Reference" "#GND2"
+			(at 187.96 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 86.36 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 187.96 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 187.96 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "78e09760-64ee-4217-93e3-1cdf5e27dda2")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 187.96 119.38 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7b0729af-9ee8-471f-af8d-685843be705e")
+		(property "Reference" "#GND3"
+			(at 187.96 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 121.92 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 187.96 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 187.96 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "43031327-a65a-402b-b9d5-a802f8f03f1a")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 200.66 68.58 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8113807b-b34a-43ac-8685-0ca61bdc7d03")
+		(property "Reference" "U$2"
+			(at 200.66 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 200.66 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 200.66 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P1"
+			(uuid "075ca26a-5878-4fe4-b4b2-b5e87bd99778")
+		)
+		(pin "P2"
+			(uuid "5c532cc2-e3f4-4b0a-ab21-72b7be023fbf")
+		)
+		(pin "P3"
+			(uuid "e8ce0730-fd57-4b7e-af92-aef6faf2edf4")
+		)
+		(pin "P4"
+			(uuid "f58325b4-7815-4cf7-be20-bf2ce78cf6dd")
+		)
+		(pin "P5"
+			(uuid "312848dd-43d4-40f2-a2fa-63cc66d171f0")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "U$2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 96.52 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "89297832-538d-4c65-9f00-f114a1f24848")
+		(property "Reference" "R5"
+			(at 186.69 95.0214 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 99.822 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "f49132b9-43fb-4c65-9587-618791bd3e10")
+		)
+		(pin "1"
+			(uuid "a0bb56b0-eded-4f8d-912c-548231c6438c")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 200.66 104.14 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a4dd3b36-bcb7-43e4-8876-f4b54b8ff47b")
+		(property "Reference" "U$3"
+			(at 200.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 200.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 200.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P5"
+			(uuid "469f1cf9-135f-4bd9-8267-e9b914280252")
+		)
+		(pin "P3"
+			(uuid "63508ed7-c1a4-4fda-9175-7637bcade3b1")
+		)
+		(pin "P4"
+			(uuid "62fbb1bb-dd91-48aa-942a-3d79af1a515c")
+		)
+		(pin "P1"
+			(uuid "bb7b63d6-3370-43ed-9d82-8cc65acd92e2")
+		)
+		(pin "P2"
+			(uuid "93795858-86a1-4372-8bf2-16db47dbd203")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "U$3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 190.5 45.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b46a9c9b-d0e1-48b0-a9d1-b07ba9e16704")
+		(property "Reference" "#GND1"
+			(at 190.5 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 187.96 48.26 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 190.5 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e1aaabf4-bf74-442b-8a2c-deb715bf8fa8")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 109.22 38.1 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b59ccb08-2eba-45e4-bc73-f9fafe52e291")
+		(property "Reference" "R12"
+			(at 105.41 36.6014 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 105.41 41.402 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 109.22 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e5132c35-3863-4512-bfdc-0ab5e77194e8")
+		)
+		(pin "2"
+			(uuid "9176920e-1ca3-498b-8fb8-94efc5813e22")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 203.2 30.48 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ceb1d99a-2373-49d4-a334-1ee96e57fa9a")
+		(property "Reference" "U$1"
+			(at 203.2 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 203.2 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 203.2 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 203.2 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P3"
+			(uuid "fde20886-0e4a-4485-8302-1c26496ff944")
+		)
+		(pin "P4"
+			(uuid "3ea23242-05f5-4fb4-892a-c6fb51a83963")
+		)
+		(pin "P5"
+			(uuid "1bcdafaf-bad3-466b-8c8a-3516663c4475")
+		)
+		(pin "P2"
+			(uuid "aa6b69ba-5f2c-4b05-9592-09cb996b18e2")
+		)
+		(pin "P1"
+			(uuid "3bd34bdf-6606-484f-ae5f-3dec35ab986e")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "U$1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:R-EU_R1206")
+		(at 182.88 76.2 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ea7676fd-c939-4870-85a8-ea0785ac4841")
+		(property "Reference" "R4"
+			(at 186.69 74.7014 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "16"
+			(at 186.69 79.502 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:R1206"
+			(at 182.88 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cfce5254-43a8-4a11-bd1d-162b8dc3068a")
+		)
+		(pin "2"
+			(uuid "c98486ec-86d2-4a25-afb4-d4fb1fb3f2f7")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:MINIJACK-SMD")
+		(at 200.66 142.24 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "efb95a66-b28f-457c-b124-eccad3248f88")
+		(property "Reference" "U$4"
+			(at 200.66 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "MINIJACK-SMD"
+			(at 200.66 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "5port-headphone-belkin-clone-schnittplatz17:502-35RASMT4BHNTRX"
+			(at 200.66 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "P3"
+			(uuid "18f2115d-594a-4644-aa9a-3f33f77dc86d")
+		)
+		(pin "P2"
+			(uuid "c965bc34-7919-473a-b577-c10f6e40e92a")
+		)
+		(pin "P1"
+			(uuid "f388c8ed-36b3-4e23-8ca3-bd52328dc4f3")
+		)
+		(pin "P4"
+			(uuid "cbb09562-fd40-45be-a883-f127d82d06ba")
+		)
+		(pin "P5"
+			(uuid "e9ba4f5b-36d9-4d86-be28-67a2754b1e01")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "U$4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5port-headphone-belkin-clone-schnittplatz17-eagle-import:GND")
+		(at 187.96 195.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fc2b3554-2e61-41c8-80a1-2c1136ed5ec3")
+		(property "Reference" "#GND5"
+			(at 187.96 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 198.12 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" ""
+			(at 187.96 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 187.96 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ced75b63-f85d-40a5-9ed2-d519c99408a9")
+		)
+		(instances
+			(project "5port-headphone-belkin-clone-schnittplatz17"
+				(path "/702d58ec-536d-48c7-9aac-eb552e3df52f"
+					(reference "#GND5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)
