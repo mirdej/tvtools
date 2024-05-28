@@ -18,8 +18,6 @@ extern Application app;
 CORS defines a way for client web applications that are loaded in one domain to interact with resources in a different domain.
 */
 
-
-
 extern Parled p[NUM_PARLED];
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -78,10 +76,14 @@ void setup_api()
               doc["flash_free_sketch_space"] = ESP.getFreeSketchSpace();
 
               doc["hostname"] = settings.hostname;
-  /*             doc["ip"] = WiFi.localIP().toString();
-              doc["mac"] = WiFi.macAddress(); */
-               doc["ip"] = ETH.localIP().toString();
-              doc["mac"] = ETH.macAddress();
+
+#if USE_ETHERNET
+                doc["ip"] = ETH.localIP().toString();
+                doc["mac"] = ETH.macAddress();
+#else
+              doc["ip"] = WiFi.localIP().toString();
+              doc["mac"] = WiFi.macAddress();
+#endif
               doc["millis"] = millis();
 
               multi_heap_info_t info;

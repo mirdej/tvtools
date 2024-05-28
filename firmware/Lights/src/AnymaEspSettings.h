@@ -10,6 +10,10 @@
 
 
 #define __DEBUG_TASK_ENABLED false
+
+#define USE_ETHERNET 1
+
+
 #define MAIN_FILE_SYSTEM LittleFS
 #define SETTINGS_FILE_PATH "/data/settings.json"
 
