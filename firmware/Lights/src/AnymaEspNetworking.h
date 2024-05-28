@@ -314,12 +314,12 @@ void wifi_task(void *)
     // wifiMulti.addAP(settings.ssid.c_str(), settings.pass.c_str());
     wifiMulti.addAP("Anymair", "Mot de passe pas complique");
 
-    while (WiFi.status() != WL_CONNECTED)
+/*     while (WiFi.status() != WL_CONNECTED)
     {
         wifiMulti.run();
         vTaskDelay(pdMS_TO_TICKS(250));
     }
-    log_i("IP address: %s", WiFi.localIP().toString().c_str());
+    log_i("IP address: %s", WiFi.localIP().toString().c_str()); */
 
 #if USE_ETHERNET
     setup_w5500();
@@ -366,7 +366,7 @@ void wifi_task(void *)
 
     while (1)
     {
-        if (WiFi.status() == WL_CONNECTED)
+      //  if (WiFi.status() == WL_CONNECTED)
         {
 
             if (millis() - last_mdns_lookup > 60000)
@@ -385,12 +385,12 @@ void wifi_task(void *)
 
             vTaskDelay(pdMS_TO_TICKS(1));
         }
-        else
+     /*    else
         {
             Serial.println("[WIFI] Connecting");
             WiFi.reconnect();
             vTaskDelay(pdMS_TO_TICKS(1000));
-        }
+        } */
     }
 }
 

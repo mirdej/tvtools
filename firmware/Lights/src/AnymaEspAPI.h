@@ -8,6 +8,7 @@
 #include <aWOT.h>
 #include "MimeTypes.h"
 #include "Parled.h"
+#include <ETH.h>
 
 extern Application app;
 
@@ -77,8 +78,10 @@ void setup_api()
               doc["flash_free_sketch_space"] = ESP.getFreeSketchSpace();
 
               doc["hostname"] = settings.hostname;
-              doc["ip"] = WiFi.localIP().toString();
-              doc["mac"] = WiFi.macAddress();
+  /*             doc["ip"] = WiFi.localIP().toString();
+              doc["mac"] = WiFi.macAddress(); */
+               doc["ip"] = ETH.localIP().toString();
+              doc["mac"] = ETH.macAddress();
               doc["millis"] = millis();
 
               multi_heap_info_t info;
