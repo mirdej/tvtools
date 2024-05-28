@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted } from "vue"
+import { reactive, ref, onMounted, watch } from "vue"
 import ColorPreview from "../components/ColorPreview.vue"
 import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
@@ -20,7 +20,7 @@ const inputRef = ref(null)
 const colorsets = ref([{ name: "Rot", colors: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'] }]);
 
 function editSet(theSet) {
-    axios.get(window.device_url + 'api/colorset/load/'+theSet, { timeout: 5000 })
+    axios.get(window.device_url + 'api/colorset/load/' + theSet, { timeout: 5000 })
     selectedSet.value = theSet;
 }
 
@@ -62,6 +62,25 @@ function cancelEditName() {
     dialogVisible.value = false;
 
 }
+
+
+var last_colors_set = new Array();
+(function observe() {
+    //console.log("observe");
+    setTimeout(() => {
+
+        if (selectedSet.value > -1) {
+            colorsets.value[selectedSet.value].colors.forEach((c, i) => {
+                if (last_colors_set[i] != c) {
+                    console.log(`${i} changed to ${c}`);
+                    last_colors_set[i] = c;
+                    axios.put(`${window.device_url}api/color/${i}/${c}`);
+                }
+            })
+        }
+        observe();
+    }, 50);
+})();
 
 function saveSet() {
     axios.put(window.device_url + 'api/colorsets', {

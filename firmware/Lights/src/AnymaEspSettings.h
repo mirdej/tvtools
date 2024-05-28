@@ -28,7 +28,7 @@ struct AnymaEspSettings
 {
 public:
     // -------------------------------------------------------------------------------------------------------------------- CUSTOMIZE THIS PART
-    String hostname = "Baby-S3";
+    String hostname = "LightsProto";
     String ssid = "Anymair";
     String pass = "Mot de passe pas complique";
     String blink_color = "00FF00";

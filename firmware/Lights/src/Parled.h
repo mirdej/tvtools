@@ -1,3 +1,6 @@
+#ifndef __PARLED_INCLUDED__
+#define __PARLED_INCLUDED__
+
 #include "Easing.h"
 #include "Arduino.h"
 #include <SPIFFS.h>
@@ -36,3 +39,5 @@ class Parled {
         
         float clip(float f);
 };
+
+#endif

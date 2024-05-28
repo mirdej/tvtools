@@ -7,6 +7,7 @@
 #include "ArduinoJson.h"
 #include <aWOT.h>
 #include "MimeTypes.h"
+#include "Parled.h"
 
 extern Application app;
 
@@ -16,45 +17,48 @@ extern Application app;
 CORS defines a way for client web applications that are loaded in one domain to interact with resources in a different domain.
 */
 
+
+
+extern Parled p[NUM_PARLED];
+
 //--------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------
 
 void setup_api()
 {
-  //--------------------------------------------------------------------------------------------------------------------------------
-  //-------------------------------------------------------------------------------------------------------------------------- GET
+        //--------------------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------------------- GET
 
-  app.get("/api/colorsets", [](Request &req, Response &res)
-          { serveJsonFile("/colorsets.json", req, res); });
+        app.get("/api/colorsets", [](Request &req, Response &res)
+                { serveJsonFile("/colorsets.json", req, res); });
 
-  app.get("/api/colorset/load/:id", [](Request &req, Response &res)
-          {
+        app.get("/api/colorset/load/:id", [](Request &req, Response &res)
+                {
             char id[10];
 
             req.route("id", id, 10);
             int n = atoi(id);
-            log_v("Load %d", n);
+          //  log_v("Load %d", n);
             res.status(204);
-            res.end();
-          });
+            res.end(); });
 
-  //-------------------------------------------------------------------
-  app.get("/api/reboot", [](Request &req, Response &res)
-          {
+        //-------------------------------------------------------------------
+        app.get("/api/reboot", [](Request &req, Response &res)
+                {
               res.status(204);
               res.set("Content-Type", "application/json");
               res.end(); 
               xTaskCreate(reboot_task, "Reboot",    4096,       NULL,     0,          NULL); });
 
-  app.get("/api/settings", [](Request &req, Response &res)
-          {
+        app.get("/api/settings", [](Request &req, Response &res)
+                {
               res.status(200);
               res.set("Content-Type", "application/json");
               serializeJson(settings.get_json(), req); 
               res.end(); });
 
-  app.get("/api/deviceinfo", [](Request &req, Response &res)
-          {
+        app.get("/api/deviceinfo", [](Request &req, Response &res)
+                {
               JsonDocument doc;
 
               doc["message"] = "deviceinfo";
@@ -96,17 +100,37 @@ void setup_api()
               serializeJson(doc, req); 
               res.end(); });
 
-  //--------------------------------------------------------------------------------------------------------------------------------
-  //-------------------------------------------------------------------------------------------------------------------------- PUT
+        //--------------------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------------------- PUT
 
-  app.put("/api/colorsets", [](Request &req, Response &res)
+        app.put("/api/colorsets", [](Request &req, Response &res)
 
-          { writeJSONFile("/colorsets.json", req, res); });
+                { writeJSONFile("/colorsets.json", req, res); });
 
-  //------------------------------------------------------------------------------
+        app.put("/api/color/:id/:color", [](Request &req, Response &res)
+                {
+            char id[10];
+            char color[10];
 
-  app.put("/api/settings", [](Request &req, Response &res)
-          {
+            req.route("id", id, 10);
+            req.route("color", color, 10);
+            int n = atoi(id);
+            n %= NUM_PARLED;
+
+            CRGB col = hexToColor(color);
+            float r,g,b;
+            r = (float)col.r/255.;
+            g = (float)col.g/255.;
+            b = (float)col.b/255.;
+            p[n].startFade(r,g,b,0);
+           // log_v("Color %d: %d %d %d", n,col.r,col.g,col.b);
+            res.status(204);
+            res.end(); });
+
+        //------------------------------------------------------------------------------
+
+        app.put("/api/settings", [](Request &req, Response &res)
+                {
               JsonDocument doc;
               DeserializationError error = deserializeJson(doc, req);
               // Test if parsing succeeds.
