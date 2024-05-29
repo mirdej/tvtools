@@ -19,6 +19,8 @@ CORS defines a way for client web applications that are loaded in one domain to 
 */
 
 extern Parled p[NUM_PARLED];
+extern uint8_t dmx_data[DMX_PACKET_SIZE];
+extern bool checking_fixtures;
 
 //--------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -112,6 +114,8 @@ void setup_api()
 
                 { writeJSONFile("/colorsets.json", req, res); });
 
+        //------------------------------------------------------------------------------
+
         app.put("/api/color/:id/:color", [](Request &req, Response &res)
                 {
             char id[10];
@@ -129,6 +133,24 @@ void setup_api()
             b = (float)col.b/255.;
             p[n].startFade(r,g,b,0);
            // log_v("Color %d: %d %d %d", n,col.r,col.g,col.b);
+            res.status(204);
+            res.end(); });
+
+        //------------------------------------------------------------------------------
+
+        app.put("/api/check/:addr", [](Request &req, Response &res)
+                {
+            char addr[10];
+
+            req.route("addr", addr, 10);
+            int n = atoi(addr);
+        
+            checking_fixtures = true;
+
+             for (int i = 0; i < DMX_PACKET_SIZE; i++) {
+                if (i == n) { dmx_data[i]= 255;} else {dmx_data[i]= 0;}
+
+             }
             res.status(204);
             res.end(); });
 

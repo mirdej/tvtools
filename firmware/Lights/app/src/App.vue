@@ -11,7 +11,7 @@ var host;
 
 var ip = location.host;
   if (ip.startsWith('127') || ip.startsWith('localhost')) {
-    window.device_url = "http://lights.local/";
+    window.device_url = "http://lightsproto.local/";
     window.served_from_device = false;
   } else {
     window.device_url = "http://" + ip + "/";

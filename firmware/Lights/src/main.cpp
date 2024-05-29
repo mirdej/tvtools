@@ -19,6 +19,7 @@ or: Maybe worlds most complicated Arduino Blink Sketch
 */
 #define NUM_FIXT 12
 #define NUM_PARLED 6
+#define DMX_PACKET_SIZE 80
 
 #include <Arduino.h>
 #include "FS.h"
@@ -42,7 +43,6 @@ or: Maybe worlds most complicated Arduino Blink Sketch
 AnymaEspSettings settings;
 AnymaEspNetworking networking;
 
-#define DMX_PACKET_SIZE 513
 SPIClass *hspi = NULL;
 
 const int PIN_DMX_MISO = 5; // unused actually
@@ -87,6 +87,18 @@ void update()
 //----------------------------------------------------------------------------------------
 //																				                                      DMX Task
 
+void colorcameos()
+{
+  for (int i = 0; i < 2; i++)
+  {
+    int n = 11 + i * 5;
+    dmx_data[n + 1] = 255;
+    dmx_data[n + 2] = 255;
+    dmx_data[n + 3] = 127;
+    dmx_data[n + 4] = 255;
+  }
+}
+
 void IRAM_ATTR sync_interrupt()
 {
   xTaskResumeFromISR(dmx_task_handle); // run calculate_frame_task() once on eack positive going sync
@@ -95,8 +107,8 @@ void IRAM_ATTR sync_interrupt()
 void dmx_task(void *pvParameters)
 {
 
-      static long start_micros;
-    long elapsed;
+  static long start_micros;
+  long elapsed;
 
   log_v("Setup DMX");
 
@@ -130,20 +142,17 @@ void dmx_task(void *pvParameters)
   {
     vTaskSuspend(NULL);
     update();
- // kick off transmission
-        SPISettings mySettting(800000, MSBFIRST, SPI_MODE0);
-        digitalWrite(PIN_DMX_CS, LOW);
-        hspi->beginTransaction(mySettting);
-        for (int i = 1; i < DMX_PACKET_SIZE; i++)
-        {
-            /*   if (i%4==0)hspi->transfer(255);
-              else if (i%3==0)    hspi->transfer(127);
-              else   */
-            hspi->transfer(dmx_data[i]);
-        }
-        hspi->endTransaction();
-        digitalWrite(PIN_DMX_CS, HIGH);
-
+    colorcameos();
+    // kick off transmission
+    SPISettings mySettting(800000, MSBFIRST, SPI_MODE0);
+    digitalWrite(PIN_DMX_CS, LOW);
+    hspi->beginTransaction(mySettting);
+    for (int i = 1; i < DMX_PACKET_SIZE; i++)
+    {
+      hspi->transfer(dmx_data[i]);
+    }
+    hspi->endTransaction();
+    digitalWrite(PIN_DMX_CS, HIGH);
 
 #if ESPDMX
 
@@ -209,12 +218,6 @@ void setup()
   {
     p[i].setAddress(3 * i + 24);
   }
-  dmx_data[11 + 2] = 255;
-  dmx_data[11 + 3] = 240;
-  dmx_data[11 + 4] = 255;
-  dmx_data[16 + 2] = 255;
-  dmx_data[16 + 3] = 240;
-  dmx_data[16 + 4] = 255;
 
   xTaskCreatePinnedToCore(
       dmx_task,  // Function that implements the task.

@@ -1,6 +1,6 @@
 <script setup>
 import { ErrorCodes, ref,onMounted, watch } from 'vue'
-import Card from 'primevue/card';
+import axios from 'axios';
 
 const fixt_buttons = ref([]);
 const is_active = ref(0);
@@ -24,7 +24,10 @@ const generate_fixt_buttons = () =>{
 
 const check = (a) => {
     is_active.value = a.id;
-    console.log(a);
+    //console.log(a);
+    //console.log(`${window.device_url}api/check/${a.addr}`);
+    axios.put(`${window.device_url}api/check/${a.addr}`);
+
 }
 
 
@@ -32,7 +35,6 @@ const check = (a) => {
 onMounted(()=>{
     generate_fixt_buttons();
     console.log(fixt_buttons.value);
-
 })
 
 
