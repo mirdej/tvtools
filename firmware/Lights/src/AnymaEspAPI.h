@@ -140,19 +140,49 @@ void setup_api()
 
         app.put("/api/check/:addr", [](Request &req, Response &res)
                 {
-            char addr[10];
+                char addr[10];
 
-            req.route("addr", addr, 10);
-            int n = atoi(addr);
-        
-            checking_fixtures = true;
+                req.route("addr", addr, 10);
 
-             for (int i = 0; i < DMX_PACKET_SIZE; i++) {
-                if (i == n) { dmx_data[i]= 255;} else {dmx_data[i]= 0;}
+                checking_fixtures = true;
+                for (int i = 0; i < DMX_PACKET_SIZE; i++) {
+                        dmx_data[i]= 0;
+                }
 
-             }
-            res.status(204);
-            res.end(); });
+                if (strcmp(addr,"stage") == 0) {
+
+                                for (int i = 1; i < 12; i++) {
+                                dmx_data[i] = 255;	
+                                }
+                                dmx_data[16] = 255;	
+
+                } else  if (strcmp(addr,"backdrop") == 0) {
+
+                                for (int i = 0; i < 6; i++) {
+                                dmx_data[24 + (3*i)] = 255;	
+                                }
+
+                }  else  if (strcmp(addr,"all") == 0) {
+
+                                for (int i = 1; i < 12; i++) {
+                                dmx_data[i] = 255;	
+                                }
+                                dmx_data[16] = 255;	
+                                for (int i = 0; i < 6; i++) {
+                                dmx_data[24 + (3*i)] = 255;	
+                                }
+
+                }  else  if (strcmp(addr,"off") == 0) {
+                        ;
+                } else { 
+                        
+                        int n = atoi(addr);
+                        n %= DMX_PACKET_SIZE;
+                        dmx_data[n]= 255;
+                }
+                res.status(204);
+                res.end(); 
+        });
 
         //------------------------------------------------------------------------------
 

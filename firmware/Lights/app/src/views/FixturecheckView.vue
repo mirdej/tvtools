@@ -3,7 +3,7 @@ import { ErrorCodes, ref,onMounted, watch } from 'vue'
 import axios from 'axios';
 
 const fixt_buttons = ref([]);
-const is_active = ref(0);
+const is_active = ref(-1);
 var max_id = 0;
 
 const generate_fixt_buttons = () =>{
@@ -24,13 +24,14 @@ const generate_fixt_buttons = () =>{
 
 const check = (a) => {
     is_active.value = a.id;
-    //console.log(a);
-    //console.log(`${window.device_url}api/check/${a.addr}`);
     axios.put(`${window.device_url}api/check/${a.addr}`);
-
 }
 
-
+const check1 = (a) => {
+    is_active.value = a;
+    axios.put(`${window.device_url}api/check/${a}`);
+//    console.log(`${window.device_url}api/check/${a}`);
+}
 
 onMounted(()=>{
     generate_fixt_buttons();
@@ -46,5 +47,10 @@ onMounted(()=>{
 <Button v-for="fixt_btn in section.items" :severity="is_active == fixt_btn.id ? 'info' : 'secondary'" @click="check({id:fixt_btn.id,addr:fixt_btn.addr})">{{fixt_btn.addr}} </Button>
 <hr />
 </div>
+<Button @click="check1('stage')" :severity="is_active == 'stage' ? 'info' : 'secondary'">Stage ON</Button>
+<Button @click="check1('backdrop')" :severity="is_active == 'backdrop' ? 'info' : 'secondary'">Backdrop ON</Button>
+<Button @click="check1('all')" :severity="is_active == 'all' ? 'info' : 'secondary'">All ON</Button>
+<Button @click="check1('off')" :severity="is_active == 'off' ? 'info' : 'secondary'">All OFF</Button>
+
 </template>
 <style scoped></style>
