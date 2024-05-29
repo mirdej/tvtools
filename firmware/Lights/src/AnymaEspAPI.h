@@ -35,13 +35,26 @@ void setup_api()
         app.get("/api/colorsets", [](Request &req, Response &res)
                 { serveJsonFile("/colorsets.json", req, res); });
 
+        app.get("/api/scenes", [](Request &req, Response &res)
+                { serveJsonFile("/scenes.json", req, res); });
+
         app.get("/api/colorset/load/:id", [](Request &req, Response &res)
                 {
             char id[10];
 
             req.route("id", id, 10);
             int n = atoi(id);
-          //  log_v("Load %d", n);
+                log_v("Load Colorset %d", n);
+            res.status(204);
+            res.end(); });
+
+        app.get("/api/scene/load/:id", [](Request &req, Response &res)
+                {
+            char id[10];
+
+            req.route("id", id, 10);
+            int n = atoi(id);
+                log_v("Load Scene %d", n);
             res.status(204);
             res.end(); });
 
@@ -116,6 +129,9 @@ void setup_api()
 
                 { writeJSONFile("/colorsets.json", req, res); });
 
+        app.put("/api/scenes", [](Request &req, Response &res)
+
+                { writeJSONFile("/scenes.json", req, res); });
         //------------------------------------------------------------------------------
 
         app.put("/api/color/:id/:color", [](Request &req, Response &res)
@@ -140,8 +156,7 @@ void setup_api()
             res.status(204);
             res.end(); });
 
-
- //------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
 
         app.put("/api/channel/:id/:level", [](Request &req, Response &res)
                 {
@@ -209,8 +224,7 @@ void setup_api()
                         dmx_data[n]= 255;
                 }
                 res.status(204);
-                res.end(); 
-        });
+                res.end(); });
 
         //------------------------------------------------------------------------------
 

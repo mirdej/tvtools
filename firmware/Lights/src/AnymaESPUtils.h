@@ -93,7 +93,7 @@ void writeJSONFile(const char *path, Request &req, Response &res)
 
   if (bytes_written)
   {
-    log_i("Wrote %d bytes to %s", bytes_written, SETTINGS_FILE_PATH);
+    log_i("Wrote %d bytes to %s", bytes_written, local_path);
   }
   else
   {
