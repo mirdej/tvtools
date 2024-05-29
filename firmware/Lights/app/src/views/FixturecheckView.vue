@@ -47,6 +47,8 @@ onMounted(()=>{
 <Button v-for="fixt_btn in section.items" :severity="is_active == fixt_btn.id ? 'info' : 'secondary'" @click="check({id:fixt_btn.id,addr:fixt_btn.addr})">{{fixt_btn.addr}} </Button>
 <hr />
 </div>
+<h5>Scenes</h5>
+
 <Button @click="check1('stage')" :severity="is_active == 'stage' ? 'info' : 'secondary'">Stage ON</Button>
 <Button @click="check1('backdrop')" :severity="is_active == 'backdrop' ? 'info' : 'secondary'">Backdrop ON</Button>
 <Button @click="check1('all')" :severity="is_active == 'all' ? 'info' : 'secondary'">All ON</Button>

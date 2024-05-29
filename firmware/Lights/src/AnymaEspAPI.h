@@ -8,6 +8,7 @@
 #include <aWOT.h>
 #include "MimeTypes.h"
 #include "Parled.h"
+#include "Fixture.h"
 #include <ETH.h>
 
 extern Application app;
@@ -19,6 +20,7 @@ CORS defines a way for client web applications that are loaded in one domain to 
 */
 
 extern Parled p[NUM_PARLED];
+extern Fixture f[NUM_FIXT];
 extern uint8_t dmx_data[DMX_PACKET_SIZE];
 extern bool checking_fixtures;
 
@@ -118,6 +120,8 @@ void setup_api()
 
         app.put("/api/color/:id/:color", [](Request &req, Response &res)
                 {
+                                        checking_fixtures = false;
+
             char id[10];
             char color[10];
 
@@ -133,6 +137,30 @@ void setup_api()
             b = (float)col.b/255.;
             p[n].startFade(r,g,b,0);
            // log_v("Color %d: %d %d %d", n,col.r,col.g,col.b);
+            res.status(204);
+            res.end(); });
+
+
+ //------------------------------------------------------------------------------
+
+        app.put("/api/channel/:id/:level", [](Request &req, Response &res)
+                {
+                checking_fixtures = false;
+
+            char id[10];
+            char level[10];
+
+            req.route("id", id, 10);
+            req.route("level", level, 10);
+            int n = atoi(id);
+            n %= NUM_FIXT;
+        
+            int l = atoi(level);
+            float fl = (float)l / 100.;
+
+              //  log_v("Fixt %d: %f", n,f);
+            f[n].startFade(fl, 0.);
+
             res.status(204);
             res.end(); });
 

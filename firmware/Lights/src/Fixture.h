@@ -1,3 +1,6 @@
+#ifndef __FIXT_INCLUDED__
+#define __FIXT_INCLUDED__
+
 #include "Easing.h"
 #include "Arduino.h"
 #include <SPIFFS.h>
@@ -23,3 +26,4 @@ class Fixture {
         float   _start_level;
         float   _level;
 };
+#endif
