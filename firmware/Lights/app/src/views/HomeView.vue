@@ -150,12 +150,12 @@ function colorchange(i) {
     //console.log(`${window.device_url}api/color/${i}/${colorsets.value[selectedSet.value].colors[i]}`);
 
 }
-function refresh() {
+function refreshStatus() {
     axios.get(window.device_url + 'api/status', { timeout: 2000 }).then(function(response){
         selectedScene.value = response.data.scene;
         selectedSet.value = response.data.colors;
     })
-    setTimeout(refresh, 2000);
+    setTimeout(refreshStatus, 2000);
     // ...
 }
 
@@ -172,7 +172,7 @@ onMounted(() => {
                     colorsets.value = response.data
                 }
 
-                setTimeout(refresh, 2000);
+                setTimeout(refreshStatus, 2000);
             } catch (e) {
                 toast.add({ severity: 'error', summary: 'An error occured', detail: e, life: 4000 });
             }
