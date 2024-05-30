@@ -11,7 +11,9 @@ import { useToast } from 'primevue/usetoast';
 const confirm = useConfirm();
 const toast = useToast();
 
-const selectedSet = ref(0);
+const hasUnsavedChanges = ref(false);
+const selectedSet = ref(-1);
+const selectedScene = ref(-1);
 const dialogVisible = ref(false)
 var oldName = null;
 const inputRef = ref(null)
@@ -19,27 +21,55 @@ const inputRef = ref(null)
 
 const colorsets = ref([{ name: "Rot", colors: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'] }]);
 
+
+function editSetClick(theSet) {
+    if (!hasUnsavedChanges.value) { editSet(theSet); } else {
+
+        confirm.require({
+            message: 'Wenn du weitermachst gehen die Einstellungen erloren. Bist du sicher?',
+            header: 'Ungesicherte Änderungen',
+            icon: 'pi pi-exclamation-triangle',
+            rejectClass: 'p-button-secondary p-button-outlined',
+            rejectLabel: 'Nein',
+            acceptLabel: 'Ja',
+            accept: () => {
+                editSet(theSet);
+            },
+            reject: () => {
+            }
+        });
+    }
+
+}
+
+
 function editSet(theSet) {
-    axios.get(window.device_url + 'api/colorset/load/' + theSet, { timeout: 5000 })
+    axios.get(window.device_url + 'api/colorset/load/' + theSet, { timeout: 5000 }).then(function (response) {
+        //console.log(response);
+        hasUnsavedChanges.value = false;
+    })
     selectedSet.value = theSet;
+    hasUnsavedChanges.value = false;
 }
 
 function addColorset() {
+    hasUnsavedChanges.value = true;
     colorsets.value.push({ name: "Rot", colors: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'] })
     selectedSet.value = colorsets.value.length - 1;
 }
 
 function removeColorset() {
     confirm.require({
-        message: 'Are you sure you want to proceed?',
-        header: 'Delete Colorset?',
+        message: 'Bist du sicher?',
+        header: 'Farbeinstellung löschen?',
         icon: 'pi pi-exclamation-triangle',
         rejectClass: 'p-button-secondary p-button-outlined',
-        rejectLabel: 'Cancel',
-        acceptLabel: 'Delete',
+        rejectLabel: 'Nein',
+        acceptLabel: 'Ja',
         accept: () => {
             colorsets.value.splice(selectedSet.value, 1)
             selectedSet.value = selectedSet.value - 1;
+            hasUnsavedChanges.value = true;
         },
         reject: () => {
         }
@@ -49,6 +79,8 @@ function removeColorset() {
 
 function editName() {
     oldName = colorsets.value[selectedSet.value].name;
+    hasUnsavedChanges.value = true;
+
     dialogVisible.value = true;
     setTimeout(() => {
         document.getElementById("colorSetName").focus()
@@ -63,31 +95,13 @@ function cancelEditName() {
 
 }
 
-
-var last_colors_set = new Array();
-(function observe() {
-    //console.log("observe");
-    setTimeout(() => {
-
-        if (selectedSet.value > -1) {
-            colorsets.value[selectedSet.value].colors.forEach((c, i) => {
-                if (last_colors_set[i] != c) {
-                    console.log(`${i} changed to ${c}`);
-                    last_colors_set[i] = c;
-                    axios.put(`${window.device_url}api/color/${i}/${c}`);
-                }
-            })
-        }
-        observe();
-    }, 50);
-})();
-
 function saveSet() {
     axios.put(window.device_url + 'api/colorsets', {
         params: colorsets.value, timeout: 2000
     })
         .then(function (response) {
             console.log(response);
+            hasUnsavedChanges.value = false;
             toast.add({ severity: 'success', summary: "Colorsets updated", life: 1000 });
         })
         .catch(function (error) {
@@ -95,6 +109,56 @@ function saveSet() {
             toast.add({ severity: 'error', summary: 'An error occured', detail: error, life: 4000 });
         })
 }
+
+
+function throttle(cb, delay = 1000) {
+    const timeoutFunc = () => {
+        if (waitingArgs == null) {
+            shouldWait = false
+        } else {
+            cb(...waitingArgs)
+            waitingArgs = null
+            setTimeout(timeoutFunc, delay)
+        }
+    }
+
+    return (...args) => {
+        if (shouldWait) {
+            waitingArgs = args
+            return
+        }
+
+        cb(...args)
+        shouldWait = true
+        setTimeout(timeoutFunc, delay)
+    }
+}
+
+let shouldWait = false
+let waitingArgs
+
+function loadscene(theSet) {
+    axios.get(window.device_url + 'api/scene/load/' + theSet, { timeout: 5000 });
+}
+
+function colorchange(i) {
+    //     axios.put(`${window.device_url}api/color/${i}/${c}`);
+
+    axios.put(`${window.device_url}api/color/${i}/${colorsets.value[selectedSet.value].colors[i]}`);
+    hasUnsavedChanges.value = true;
+
+    //console.log(`${window.device_url}api/color/${i}/${colorsets.value[selectedSet.value].colors[i]}`);
+
+}
+function refresh() {
+    axios.get(window.device_url + 'api/status', { timeout: 2000 }).then(function(response){
+        selectedScene.value = response.data.scene;
+        selectedSet.value = response.data.colors;
+    })
+    setTimeout(refresh, 2000);
+    // ...
+}
+
 
 onMounted(() => {
 
@@ -107,9 +171,13 @@ onMounted(() => {
                     //console.log(response.data)
                     colorsets.value = response.data
                 }
+
+                setTimeout(refresh, 2000);
             } catch (e) {
                 toast.add({ severity: 'error', summary: 'An error occured', detail: e, life: 4000 });
             }
+
+
         })
 })
 
@@ -120,7 +188,9 @@ onMounted(() => {
         <div id="swatchpanel">
             <div v-if="selectedSet > -1">
                 <div style="display:inline-block" v-for="color, i in colorsets[selectedSet].colors">
-                    <ColorPicker v-model="colorsets[selectedSet].colors[i]" inline />
+                    <ColorPicker @change="(function () {
+                        throttle(colorchange, 40)(i);
+                    })()" v-model="colorsets[selectedSet].colors[i]" inline />
                 </div>
 
             </div>
@@ -128,7 +198,7 @@ onMounted(() => {
         <div id="buttonpanel">
 
 
-            <Button @click="editSet(i)" @dblclick="editName" style="width:99%;margin:2px;"
+            <Button @click="editSetClick(i)" @dblclick="editName" style="width:99%;margin:2px;"
                 :severity="selectedSet == i ? 'info' : 'secondary'" v-for="colorset, i in colorsets">
                 <ColorPreview :colorset="colorset" />
             </Button>
@@ -141,7 +211,7 @@ onMounted(() => {
     </div>
     <Toolbar>
         <template #start>
-            <Button @click="saveSet()" severity="secondary"><i class="pi pi-save"
+            <Button :disabled=!hasUnsavedChanges @click="saveSet()" severity="secondary"><i class="pi pi-save"
                     style="font-size: 1.5rem"></i></Button>
         </template>
         <template #end>
@@ -151,27 +221,26 @@ onMounted(() => {
                     style="font-size: 1.5rem"></i></Button>
         </template>
     </Toolbar>
-
+    {{ hasUnsavedChanges }}
     <div class="swatch-container" style="margin-top: 2em;">
-        <Button class="bigBtn" severity="secondary">Konserve</Button> <Button class="bigBtn"
-            severity="info">Live</Button>
-
+        <Button class="bigBtn" :severity="selectedScene == 0 ? 'info' : 'secondary'" @click="loadscene(0)">Konserve</Button>
+        <Button class="bigBtn" :severity="selectedScene == 1 ? 'info' : 'secondary'" @click="loadscene(1)">Live</Button>
     </div>
 
 
 
 
 
-    <Dialog v-model:visible="dialogVisible" modal header="Edit colorSetName" :style="{ width: '25rem' }">
-        <span class="p-text-secondary block mb-5">Enter a new name</span>
+    <Dialog v-model:visible="dialogVisible" modal header="Namen ändern" :style="{ width: '25rem' }">
+        <span class="p-text-secondary block mb-5">Neuer Name</span>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="colorSetName" class="font-semibold w-6rem">Name</label>
             <InputText ref="inputRef" id="colorSetName" v-model="colorsets[selectedSet].name" class="flex-auto"
                 autocomplete="off" />
         </div>
         <div class="flex justify-content-end gap-2">
-            <Button type="button" label="Cancel" severity="secondary" @click="cancelEditName()"></Button>
-            <Button type="button" label="Save" @click="dialogVisible = false"></Button>
+            <Button type="button" label="Zurück" severity="secondary" @click="cancelEditName()"></Button>
+            <Button type="button" label="Ok" @click="dialogVisible = false"></Button>
         </div>
     </Dialog>
 </template>

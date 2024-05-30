@@ -24,6 +24,9 @@ extern Fixture f[NUM_FIXT];
 extern uint8_t dmx_data[DMX_PACKET_SIZE];
 extern bool checking_fixtures;
 
+int currentColors = -1;
+int currentScene = -1;
+
 //--------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------
 
@@ -31,6 +34,15 @@ void setup_api()
 {
         //--------------------------------------------------------------------------------------------------------------------------------
         //-------------------------------------------------------------------------------------------------------------------------- GET
+        app.get("/api/status", [](Request &req, Response &res)
+                {              
+                JsonDocument doc;
+                doc["colors"] = currentColors;
+                doc["scene"] = currentScene;
+                res.status(200);
+                res.set("Content-Type", "application/json");
+                serializeJson(doc, req); 
+                res.end(); });
 
         app.get("/api/colorsets", [](Request &req, Response &res)
                 { serveJsonFile("/colorsets.json", req, res); });
@@ -40,23 +52,68 @@ void setup_api()
 
         app.get("/api/colorset/load/:id", [](Request &req, Response &res)
                 {
+                                        checking_fixtures = false;
+
             char id[10];
 
             req.route("id", id, 10);
             int n = atoi(id);
                 log_v("Load Colorset %d", n);
+
+                File file = MAIN_FILE_SYSTEM.open("/data/colorsets.json", FILE_READ);
+                if (!file)
+                {
+                log_e("- failed to open file for reading");
+                return;
+                }
+
+                JsonDocument doc;
+                deserializeJson(doc, file);
+
+                JsonArray levels = doc[n]["colors"];
+                int i = 0;
+                for (JsonVariant item : levels) {
+                        CRGB col = hexToColor(item);
+                        float r,g,b;
+                        r = (float)col.r/255.;
+                        g = (float)col.g/255.;
+                        b = (float)col.b/255.;
+                        p[i++].startFade(r,g,b,2.);
+                }
+
+                currentColors = n;
             res.status(204);
             res.end(); });
 
         app.get("/api/scene/load/:id", [](Request &req, Response &res)
                 {
-            char id[10];
+                checking_fixtures = false;
 
-            req.route("id", id, 10);
-            int n = atoi(id);
-                log_v("Load Scene %d", n);
-            res.status(204);
-            res.end(); });
+                char id[10];
+
+                req.route("id", id, 10);
+                int n = atoi(id);
+                        log_v("Load Scene %d", n);
+
+                File file = MAIN_FILE_SYSTEM.open("/data/scenes.json", FILE_READ);
+                if (!file)
+                {
+                log_e("- failed to open file for reading");
+                return;
+                }
+
+                JsonDocument doc;
+                deserializeJson(doc, file);
+
+                JsonArray levels = doc[n]["levels"];
+                int i = 0;
+                for (JsonVariant item : levels) {
+                       // log_v ("Level %d: %f",i,item.as<float>()/100.);
+                        f[i++].startFade(item.as<float>()/100., 2.);
+                }
+                currentScene = n;
+                res.status(204);
+                res.end(); });
 
         //-------------------------------------------------------------------
         app.get("/api/reboot", [](Request &req, Response &res)
