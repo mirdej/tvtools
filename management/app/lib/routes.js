@@ -26,6 +26,7 @@ Router.route('/ablauf', 			function () {this.render( 'ablauf');},{name:'ablauf'}
 Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'});  });
 
 
+Router.route('/all',		function () {this.render( 'all' );},{name:'all'});
 
 /*
 Router.route('/notizenblatt', {

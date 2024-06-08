@@ -11,7 +11,7 @@
 
 #define __DEBUG_TASK_ENABLED false
 
-#define USE_ETHERNET 0
+#define USE_ETHERNET 1
 
 
 #define MAIN_FILE_SYSTEM LittleFS

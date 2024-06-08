@@ -2,9 +2,11 @@ Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
 
-ProjectID = "SchulTV-DUB-2024";
+ProjectID = "SchulTV-OE-2024-2";
+//ProjectID = "SchulTV-OE-2024-1";
+//ProjectID = "SchulTV-DUB-2024";
 //ProjectID = "SchulTV-ZH-2023";
-//ProjectID = "SchulTV-OE-2023-2";
+//ProjectID = "SchulTV-OE-2023-1";
 
 //ProjectID = "SchulTV-HO-2023";
 //ProjectID = "SchulTV-DI-2023";
@@ -20,7 +22,7 @@ ProjectID = "SchulTV-DUB-2024";
 //ProjectID = "SchulTV-AD-2022";
 
 //ProjectID = "SchulTV-BW-2022";
-//ProjectID = "SchulTV-OE-2021-1";
+//ProjectID = "SchulTV-OE-2021-2";
 
 
 //ProjectID = "SchulTV-VW-2021";
@@ -40,6 +42,34 @@ if (Meteor.isClient) {
 
 
 Session.set("Project", {
+show_all:true,
+  name:"Oberengstringen",
+   place:"Goldschmied",
+   id:ProjectID,
+   logo:"logo-OE.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Jun 10 2024 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jun 14 2024 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "#46 Oberengstringen Goldschmied 6c",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Martin Gaisser, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+/*
+Session.set("Project", {
+show_all:true,
+  name:"Oberengstringen",
+   place:"Goldschmied",
+   id:ProjectID,
+   logo:"logo-OE.png",
+   badge:"carte-de-presse-schultv2.jpg",
+   begin:"Mon Jun 3 2024 00:00:00 GMT+0100 (CET)",
+   end:"Fri Jun 7 2024 00:00:00 GMT+0100 (CET)",
+   abspannVorlauf : "#45 Oberengstringen Goldschmied 6a",
+   leitung : "Michael Egger, Margrit Egger",
+   danke: "Maja nKlemm, Fred Schmid,, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+});
+
+Session.set("Project", {
   name:"Dübendorf",
    place:"Grüze",
    id:ProjectID,
@@ -51,8 +81,6 @@ Session.set("Project", {
    leitung : "Michael Egger, Margrit Egger",
    danke: "Michael Polanski, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
 });
-/*
-
 Session.set("Project", {
    name:"Zürich Feld",
    id:ProjectID,
@@ -505,6 +533,9 @@ if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('members', function membersPublication() {
     return Members.find({project:ProjectID});
+//return Members.find({ project:{ $regex: /SchulTV-OE/ }});
+
+    //return Members.find({});
   });
   Meteor.publish('groups', function groupsPublication() {
     return Groups.find({project:ProjectID});
