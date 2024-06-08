@@ -26,16 +26,27 @@ function editSetClick(theSet) {
     if (!hasUnsavedChanges.value) { editSet(theSet); } else {
 
         confirm.require({
-            message: 'Wenn du weitermachst gehen die Einstellungen erloren. Bist du sicher?',
+            message: 'Änderungen speichern?',
             header: 'Ungesicherte Änderungen',
             icon: 'pi pi-exclamation-triangle',
             rejectClass: 'p-button-secondary p-button-outlined',
             rejectLabel: 'Nein',
             acceptLabel: 'Ja',
             accept: () => {
-                editSet(theSet);
+                axios.put(window.device_url + 'api/colorsets', {
+                    params: colorsets.value, timeout: 2000
+                })
+                    .then(function (response) {
+                        toast.add({ severity: 'success', summary: "Colorsets updated", life: 1000 });
+                        editSet(theSet);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        toast.add({ severity: 'error', summary: 'An error occured', detail: error, life: 4000 });
+                    })
             },
             reject: () => {
+                editSet(theSet);
             }
         });
     }
@@ -47,9 +58,10 @@ function editSet(theSet) {
     axios.get(window.device_url + 'api/colorset/load/' + theSet, { timeout: 5000 }).then(function (response) {
         //console.log(response);
         hasUnsavedChanges.value = false;
+    }).then(function (response) {
+        selectedSet.value = theSet;
+        hasUnsavedChanges.value = false;
     })
-    selectedSet.value = theSet;
-    hasUnsavedChanges.value = false;
 }
 
 function addColorset() {
@@ -96,11 +108,13 @@ function cancelEditName() {
 }
 
 function saveSet() {
+    if (hasUnsavedChanges.value == false) return;
+
     axios.put(window.device_url + 'api/colorsets', {
         params: colorsets.value, timeout: 2000
     })
         .then(function (response) {
-            console.log(response);
+            //            console.log(response);
             hasUnsavedChanges.value = false;
             toast.add({ severity: 'success', summary: "Colorsets updated", life: 1000 });
         })
@@ -151,12 +165,17 @@ function colorchange(i) {
 
 }
 function refreshStatus() {
-    axios.get(window.device_url + 'api/status', { timeout: 2000 }).then(function(response){
+    axios.get(window.device_url + 'api/status', { timeout: 2000 }).then(function (response) {
         selectedScene.value = response.data.scene;
         selectedSet.value = response.data.colors;
     })
     setTimeout(refreshStatus, 2000);
     // ...
+}
+
+function autoSave() {
+    saveSet();
+    setTimeout(autoSave, 20000);
 }
 
 
@@ -173,12 +192,20 @@ onMounted(() => {
                 }
 
                 setTimeout(refreshStatus, 2000);
+                setTimeout(autoSave, 20000);
+
             } catch (e) {
                 toast.add({ severity: 'error', summary: 'An error occured', detail: e, life: 4000 });
             }
 
 
         })
+})
+
+
+
+onBeforeUnmount(() => {
+    saveSet();
 })
 
 
@@ -222,9 +249,10 @@ onMounted(() => {
                     style="font-size: 1.5rem"></i></Button>
         </template>
     </Toolbar>
-    {{ hasUnsavedChanges }}
+
     <div class="swatch-container" style="margin-top: 2em;">
-        <Button class="bigBtn" :severity="selectedScene == 0 ? 'info' : 'secondary'" @click="loadscene(0)">Konserve</Button>
+        <Button class="bigBtn" :severity="selectedScene == 0 ? 'info' : 'secondary'"
+            @click="loadscene(0)">Konserve</Button>
         <Button class="bigBtn" :severity="selectedScene == 1 ? 'info' : 'secondary'" @click="loadscene(1)">Live</Button>
     </div>
 
