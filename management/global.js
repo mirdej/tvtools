@@ -533,7 +533,7 @@ if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('members', function membersPublication() {
     return Members.find({project:ProjectID});
-//return Members.find({ project:{ $regex: /SchulTV-OE/ }});
+   //return Members.find({ project:{ $regex: /SchulTV-OE/ }});
 
     //return Members.find({});
   });

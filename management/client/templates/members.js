@@ -13,9 +13,9 @@ Template.memberlist.helpers({
 
     members: function () {
         if (Session.get("show_all")){
-          return Members.find({ project:{ $regex: /SchulTV-OE/ }}, {sort: {last:1,first: 2}});
+          return Members.find({ project:Session.get("Project").id}, {sort: {first:1,last: 2}});
       } else {
-          return Members.find({project:Session.get("Project").id}, {sort: {first: 1}});
+          return Members.find({project:Session.get("Project").id},  {sort: {createdAt: 1} });
       }
     },
     
