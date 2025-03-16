@@ -25,6 +25,7 @@
 #include "driver/spi_master.h"
 #include <ETH.h>
 
+
 const int PIN_CS = 14;
 const int PIN_SCK = 13;
 const int PIN_MISO = 12;
@@ -298,6 +299,8 @@ void network_task(void *)
 
 #if USE_ETHERNET
     setup_w5500();
+
+
 #else
     while (WiFi.status() != WL_CONNECTED)
     {

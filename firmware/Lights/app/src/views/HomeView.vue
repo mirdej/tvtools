@@ -211,6 +211,7 @@ onBeforeUnmount(() => {
 
 </script>
 
+
 <template>
     <div class="swatch-container">
         <div id="swatchpanel">

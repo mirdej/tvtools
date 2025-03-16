@@ -41,8 +41,8 @@ public:
 
     //-- storage and retrieval functions
     void begin();
-    err_t read();
-    err_t write();
+    error_t read();
+    error_t write();
     JsonDocument get_json();
 
     bool dirty;
@@ -75,7 +75,7 @@ JsonDocument AnymaEspSettings::get_json()
 /** ------------------------------------------------------------------------------------------------------------------------------------
  * @brief  Read Settings from JSON file in Filesystem
  */
-err_t AnymaEspSettings::read()
+error_t AnymaEspSettings::read()
 {
     if (!MAIN_FILE_SYSTEM.exists(SETTINGS_FILE_PATH))
     {
@@ -117,7 +117,7 @@ err_t AnymaEspSettings::read()
 /** ------------------------------------------------------------------------------------------------------------------------------------
  * @brief  Write Settings to JSON file in Filesystem
  */
-err_t AnymaEspSettings::write()
+error_t AnymaEspSettings::write()
 {
 
     // check for settings file
