@@ -6,6 +6,7 @@ import Dialog from 'primevue/dialog';
 import { useConfirm } from "primevue/useconfirm";
 import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
+import {onBeforeUnmount } from 'vue'
 
 //-------------------------------------------------------  REACTIVE
 const confirm = useConfirm();

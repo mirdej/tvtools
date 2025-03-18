@@ -26,9 +26,10 @@ onMounted(() => {
     axios.get(window.device_url + 'api/deviceinfo', { timeout: 5000 })
 
         .then(function (response) {
-            window.device_url = "http://" + response.data.ip + "/";
+            //window.device_url = "http://" + response.data.ip + "/";
+           // window.device_url = "http://lights.local/";
             talking_to.value = window.device_url;
-            console.log(window.device_url);
+            console.log("Talking to: ",window.device_url);
 
         })
 })

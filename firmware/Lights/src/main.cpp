@@ -56,7 +56,7 @@ TaskHandle_t dmx_task_handle;
 //																				                                     User Globals
 
 #define NUM_PIXELS 1
-CRGB pixel[NUM_PIXELS];
+//CRGB pixel[NUM_PIXELS];
 
 #if ESPDMX
 const dmx_port_t dmxPort = 2;
@@ -199,8 +199,8 @@ void setup()
 
   log_v("________________________");
   log_v("Setup");
-  FastLED.addLeds<SK6812, PIN_PIX, GRB>(pixel, NUM_PIXELS);
-  FastLED.setBrightness(100);
+/*   FastLED.addLeds<SK6812, PIN_PIX, GRB>(pixel, NUM_PIXELS);
+  FastLED.setBrightness(100); */
 
   // Format if there is no Filesystem, Max open files = 10 for better Webserver stability
   MAIN_FILE_SYSTEM.begin(true, "/littlefs", 10U);
