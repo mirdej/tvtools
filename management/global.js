@@ -52,7 +52,7 @@ if (Meteor.isClient) {
       end:"Fri Mar 21 2025 00:00:00 GMT+0100 (CET)",
       abspannVorlauf : "#47 Dübendorf Grüze B1d",
       leitung : "Michael Egger, Margrit Egger",
-      danke: "Michael Polanski, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+      danke: "Michael Polanski, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Monika Hess, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
    });
       /*
 Session.set("Project", {

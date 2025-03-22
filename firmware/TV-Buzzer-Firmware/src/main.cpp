@@ -14,16 +14,8 @@
 #include <arduino-timer.h>
 #include <FastLED.h>
 
-#include <WiFi.h>
-#include <WiFiMulti.h>
-
-#include <WiFiUDP.h>
-#include <ESPmDNS.h>
-
 #include "SPI.h"
-#include <AppleMIDI.h>
-#include <ESPAsyncWebServer.h>
-#include "AsyncOTA.h"
+#include <Agora.h>
 
 #define PIN_PIX 17
 #define PIN_AD_BATT 2
@@ -31,14 +23,16 @@
 #define NUM_PIXELS 17
 
 #define NUM_BUZZERS 4
+#define MESSAGE_POWERSAVE 123
 
 #define STATUS_NO_WIFI 0
-#define STATUS_NO_MIDI_SESSION 1
+#define STATUS_NOT_CONNECTED 1
 #define STATUS_READY 2
 #define STATUS_ARMED 3
 #define STATUS_TRIGGERED 4
+#define STATUS_POWERSAVE 5
 
-int DEBUG = 0;
+int DEBUG = 3;
 
 const CRGB team_colors[] = {CRGB(255, 0, 200),
                             CRGB(50, 0, 200),
@@ -48,8 +42,7 @@ int batt_max, batt_min;
 int batt_level;
 
 int buzzer_status = STATUS_NO_WIFI;
-int buzzer_id = 0;
-uint8_t midi_channel = 1;
+uint8_t buzzer_id = 0;
 
 CRGB pixel[NUM_PIXELS];
 
@@ -71,12 +64,7 @@ Colors
 
 */
 
-USING_NAMESPACE_APPLEMIDI
-APPLEMIDI_CREATE_DEFAULTSESSION_INSTANCE();
-
 Preferences preferences;
-WiFiMulti wifiMulti;
-AsyncWebServer server(80);
 
 auto t = timer_create_default(); // create a timer with default settings
 String hostname;
@@ -94,9 +82,13 @@ void test()
 
 void trigger(bool on)
 {
+  uint8_t buf[2];
+  buf[1] = buzzer_id;
+
   if (on)
   {
-    MIDI.sendNoteOn(64, 127, midi_channel);
+    buf[0] = 127;
+
     if (DEBUG > 0)
     {
       Serial.println("------------------------TRIG---------");
@@ -105,13 +97,14 @@ void trigger(bool on)
   }
   else
   {
-    MIDI.sendNoteOff(64, 127, midi_channel);
+    buf[0] = 0;
     if (DEBUG > 0)
     {
       Serial.println("(Note OFF)");
     }
     trigger_sent = 0;
   }
+  Agora.tell(buf, 2);
 }
 
 bool check_hanging_notes(void *)
@@ -124,7 +117,6 @@ bool check_hanging_notes(void *)
     }
   }
   return true; // repeat? true
-
 }
 
 bool battery_stats(void *)
@@ -140,7 +132,6 @@ bool battery_stats(void *)
     preferences.putUInt("batt_min", batt_min);
   }
   return true; // repeat? true
-
 }
 // -----------------------------------------------------------------------------
 
@@ -153,16 +144,7 @@ bool check_battery(void *)
   batt = map(batt_level, batt_min, batt_max, 0, 127);
   batt = constrain(batt, 0, 127);
 
-  MIDI.sendControlChange(2, batt, midi_channel);
   return true; // repeat? true
-
-}
-
-void send_color()
-{
-  MIDI.sendControlChange(3, team_color.r >> 1, midi_channel);
-  MIDI.sendControlChange(4, team_color.g >> 1, midi_channel);
-  MIDI.sendControlChange(5, team_color.b >> 1, midi_channel);
 }
 
 // -----------------------------------------------------------------------------
@@ -171,6 +153,7 @@ bool check_hall(void *)
 {
   static int thresh;
   int val = analogRead(PIN_SENS);
+  Serial.println(val);
   int diff = abs(val - hall_val);
   hall_val = (hall_val + val) / 2;
   if (diff > 3)
@@ -192,7 +175,6 @@ bool check_hall(void *)
     trigger(true);
   }
   return true; // repeat? true
-
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +192,7 @@ bool update_leds(void *)
     fill_solid(pixel, NUM_PIXELS, CRGB::Blue);
     break;
 
-  case STATUS_NO_MIDI_SESSION:
+  case STATUS_NOT_CONNECTED:
     FastLED.setBrightness(20);
     fill_solid(pixel, NUM_PIXELS, CRGB::Gold);
     break;
@@ -223,6 +205,13 @@ bool update_leds(void *)
   case STATUS_ARMED:
     FastLED.setBrightness(beatsin8(42, 50, 190));
     fill_solid(pixel, NUM_PIXELS, team_color);
+    break;
+
+  case STATUS_POWERSAVE:
+    FastLED.setBrightness(10);
+    fill_solid(pixel, NUM_PIXELS, CRGB::Black);
+    pixel[1] = team_color;
+    pixel[14] = team_color;
     break;
 
   case STATUS_TRIGGERED:
@@ -240,76 +229,39 @@ bool update_leds(void *)
   return true; // repeat? true
 }
 
-// ====================================================================================
-// Event handlers for incoming MIDI messages
-// ====================================================================================
-
-// -----------------------------------------------------------------------------
-// rtpMIDI session. Device connected
-// -----------------------------------------------------------------------------
-void OnAppleMidiConnected(const ssrc_t &ssrc, const char *name)
+void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
 {
-  buzzer_status = STATUS_READY;
-  Serial.print(F("Connected to session "));
-  Serial.println(name);
-  delay(500);
-  check_battery(NULL);
-  send_color();
-}
-
-// -----------------------------------------------------------------------------
-// rtpMIDI session. Device disconnected
-// -----------------------------------------------------------------------------
-void OnAppleMidiDisconnected(const ssrc_t &ssrc)
-{
-  buzzer_status = STATUS_NO_MIDI_SESSION;
-  Serial.println(F("Disconnected"));
-}
-
-// -----------------------------------------------------------------------------
-//
-// -----------------------------------------------------------------------------
-static void OnAppleMidiNoteOn(byte channel, byte note, byte velocity)
-{
-  if (DEBUG)
+  // Serial.printf("Message from a Member: %s\n", incomingData);
+  if (len == 1)
   {
-    Serial.print(F("Incoming NoteOn  from channel: "));
-    Serial.print(channel);
-    Serial.print(F(", note: "));
-    Serial.print(note);
-    Serial.print(F(", velocity: "));
-    Serial.println(velocity);
-  }
-  if (note == 63)
-    buzzer_status = STATUS_READY;
-  if (note == 64)
-    buzzer_status = STATUS_ARMED;
-  if (note == 65)
-  {
-    if (velocity == midi_channel)
+    if (incomingData[0] == 0)
+    {
+      buzzer_status = STATUS_ARMED;
+    }
+    else if (incomingData[0] == buzzer_id)
     {
       buzzer_status = STATUS_TRIGGERED;
+    }
+    else if (incomingData[0] == MESSAGE_POWERSAVE)
+    {
+      buzzer_status = STATUS_POWERSAVE;
     }
     else
     {
       buzzer_status = STATUS_READY;
     }
   }
-}
-
-// -----------------------------------------------------------------------------
-//
-// -----------------------------------------------------------------------------
-static void OnAppleMidiNoteOff(byte channel, byte note, byte velocity)
-{
-  if (DEBUG)
+  else if (len == 4)
   {
-    Serial.print(F("Incoming NoteOff from channel: "));
-    Serial.print(channel);
-    Serial.print(F(", note: "));
-    Serial.print(note);
-    Serial.print(F(", velocity: "));
-    Serial.println(velocity);
+    if (incomingData[0] == buzzer_id)
+    {
+      team_color.r = incomingData[1];
+      team_color.g = incomingData[2];
+      team_color.b = incomingData[3];
+      preferences.putUInt("r", team_color.r);
+      preferences.putUInt("g", team_color.g);
+      preferences.putUInt("b", team_color.b);
+    }
   }
 }
 
@@ -333,7 +285,9 @@ void setup()
   Serial.println("Hello");
 
   preferences.begin("anyma", false);
-  buzzer_id = preferences.getUInt("buzzer_id", 0);
+  buzzer_id = preferences.getUInt("buzzer_id", 1);
+  if (buzzer_id == 0)
+    buzzer_id = 1;
   DEBUG = preferences.getUInt("debug", 0);
   team_color.r = preferences.getUInt("r", 100);
   team_color.g = preferences.getUInt("g", 100);
@@ -345,95 +299,12 @@ void setup()
   Serial.print("Batt-Max: ");
   Serial.println(batt_max);
 
-  hostname = "buzzer_" + String(buzzer_id + 1);
-  midi_channel = buzzer_id + 1;
+  hostname = "buzzer_" + String(buzzer_id);
 
-  WiFi.mode(WIFI_STA);
-  wifiMulti.addAP("Anymair", "Mot de passe pas complique");
-  wifiMulti.addAP("netplus-62051f", "y5sevr33");
+  Agora.begin(hostname.c_str());
+  Agora.join("tv-buzzers", callback);
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    wifiMulti.run();
-    Serial.print(".");
-    delay(250);
-  }
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.println(hostname);
-
-  if (!MDNS.begin(hostname.c_str()))
-  {
-    Serial.println("Error setting up MDNS responder!");
-    while (1)
-    {
-      delay(1000);
-    }
-  }
-  buzzer_status = STATUS_NO_MIDI_SESSION;
-
-  server.on("/set", HTTP_GET, [](AsyncWebServerRequest *request)
-            {
-		String inputMessage;
-		String replyMessage;
-		if (request->hasParam("id")) {
-				inputMessage = request->getParam("id")->value();
-				Serial.println(inputMessage);
-                buzzer_id = inputMessage.toInt();
-                if (buzzer_id < 1) buzzer_id = 1;
-                if (buzzer_id > NUM_BUZZERS) buzzer_id = NUM_BUZZERS;
-                buzzer_id--;
-                preferences.putUInt("buzzer_id", buzzer_id);
-                midi_channel = buzzer_id + 1;
-                hostname    = "buzzer_"+String(buzzer_id+1);
-                team_color  = team_colors[buzzer_id];
-                replyMessage += "Changed buzzer id to: "+String(buzzer_id + 1)+"\n";
-                Serial.print(inputMessage);
-		}
-	    if (request->hasParam("debug")) {
-	    		inputMessage = request->getParam("debug")->value();
-                DEBUG = inputMessage.toInt();
-                preferences.putUInt("debug", DEBUG);
-                replyMessage += "Debug level: "+String(DEBUG)+"\n";
-
-	    }
-	    if (request->hasParam("r")) {
-	    		inputMessage = request->getParam("r")->value();
-                team_color.r = inputMessage.toInt();
-                preferences.putUInt("r",   team_color.r);
-                replyMessage += "Red level: "+String(team_color.r)+"\n";
-                send_color();
-	    }
-	    if (request->hasParam("g")) {
-	    		inputMessage = request->getParam("g")->value();
-                team_color.g = inputMessage.toInt();
-                preferences.putUInt("g",   team_color.g);
-                replyMessage += "Green level: "+String(team_color.g)+"\n";
-                send_color();
-
-	    }
-	    if (request->hasParam("b")) {
-	    		inputMessage = request->getParam("b")->value();
-                team_color.b = inputMessage.toInt();
-                preferences.putUInt("b",   team_color.b);
-                replyMessage += "Blue level: "+String(team_color.b)+"\n";
-                send_color();
-	    }
-
-		request->send(200, "text/text", replyMessage); });
-
-  AsyncOTA.begin(&server);
-  server.begin();
-
-  MIDI.begin(1); // listen on channel 1
-  AppleMIDI.setHandleConnected(OnAppleMidiConnected);
-  AppleMIDI.setHandleDisconnected(OnAppleMidiDisconnected);
-  MIDI.setHandleNoteOn(OnAppleMidiNoteOn);
-  MIDI.setHandleNoteOff(OnAppleMidiNoteOff);
-
-  MDNS.addService("apple-midi", "udp", AppleMIDI.getPort());
-  MDNS.addService("http", "tcp", 80);
-  Serial.println("Started AppleMIDI");
+  buzzer_status = STATUS_NOT_CONNECTED;
 
   fill_solid(pixel, NUM_PIXELS, CRGB::Black);
   for (int i = 0; i < NUM_PIXELS; i = i + 3)
@@ -446,9 +317,9 @@ void setup()
   t.every(50, update_leds);
   t.every(30, check_hall);
   t.every(1000, check_hanging_notes);
-  t.every(10000, check_battery);
-  t.every(120000, battery_stats);
-  // t.every(200,check_switch);
+  // t.every(10000, check_battery);
+  // t.every(120000, battery_stats);
+  //  t.every(200,check_switch);
 }
 
 // ====================================================================================
@@ -458,5 +329,4 @@ void setup()
 void loop()
 {
   t.tick();
-  MIDI.read();
 }
