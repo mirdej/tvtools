@@ -12,7 +12,7 @@ var host;
 var ip = location.host;
 console.log("IP",ip)
   if (ip.startsWith('127') || ip.startsWith('localhost')) {
-    window.device_url = "http://192.168.252.199/";
+    window.device_url = "http://192.168.252.33/";
     window.served_from_device = false;
   } else {
     window.device_url = "http://" + ip + "/";

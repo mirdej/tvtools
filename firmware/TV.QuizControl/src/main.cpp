@@ -44,6 +44,8 @@ void send_triggered_buzzer();
 void update_leds()
 {
   fill_solid(pixel, NUM_PIXELS, CRGB::SaddleBrown);
+  if (triggered_buzzer == 0)
+    pixel[1] = CRGB::Yellow;
   if (onair)
     pixel[2] = CRGB::Red;
   else
@@ -73,7 +75,6 @@ void tud_midi_rx_cb(uint8_t itf)
         triggered_buzzer = DISARM_BUZZERS;
       }
       send_triggered_buzzer();
-
     }
   }
   else
@@ -95,12 +96,19 @@ void send_triggered_buzzer()
 //                                      Agora Callback Function
 void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
 {
+
   if (len == 2)
   {
+    Serial.printf("Callback called %d %d\n", incomingData[0], incomingData[1]);
     if (triggered_buzzer == 0)
     {
-      triggered_buzzer = incomingData[1];
-      send_triggered_buzzer();
+      if (incomingData[0])
+      {
+        Serial.print("Trigger");
+        triggered_buzzer = incomingData[1];
+        Serial.println(triggered_buzzer);
+        send_triggered_buzzer();
+      }
     }
   }
 }
@@ -123,6 +131,7 @@ void setup()
   FastLED.setBrightness(150);
   fill_solid(pixel, NUM_PIXELS, CRGB::Blue);
   FastLED.show();
+  triggered_buzzer = DISARM_BUZZERS;
 
   Agora.begin("TV-Quiz-Controller");
   Agora.establish("tv-buzzers", callback);
@@ -175,11 +184,12 @@ void loop()
           if (triggered_buzzer > 0 && triggered_buzzer != DISARM_BUZZERS)
           {
             triggered_buzzer = DISARM_BUZZERS;
+            midi.noteON(i + 10, 127);
+            delay(100);
             send_triggered_buzzer();
           }
         }
         pixel[i] = CRGB::White;
-        midi.noteON(i + 10, 127);
       }
       else
       {

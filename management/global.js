@@ -2,7 +2,8 @@ Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
 
-ProjectID = "SchulTV-DUB-2025-1";
+ProjectID = "SchulTV-DUB-2025-2";
+//ProjectID = "SchulTV-DUB-2025-1";
 //ProjectID = "SchulTV-OE-2024-2";
 //ProjectID = "SchulTV-OE-2024-1";
 //ProjectID = "SchulTV-DUB-2024";
@@ -37,6 +38,23 @@ ProjectID = "SchulTV-DUB-2025-1";
 //ProjectID = "SchulTV-SC-2019";
 //ProjectID = "SchulTV-OE-2019-2";
 
+if (Meteor.isClient) {
+	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+   Session.set("Project", {
+      show_all:true,
+      name:"Dübendorf",
+      place:"Grüze",
+      id:ProjectID,
+      logo:"logo-DUB.png",
+      badge:"carte-de-presse-schultv2.jpg",
+      begin:"Mon Mar 24 2025 00:00:00 GMT+0100 (CET)",
+      end:"Fri Mar 28 2025 00:00:00 GMT+0100 (CET)",
+      abspannVorlauf : "#48 Dübendorf Grüze B1c",
+      leitung : "Michael Egger, Margrit Egger",
+      danke: "Claudia Perpinyani, Ursina Kuhn, Moni Egger, Anne-Sophie Cosandey, Cali Flores, Monika Hess, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
+   });
+      /*
 
 if (Meteor.isClient) {
 	Months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
@@ -54,7 +72,6 @@ if (Meteor.isClient) {
       leitung : "Michael Egger, Margrit Egger",
       danke: "Michael Polanski, Cali Flores, Moni Egger, Anne-Sophie Cosandey, Monika Hess, Catja Loepfe, Nico Grüninger Bildungsdirektion, Kanton Zürich,  Schule & Kultur"
    });
-      /*
 Session.set("Project", {
 show_all:true,
   name:"Oberengstringen",
