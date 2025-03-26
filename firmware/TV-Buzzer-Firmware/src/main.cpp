@@ -17,6 +17,8 @@
 #include "SPI.h"
 #include <Agora.h>
 
+#define CALIBRATE_TIME 2000
+#define BUZZER_SAMPLE_INTERVAL 10
 #define PIN_PIX 17
 #define PIN_AD_BATT 2
 #define PIN_SENS 1
@@ -70,8 +72,10 @@ auto t = timer_create_default(); // create a timer with default settings
 String hostname;
 int hall_val;
 int channel;
-
+long calibrate_hall_until = CALIBRATE_TIME;
 long trigger_sent = 0;
+int trigger_max_deviation;
+long last_message_from_master;
 
 void test()
 {
@@ -119,61 +123,69 @@ bool check_hanging_notes(void *)
   return true; // repeat? true
 }
 
-bool battery_stats(void *)
-{
-  if (batt_level > batt_max)
-  {
-    batt_max = batt_level;
-    preferences.putUInt("batt_max", batt_max);
-  }
-  if (batt_level < batt_min)
-  {
-    batt_min = batt_level;
-    preferences.putUInt("batt_min", batt_min);
-  }
-  return true; // repeat? true
-}
-// -----------------------------------------------------------------------------
-
-bool check_battery(void *)
-{
-  // Serial.println("I'm alive");
-  batt_level = analogRead(PIN_AD_BATT);
-  int batt;
-
-  batt = map(batt_level, batt_min, batt_max, 0, 127);
-  batt = constrain(batt, 0, 127);
-
-  return true; // repeat? true
-}
-
 // -----------------------------------------------------------------------------
 
 bool check_hall(void *)
 {
-  static int thresh;
-  int val = analogRead(PIN_SENS);
-  Serial.println(val);
-  int diff = abs(val - hall_val);
-  hall_val = (hall_val + val) / 2;
-  if (diff > 3)
+  static int trigger_resting;
+  static int triggered;
+  float dev;
+
+  int hall_val = analogRead(PIN_SENS);
+
+  if (millis() < calibrate_hall_until)
   {
-    thresh = (127 * thresh + diff) / 128;
+    if (trigger_resting == 0)
+    {
+      trigger_resting = hall_val;
+      trigger_max_deviation = 0;
+    }
+    else
+    {
+      trigger_resting = (7 * trigger_resting + hall_val) / 8;
+    }
+
+    int trigger_deviation = abs(hall_val - trigger_resting);
+    if (trigger_deviation > trigger_max_deviation)
+    {
+      trigger_max_deviation = trigger_deviation;
+      if (trigger_max_deviation == 0)
+        trigger_max_deviation = 1; // prevent divide by zero
+    }
+  }
+  else
+  {
+
+    if (calibrate_hall_until)
+    {
+      Serial.printf("Calibrated: Trigger Resting %d, Deviation %d\n", trigger_resting, trigger_max_deviation);
+      calibrate_hall_until = 0;
+    }
+
+    if (buzzer_status != STATUS_ARMED)
+      return true;
+
+    dev = abs(hall_val - trigger_resting) / trigger_max_deviation;
+    if (dev > 1.8)
+    {
+      Serial.println(hall_val);
+
+      if (triggered == 5)
+      {
+        trigger(true);
+        Serial.println("Note ON");
+      }
+      triggered++;
+    }
+    else
+    {
+      if (dev < 1.2)
+      {
+        triggered = 0;
+      }
+    }
   }
 
-  if (DEBUG > 2)
-  {
-    Serial.print("Thresh: ");
-    Serial.print(thresh);
-    Serial.print(" diff: ");
-    Serial.println(diff);
-  }
-
-  //  if (buzzer_status != STATUS_ARMED) return;
-  if (diff > 10 * thresh)
-  {
-    trigger(true);
-  }
   return true; // repeat? true
 }
 
@@ -183,6 +195,10 @@ bool update_leds(void *)
 {
   static char roundtrip;
   roundtrip++;
+  if (millis() - last_message_from_master > 4000)
+  {
+    buzzer_status = STATUS_NOT_CONNECTED;
+  }
 
   switch (buzzer_status)
   {
@@ -194,7 +210,7 @@ bool update_leds(void *)
 
   case STATUS_NOT_CONNECTED:
     FastLED.setBrightness(20);
-    fill_solid(pixel, NUM_PIXELS, CRGB::Gold);
+    fill_solid(pixel, NUM_PIXELS, CRGB::Red);
     break;
 
   case STATUS_READY:
@@ -229,6 +245,9 @@ bool update_leds(void *)
   return true; // repeat? true
 }
 
+// ====================================================================================
+//                                                          AGORA Callbacl
+
 void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
 {
   // Serial.printf("Message from a Member: %s\n", incomingData);
@@ -249,7 +268,10 @@ void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
     else
     {
       buzzer_status = STATUS_READY;
+      /*    calibrate_hall_until = millis() + CALIBRATE_TIME;
+         trigger_max_deviation = 1; */
     }
+    last_message_from_master = millis();
   }
   else if (len == 4)
   {
@@ -313,9 +335,11 @@ void setup()
   }
   FastLED.show();
 
+  calibrate_hall_until = millis() + CALIBRATE_TIME;
+
   //    t.every(100,test);
   t.every(50, update_leds);
-  t.every(30, check_hall);
+  t.every(5, check_hall);
   t.every(1000, check_hanging_notes);
   // t.every(10000, check_battery);
   // t.every(120000, battery_stats);
