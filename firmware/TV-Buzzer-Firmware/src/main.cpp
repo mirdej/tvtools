@@ -13,12 +13,18 @@
 #include <Preferences.h>
 #include <arduino-timer.h>
 #include <FastLED.h>
+#include "Statistic.h"
 
 #include "SPI.h"
 #include <Agora.h>
 
-#define CALIBRATE_TIME 2000
-#define BUZZER_SAMPLE_INTERVAL 10
+// ms sampling rate
+#define BUZZER_SAMPLE_INTERVAL 2
+// how much more than standard deviation triggers the buzzer
+#define BUZZER_THRESH 4.
+// how many conecutive triggering samples actually trigger buzzer
+#define BUZZER_INERTIA 10
+
 #define PIN_PIX 17
 #define PIN_AD_BATT 2
 #define PIN_SENS 1
@@ -46,8 +52,8 @@ int batt_level;
 int buzzer_status = STATUS_NO_WIFI;
 uint8_t buzzer_id = 0;
 
+statistic::Statistic<float, uint32_t, true> myStats;
 CRGB pixel[NUM_PIXELS];
-
 CRGB team_color;
 /*
 Colors
@@ -72,7 +78,6 @@ auto t = timer_create_default(); // create a timer with default settings
 String hostname;
 int hall_val;
 int channel;
-long calibrate_hall_until = CALIBRATE_TIME;
 long trigger_sent = 0;
 int trigger_max_deviation;
 long last_message_from_master;
@@ -127,68 +132,57 @@ bool check_hanging_notes(void *)
 
 bool check_hall(void *)
 {
-  static int trigger_resting;
-  static int triggered;
+  static int trig_count;
   float dev;
+  hall_val = analogRead(PIN_SENS);
+  myStats.add(hall_val);
 
-  int hall_val = analogRead(PIN_SENS);
+  if (buzzer_status != STATUS_ARMED)
+    return true;
 
-  if (millis() < calibrate_hall_until)
-  {
-    if (trigger_resting == 0)
-    {
-      trigger_resting = hall_val;
-      trigger_max_deviation = 0;
-    }
-    else
-    {
-      trigger_resting = (7 * trigger_resting + hall_val) / 8;
-    }
-
-    int trigger_deviation = abs(hall_val - trigger_resting);
-    if (trigger_deviation > trigger_max_deviation)
-    {
-      trigger_max_deviation = trigger_deviation;
-      if (trigger_max_deviation == 0)
-        trigger_max_deviation = 1; // prevent divide by zero
-    }
+  float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
+  if (deviation > BUZZER_THRESH) {
+    trig_count++;
+  } else {
+    trig_count = 0;
   }
-  else
-  {
 
-    if (calibrate_hall_until)
-    {
-      Serial.printf("Calibrated: Trigger Resting %d, Deviation %d\n", trigger_resting, trigger_max_deviation);
-      calibrate_hall_until = 0;
-    }
-
-    if (buzzer_status != STATUS_ARMED)
-      return true;
-
-    dev = abs(hall_val - trigger_resting) / trigger_max_deviation;
-    if (dev > 1.8)
-    {
-      Serial.println(hall_val);
-
-      if (triggered == 5)
-      {
-        trigger(true);
-        Serial.println("Note ON");
-      }
-      triggered++;
-    }
-    else
-    {
-      if (dev < 1.2)
-      {
-        triggered = 0;
-      }
-    }
+  if (trig_count == BUZZER_INERTIA) {
+    trigger(true);
   }
 
   return true; // repeat? true
 }
 
+bool print_vals(void *)
+{
+  Serial.print("Count: ");
+  Serial.print(myStats.count());
+  Serial.print(" Min: ");
+  Serial.print(myStats.minimum(),2);
+  Serial.print(" Max: ");
+  Serial.print(myStats.maximum(),2);
+  Serial.print(" Average: ");
+  Serial.print(myStats.average(),2);
+  Serial.print(" variance: ");
+  Serial.print(myStats.variance(),2);
+  Serial.print(" stdev: ");
+  Serial.print(myStats.pop_stdev(),2);
+/*   Serial.print(" unbias stdev: ");
+  Serial.print(myStats.unbiased_stdev(),2); */
+  Serial.print("  | val:  ");
+  Serial.print(hall_val);
+
+  float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
+  Serial.print("  |  ");
+  Serial.print(deviation, 2);
+  Serial.print("  |  ");
+if (deviation > BUZZER_THRESH) {
+  Serial.print("******");
+}
+Serial.println();
+  return true;
+}
 // -----------------------------------------------------------------------------
 
 bool update_leds(void *)
@@ -307,6 +301,8 @@ void setup()
   Serial.println("Hello");
 
   preferences.begin("anyma", false);
+  //preferences.putUInt("buzzer_id", 1);
+
   buzzer_id = preferences.getUInt("buzzer_id", 1);
   if (buzzer_id == 0)
     buzzer_id = 1;
@@ -322,6 +318,7 @@ void setup()
   Serial.println(batt_max);
 
   hostname = "buzzer_" + String(buzzer_id);
+Serial.println(hostname);
 
   Agora.begin(hostname.c_str());
   Agora.join("tv-buzzers", callback);
@@ -335,11 +332,10 @@ void setup()
   }
   FastLED.show();
 
-  calibrate_hall_until = millis() + CALIBRATE_TIME;
-
   //    t.every(100,test);
   t.every(50, update_leds);
-  t.every(5, check_hall);
+  t.every(BUZZER_SAMPLE_INTERVAL, check_hall);
+  t.every(150, print_vals);
   t.every(1000, check_hanging_notes);
   // t.every(10000, check_battery);
   // t.every(120000, battery_stats);
