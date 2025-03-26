@@ -128,6 +128,19 @@ bool check_hanging_notes(void *)
   return true; // repeat? true
 }
 
+bool isPressed()
+{
+  if(myStats.maximum() - myStats.minimum() < 200) return false; // prevent triggering from noise when it has never been pressed
+  if (myStats.average() > myStats.middle())
+  {
+    return (hall_val < myStats.middle());
+  }
+  else
+  {
+    return (hall_val > myStats.middle());
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 bool check_hall(void *)
@@ -140,14 +153,18 @@ bool check_hall(void *)
   if (buzzer_status != STATUS_ARMED)
     return true;
 
-  float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
-  if (deviation > BUZZER_THRESH) {
+  //float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
+  if (isPressed())
+  {
     trig_count++;
-  } else {
+  }
+  else
+  {
     trig_count = 0;
   }
 
-  if (trig_count == BUZZER_INERTIA) {
+  if (trig_count == BUZZER_INERTIA)
+  {
     trigger(true);
   }
 
@@ -159,17 +176,17 @@ bool print_vals(void *)
   Serial.print("Count: ");
   Serial.print(myStats.count());
   Serial.print(" Min: ");
-  Serial.print(myStats.minimum(),2);
+  Serial.print(myStats.minimum(), 2);
   Serial.print(" Max: ");
-  Serial.print(myStats.maximum(),2);
+  Serial.print(myStats.maximum(), 2);
   Serial.print(" Average: ");
-  Serial.print(myStats.average(),2);
+  Serial.print(myStats.average(), 2);
   Serial.print(" variance: ");
-  Serial.print(myStats.variance(),2);
+  Serial.print(myStats.variance(), 2);
   Serial.print(" stdev: ");
-  Serial.print(myStats.pop_stdev(),2);
-/*   Serial.print(" unbias stdev: ");
-  Serial.print(myStats.unbiased_stdev(),2); */
+  Serial.print(myStats.pop_stdev(), 2);
+  /*   Serial.print(" unbias stdev: ");
+    Serial.print(myStats.unbiased_stdev(),2); */
   Serial.print("  | val:  ");
   Serial.print(hall_val);
 
@@ -177,10 +194,11 @@ bool print_vals(void *)
   Serial.print("  |  ");
   Serial.print(deviation, 2);
   Serial.print("  |  ");
-if (deviation > BUZZER_THRESH) {
-  Serial.print("******");
-}
-Serial.println();
+  if (isPressed())
+  {
+    Serial.print("******");
+  }
+  Serial.println();
   return true;
 }
 // -----------------------------------------------------------------------------
@@ -234,6 +252,10 @@ bool update_leds(void *)
   default:
     fill_solid(pixel, NUM_PIXELS, CRGB::Blue);
     break;
+  }
+
+  if (isPressed() && buzzer_status != STATUS_TRIGGERED) {
+    fill_solid(pixel, NUM_PIXELS, CRGB::Gray);
   }
   FastLED.show();
   return true; // repeat? true
@@ -301,7 +323,7 @@ void setup()
   Serial.println("Hello");
 
   preferences.begin("anyma", false);
-  //preferences.putUInt("buzzer_id", 1);
+  // preferences.putUInt("buzzer_id", 1);
 
   buzzer_id = preferences.getUInt("buzzer_id", 1);
   if (buzzer_id == 0)
@@ -318,7 +340,7 @@ void setup()
   Serial.println(batt_max);
 
   hostname = "buzzer_" + String(buzzer_id);
-Serial.println(hostname);
+  Serial.println(hostname);
 
   Agora.begin(hostname.c_str());
   Agora.join("tv-buzzers", callback);
@@ -335,7 +357,7 @@ Serial.println(hostname);
   //    t.every(100,test);
   t.every(50, update_leds);
   t.every(BUZZER_SAMPLE_INTERVAL, check_hall);
-  t.every(150, print_vals);
+  //t.every(150, print_vals);
   t.every(1000, check_hanging_notes);
   // t.every(10000, check_battery);
   // t.every(120000, battery_stats);
