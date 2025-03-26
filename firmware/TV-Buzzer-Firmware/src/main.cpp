@@ -51,6 +51,7 @@ int batt_level;
 
 int buzzer_status = STATUS_NO_WIFI;
 uint8_t buzzer_id = 0;
+int polarity = 0;
 
 statistic::Statistic<float, uint32_t, true> myStats;
 CRGB pixel[NUM_PIXELS];
@@ -130,8 +131,21 @@ bool check_hanging_notes(void *)
 
 bool isPressed()
 {
-  if(myStats.maximum() - myStats.minimum() < 200) return false; // prevent triggering from noise when it has never been pressed
-  if (myStats.average() > myStats.middle())
+  if (myStats.maximum() - myStats.minimum() < 100)
+    return false; // prevent triggering from noise when it has never been pressed
+  if (polarity == 0)
+  {
+    if (myStats.average() > myStats.middle())
+    {
+      polarity = 1;
+    }
+    else
+    {
+      polarity = -1;
+    }
+  }
+
+  if (polarity == 1)
   {
     return (hall_val < myStats.middle());
   }
@@ -140,6 +154,7 @@ bool isPressed()
     return (hall_val > myStats.middle());
   }
 }
+
 
 // -----------------------------------------------------------------------------
 
@@ -153,7 +168,7 @@ bool check_hall(void *)
   if (buzzer_status != STATUS_ARMED)
     return true;
 
-  //float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
+  // float deviation = abs((float)hall_val - myStats.average()) / myStats.pop_stdev();
   if (isPressed())
   {
     trig_count++;
@@ -254,7 +269,8 @@ bool update_leds(void *)
     break;
   }
 
-  if (isPressed() && buzzer_status != STATUS_TRIGGERED) {
+  if (isPressed() && buzzer_status != STATUS_TRIGGERED)
+  {
     fill_solid(pixel, NUM_PIXELS, CRGB::Gray);
   }
   FastLED.show();
@@ -324,11 +340,17 @@ void setup()
 
   preferences.begin("anyma", false);
   // preferences.putUInt("buzzer_id", 1);
+/*   preferences.putUInt("r", 80);
+  preferences.putUInt("g", 255);
+  preferences.putUInt("b", 60); */
+
 
   buzzer_id = preferences.getUInt("buzzer_id", 1);
   if (buzzer_id == 0)
     buzzer_id = 1;
   DEBUG = preferences.getUInt("debug", 0);
+
+
   team_color.r = preferences.getUInt("r", 100);
   team_color.g = preferences.getUInt("g", 100);
   team_color.b = preferences.getUInt("b", 100);
@@ -357,7 +379,7 @@ void setup()
   //    t.every(100,test);
   t.every(50, update_leds);
   t.every(BUZZER_SAMPLE_INTERVAL, check_hall);
-  //t.every(150, print_vals);
+//  t.every(150, print_vals);
   t.every(1000, check_hanging_notes);
   // t.every(10000, check_battery);
   // t.every(120000, battery_stats);
