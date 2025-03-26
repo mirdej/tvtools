@@ -117,15 +117,10 @@ void trigger(bool on)
   Agora.tell(buf, 2);
 }
 
-bool check_hanging_notes(void *)
+bool clear_stats(void *)
 {
-  if (trigger_sent)
-  {
-    if (millis() - trigger_sent > 2000)
-    {
-      trigger(false);
-    }
-  }
+  myStats.clear();
+
   return true; // repeat? true
 }
 
@@ -154,7 +149,6 @@ bool isPressed()
     return (hall_val > myStats.middle());
   }
 }
-
 
 // -----------------------------------------------------------------------------
 
@@ -340,16 +334,14 @@ void setup()
 
   preferences.begin("anyma", false);
   // preferences.putUInt("buzzer_id", 1);
-/*   preferences.putUInt("r", 80);
-  preferences.putUInt("g", 255);
-  preferences.putUInt("b", 60); */
-
+  /*   preferences.putUInt("r", 100);
+    preferences.putUInt("g", 20);
+    preferences.putUInt("b", 247); */
 
   buzzer_id = preferences.getUInt("buzzer_id", 1);
   if (buzzer_id == 0)
     buzzer_id = 1;
   DEBUG = preferences.getUInt("debug", 0);
-
 
   team_color.r = preferences.getUInt("r", 100);
   team_color.g = preferences.getUInt("g", 100);
@@ -379,8 +371,8 @@ void setup()
   //    t.every(100,test);
   t.every(50, update_leds);
   t.every(BUZZER_SAMPLE_INTERVAL, check_hall);
-//  t.every(150, print_vals);
-  t.every(1000, check_hanging_notes);
+  //t.every(150, print_vals);
+  t.every(5000, clear_stats);
   // t.every(10000, check_battery);
   // t.every(120000, battery_stats);
   //  t.every(200,check_switch);
