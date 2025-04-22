@@ -25,6 +25,7 @@ MIDIusb midi;
 #define PIN_PIX 17
 #define NUM_PIXELS 6
 #define NOTIFICATION_INTERVAL 3000
+#define MESSAGE_BATTERYLEVEL 44
 
 CRGB pixel[NUM_PIXELS];
 
@@ -109,6 +110,14 @@ void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
         Serial.println(triggered_buzzer);
         send_triggered_buzzer();
       }
+    }
+  }
+
+  if (len == 3)
+  {
+    if (incomingData[0] == MESSAGE_BATTERYLEVEL)
+    {
+      midi.controlChange(incomingData[1],incomingData[2]);
     }
   }
 }

@@ -16,6 +16,7 @@ console.log("IP",ip)
     window.served_from_device = false;
   } else {
     window.device_url = "http://" + ip + "/";
+    window.device_url = "http://192.168.252.33/";
    // window.device_url = "http://lights.local/";
     window.served_from_device = true;
   }
