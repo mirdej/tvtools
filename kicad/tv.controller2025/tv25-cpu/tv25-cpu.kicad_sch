@@ -7112,6 +7112,16 @@
 		)
 		(uuid "6a841818-2295-4723-a87b-7e47fc77b7ff")
 	)
+	(label "b40"
+		(at 185.42 57.15 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6b8b267b-031d-4684-a2e5-c194f49cc91d")
+	)
 	(label "usb+"
 		(at 114.3 62.23 180)
 		(effects
@@ -7192,6 +7202,16 @@
 		)
 		(uuid "91da263b-fe17-4e2a-bc87-272cf944fcdd")
 	)
+	(label "b41"
+		(at 185.42 54.61 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9de3a38e-a7b8-49f7-a5e3-85e912c2cbd3")
+	)
 	(label "sda"
 		(at 40.64 261.62 180)
 		(effects
@@ -7202,6 +7222,16 @@
 		)
 		(uuid "a21f3cc6-10e5-4086-9a92-8ae1b7c4d75c")
 	)
+	(label "b39"
+		(at 185.42 59.69 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b0af3e17-2ee9-4004-93d2-5e0da2c87cca")
+	)
 	(label "scl"
 		(at 181.61 62.23 0)
 		(effects
@@ -7211,6 +7241,16 @@
 			(justify left bottom)
 		)
 		(uuid "bc12e044-0373-4a5d-97ba-2a55531b85cd")
+	)
+	(label "b42"
+		(at 185.42 52.07 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cc9d0130-693e-4969-bbda-3b5e6fff915e")
 	)
 	(label "rx"
 		(at 90.805 228.727 180)

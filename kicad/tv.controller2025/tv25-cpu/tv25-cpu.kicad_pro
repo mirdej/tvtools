@@ -501,9 +501,9 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../../../../../../../Desktop/tv25-cpu.step",
       "svg": "",
-      "vrml": ""
+      "vrml": "../../../../../../../Desktop/tv25-cpu.wrl"
     },
     "page_layout_descr_file": ""
   },

@@ -31,8 +31,8 @@
 #define MESSAGE_POWERSAVE 123
 #define MESSAGE_BATTERYLEVEL 44
 
-#define STATUS_NO_WIFI 0
-#define STATUS_NOT_CONNECTED 1
+#define STATUS_STARTUP 0
+#define STATUS_LOST_CONNECTION 1
 #define STATUS_READY 2
 #define STATUS_ARMED 3
 #define STATUS_TRIGGERED 4
@@ -49,7 +49,7 @@ const CRGB team_colors[] = {CRGB(255, 0, 200),
                             CRGB(0, 255, 100),
                             CRGB(70, 200, 10)};
 
-int buzzer_status = STATUS_NO_WIFI;
+int buzzer_status = STATUS_STARTUP;
 uint8_t buzzer_id = 0;
 int polarity = 0;
 
@@ -216,30 +216,27 @@ void led_task(void *)
   FastLED.addLeds<SK6812, PIN_PIX, GRB>(pixel, NUM_PIXELS);
   FastLED.setBrightness(5);
   fill_solid(pixel, NUM_PIXELS, CRGB::Black);
-  for (int i = 0; i < NUM_PIXELS; i = i + 3)
-  {
-    pixel[i] = CRGB::Gold;
-  }
   FastLED.show();
   while (1)
   {
     delay(50);
 
     roundtrip++;
-    if (millis() - last_message_from_master > 4000)
+    if ((last_message_from_master > 0) && (millis() - last_message_from_master > 4000))
     {
-      buzzer_status = STATUS_NOT_CONNECTED;
+      buzzer_status = STATUS_LOST_CONNECTION;
     }
 
     switch (buzzer_status)
     {
 
-    case STATUS_NO_WIFI:
-      FastLED.setBrightness(20);
-      fill_solid(pixel, NUM_PIXELS, CRGB::Blue);
+    case STATUS_STARTUP:
+      FastLED.setBrightness(5);
+      fill_solid(pixel, NUM_PIXELS, CRGB::Black);
+      pixel[8] = CRGB::Blue;
       break;
 
-    case STATUS_NOT_CONNECTED:
+    case STATUS_LOST_CONNECTION:
       FastLED.setBrightness(20);
       fill_solid(pixel, NUM_PIXELS, CRGB::Red);
       break;
@@ -357,7 +354,6 @@ void setup()
   esp_sleep_enable_timer_wakeup(120 * uS_TO_S_FACTOR);
   esp_deep_sleep_enable_gpio_wakeup((1 << PIN_BTN), ESP_GPIO_WAKEUP_GPIO_LOW);
 
-  buzzer_status = STATUS_NOT_CONNECTED;
   Serial.println("Setup Done");
 }
 

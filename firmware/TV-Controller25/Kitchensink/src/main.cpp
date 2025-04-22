@@ -19,9 +19,9 @@ S3 Base
 #define PIN_SCL 38
 #define PIN_SDA 37
 #define PIN_PIX 17
-#define NUM_PIXELS 4
-#define NUM_BTNS 4
-const int PIN_BTN[NUM_BTNS] = {42, 41, 40, 39};
+#define NUM_PIXELS 10
+#define NUM_BTNS 10
+const int PIN_BTN[NUM_BTNS] = {39, 40, 42, 41, 4, 5, 6, 7, 15, 16};
 
 //----------------------------------------------------------------------------------------
 //                                                                                 GLOBALS
@@ -48,13 +48,20 @@ void led_task(void *)
 
   while (1)
   {
+    fill_solid(pixel, NUM_PIXELS, CRGB::DarkBlue);
+    for (int i = 0; i < NUM_BTNS; i++)
+    {
+      if (!digitalRead(PIN_BTN[i]))
+      {
+        pixel[i] = CRGB::LightCyan;
+      }
+    }
     FastLED.show();
     vTaskDelay(pdMS_TO_TICKS(40)); // ~25 fps display
   }
 
   vTaskDelete(NULL); // we never get here
 }
-
 
 // -----------------------------------------------------------------------------
 
@@ -88,15 +95,14 @@ void battery_task(void *)
       Serial.println(" %");
       Serial.println();
 
-/*       uint8_t buf[3];
-      buf[0] = MESSAGE_BATTERYLEVEL;
-      buf[1] = buzzer_id;
-      buf[2] = (uint8_t)(maxlipo.cellPercent()); */
-      //Agora.tell(buf, 3);
+      /*       uint8_t buf[3];
+            buf[0] = MESSAGE_BATTERYLEVEL;
+            buf[1] = buzzer_id;
+            buf[2] = (uint8_t)(maxlipo.cellPercent()); */
+      // Agora.tell(buf, 3);
     }
   }
 }
-
 
 //----------------------------------------------------------------------------------------
 //																				                                      Button Task
