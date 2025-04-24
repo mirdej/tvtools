@@ -331,7 +331,7 @@ void setup()
   Serial.println("Hello from [ a n y m a ]");
 
   preferences.begin("anyma", false);
-  preferences.putUInt("buzzer_id", 4);
+  preferences.putUInt("buzzer_id", 3);
 
   buzzer_id = preferences.getUInt("buzzer_id", 1);
   if (buzzer_id == 0)

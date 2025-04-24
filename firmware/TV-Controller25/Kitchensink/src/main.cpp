@@ -36,7 +36,7 @@ void led_task(void *)
 {
 
   FastLED.addLeds<SK6812, PIN_PIX, GRB>(pixel, NUM_PIXELS);
-  FastLED.setBrightness(5);
+  FastLED.setBrightness(250);
   for (int hue = 0; hue < 360; hue++)
   {
     fill_rainbow(pixel, NUM_PIXELS, hue, 7);
