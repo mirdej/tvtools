@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>namelist</title>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="BBEdit 14.0" />
+    <link rel="stylesheet" href="src/bootstrap.min.css">
+    <link rel="stylesheet" href="src/jquery-ui.min.css">
+
+    <link href="src/webfonts/all.css" rel="stylesheet">
+
+    <script src="src/jquery-3.4.1.min.js">
+    </script>
+    <script src="src/jquery-ui.min.js">
+    </script>
+    <script src="src/bootstrap.bundle.min.js">
+    </script>
+    <style>
+        @font-face {
+            font-family: myFirstFont;
+            src: url(sansation_light.woff);
+        }
+
+        #filmlist {
+            position: relative;
+            width: 300px;
+            list-style-type: none;
+            padding-inline-start: 0px important !;
+            padding: 0px;
+        }
+
+        .selected {
+            background-color: #886;
+        }
+
+        #filmlist li {
+            position: relative;
+            width: 100%;
+            padding: 4px;
+            margin: 4px;
+        }
+
+        .movie {
+            cursor: pointer;
+        }
+
+        .movie:hover {
+            background-color: #555;
+        }
+
+        .duration {
+            position: absolute;
+            right: 0px;
+        }
+
+        .handle {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul id="filmlist">
+        <li>Keine Namen bis jetzt</li>
+    </ul>
+    <button id="neu"><i class="fa-solid fa-user"></i> Neu</button>
+    <button id="sort"><i class="fa-solid fa-arrow-down-a-z"></i> Sortieren</button>
+    <button id="order" status="0"><i class="fa-solid fa-hand-point-left"></i> <span class="text">Ordnen</span></button>
+
+    <script>
+        $(document).ready(function () {
+
+            var totaltime = 0;
+
+
+            var titles = { "namen": ["Lise", "Spitz", "Michi", "Moni"] };
+
+            var selected = -1;
+
+            function unEntity(str) {
+                return $("<textarea></textarea>").html(str).text();
+            }
+
+
+
+            function select_next() {
+                var n = selected + 1;
+                if (n >= $('.movie').length) n = 0;
+                $('.movie').eq(n).click();
+            }
+
+
+            function select_prev() {
+                var n = selected - 1;
+                if (n < 0) n = $('.movie').length - 1;
+                $('.movie').eq(n).click();
+            }
+
+            function output_list() {
+                var allnames = []
+                $('.movie .name').each(function () {
+                    allnames.push(unEntity($(this).html()));
+                })
+                console.log(allnames);
+                try {
+                    //   window.max.outlet("names", allnames)
+                    var obj = { "namen": allnames }
+                    window.max.setDict("namen", obj)
+
+                } catch {
+                }
+
+            }
+
+            $('#sort').click(function () {
+                titles.namen = titles.namen.sort()
+                rebuild_list();
+                output_list();
+            })
+
+            $('#neu').click(function () {
+                var nn = prompt("Neuer Name:");
+                if (nn) {
+                    titles.namen.push(nn)
+                    rebuild_list();
+                    output_list();
+                }
+            })
+
+            $('#order').click(function () {
+                if ($(this).attr('status') == 0) {
+                    $('#filmlist').sortable();
+                    $('#filmlist').sortable('enable');
+                    $(this).children('.text').html("Fertig")
+                    $(this).attr('status', 1)
+                    $('.handle').show();
+                } else {
+                    $('#filmlist').sortable('disable');
+                    $(this).children('.text').html("Ordnen")
+                    $(this).attr('status', 0);
+                    $('.handle').hide();
+                    output_list();
+                }
+            })
+
+
+            function rebuild_list() {
+                $('#filmlist').html("");
+                titles.namen.forEach(function (clip, i) {
+                    totaltime = totaltime + clip.durationms;
+                    var dur = clip.durationms;
+                    var s = '<li class="movie"><i class="handle fa-solid fa-grip-lines"></i> <span class="name">' + clip + '</span><span class="duration text-muted"><i class="fa-solid fa-pen-to-square editbtn"></i> <i class="fa-solid fa-trash-can deletebtn"></i></span></li>'
+                    $('#filmlist').append(s);
+                })
+                $(".movie").click(function () {
+                    $(".movie").removeClass('selected');
+                    $(this).addClass('selected');
+                    selected = $(this).index();
+                    console.log($(this).children('.name').html());
+                    try {
+                        window.max.outlet("selected", unEntity($(this).children('.name').html()))
+                    } catch {
+                    }
+                })
+
+                $(".editbtn").click(function () {
+                    selected = $(this).closest('li').index();
+                    var n = $(this).closest('li').children('.name').html();
+                    var nn = prompt("Neuer Name:", n);
+                    if (nn) $(this).parent().parent().children('.name').html(nn);
+                    output_list();
+                })
+
+                $(".deletebtn").click(function () {
+                    var n = $(this).parent().parent().children('.name').html();
+                    if (confirm(n + " wirklich löchen")) {
+                        $(this).closest('li').remove();
+                    }
+                    output_list();
+                })
+
+            }
+
+
+            try {
+                // access dictionary
+                window.max.getDict("namen", function (dict) {
+                    // dict is a JS object, so you can do things like
+                    titles = dict;
+                    rebuild_list();
+                })
+            } catch (error) { }
+
+            try {
+                window.max.bindInlet("next", function () {
+                    select_next();
+                })
+            } catch {
+                ;
+            }
+            try {
+                window.max.bindInlet("prev", function () {
+                    select_prev();
+                })
+            } catch {
+                ;
+            }
+            //  rebuild_list();
+            //  output_list();
+        });
+
+    </script>
+</body>
+
+</html>

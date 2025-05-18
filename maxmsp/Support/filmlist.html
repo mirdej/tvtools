@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>filmlist</title>
+    <meta name="generator" content="BBEdit 14.0" />
+    	<link rel="stylesheet" href="src/bootstrap.min.css">
+	<link rel="stylesheet" href="src/jquery-ui.min.css">
+	<script src="src/jquery-3.4.1.min.js">
+	</script>
+	<script src="src/jquery-ui.min.js">
+	</script>
+	<script src="src/bootstrap.bundle.min.js">
+	</script>
+<style>
+    #filmlist{position:relative; width:300px;list-style-type: none; padding-inline-start: 0px important!;padding:0px;}
+    .selected  {background-color:#886;}
+    #filmlist li {position:relative; width:100%;padding:4px;margin:4px;}
+    .movie {cursor:pointer;}
+    .movie:hover {background-color:#555;}
+    .duration { position:absolute; right:0px;}
+
+</style>
+</head>
+<body>
+<ul id="filmlist">
+<li>No Clips</li>
+</ul>
+<script>
+$( document ).ready(function(){
+
+    var totaltime = 0;
+	var selected = -1;
+
+
+	function select_next() {
+		var n = selected + 1;
+		if (n >= $('.movie').length) n = 0;
+		$('.movie').eq(n).click();
+	}
+	
+
+    function select_prev() {
+		var n = selected - 1;
+		if (n < 0) n = $('.movie').length-1;
+		$('.movie').eq(n).click();
+	}
+
+    function ms_to_timecode(ms){
+        mins = parseInt(ms / 60000);
+        secs = parseInt(ms) % 60000;
+        secs = parseInt(secs/1000);
+        var str = "";
+        if (mins < 10) str = "0";
+        str = str + mins;
+        str = str + ":";
+        if (secs < 10) str = str +  "0";
+        str = str + secs;
+        return str;
+    }
+    $("#totaltime").html("HALLO");
+    
+    try {
+        window.max.bindInlet("next", function() {
+        	select_next();
+		})
+	} catch {
+		;
+	}
+    try {
+        window.max.bindInlet("prev", function() {
+        	select_prev();
+		})
+	} catch {
+		;
+	}
+
+    try {
+        window.max.bindInlet("update", function(dictname) {
+            totaltime = 0;
+            window.max.getDict(dictname, function(dict) { 
+
+           /*     $('body').append(dict.clips.length)
+                for (var i = 0; i < clips.length; i++) {
+                    $('body').append(clips[i].filename);
+                } */
+
+                    $('#filmlist').html("");
+
+                dict.clips.forEach(function(clip,i){
+                    totaltime = totaltime + clip.durationms;
+                    var dur = clip.durationms;
+                    var s = '<li class="movie" fullpath="'+clip.absolutepath+'">'+clip.filename+'<span class="duration text-muted">'+ms_to_timecode(dur)+'</span></li>'
+                    $('#filmlist').append(s);
+                })
+                
+              //  $("#totaltime").html(ms_to_timecode(totaltime));
+                $('#filmlist').append("<hr />");
+                $('#filmlist').append('<li>Total<span class="duration text-muted">'+ms_to_timecode(totaltime)+'</span></li>');
+                
+                $(".movie").click(function() {
+                    $(".movie").removeClass('selected');
+                    $(this).addClass('selected');
+                    selected = $(this).index();
+                    try {
+                        window.max.outlet("selected", $(this).index())
+                        window.max.outlet("path", $(this).attr('fullpath'));
+                    } catch {
+                    }
+                })
+
+            })
+            
+        })
+    }   catch (error) {
+            console.error(error);
+                    try {
+                        window.max.outlet("error", error)
+                    } catch {
+                    }
+   }
+
+ });
+
+</script>
+</body>
+</html>

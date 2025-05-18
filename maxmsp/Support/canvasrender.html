@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="generator" content="BBEdit 14.0" />
+    <style> 
+        canvas{border:1px solid red;}
+        
+    </style>
+</head>
+<body>
+<canvas id=canvas width=1920 height=240></canvas>
+ <script>
+      window.onload = function() {
+      
+      		var lineheight = 50;
+					//document.body.append("Mellow");
+
+            function draw_line(text,x,y){
+                var canvas = document.getElementById("canvas");
+                var ctx = canvas.getContext("2d");
+          
+              //  ctx.fillStyle = "black ";
+                ctx.shadowColor = "rgba(0,0,0,0.7)";
+                ctx.fillStyle = "white";
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetY = 3;
+                ctx.shadowOffsetX = 3;
+                ctx.fillText(text, x, y);
+                ctx.shadowColor = "rgba(0,0,0,0.)";
+                ctx.shadowOffsetY = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowBlur = 0;
+                ctx.strokeText(text, x, y);
+            }
+        
+        
+        	try {
+        		window.max.bindInlet("render",function(){
+
+	                var canvas = document.getElementById("canvas");
+    	            var ctx = canvas.getContext("2d");
+					ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        			window.max.getDict("titles", function(dict){
+        				var lines = dict.lines;
+        				if (typeof lines === 'string') {
+        					//oneliners are bigger and left
+								ctx.font = font = 'bold 120px Arial black';
+								ctx.textAlign = 'left'; 
+								draw_line(lines, 400 , 120);
+        				} else {
+							for (var i = 0; i < lines.length; i++){
+								ctx.font = font = 'bold 48px Arial black';
+								ctx.textAlign = 'center';
+								draw_line(lines[i], canvas.width/2 , (i+1)*lineheight);
+							}
+        				}
+        			})
+       		})
+			} catch {}
+			
+       		try {
+        		window.max.bindInlet("save",function(){
+
+				  try {
+						var d = canvas.toDataURL("image/png").split(',')[1];
+						window.max.outlet("data",d.length);
+						// have to divide data into chunks to not truncate. strange bug in max???
+						window.max.setDict("imagedata", {"image":d.match(/.{1,512}/g)})
+						window.max.outlet("image_ready")
+
+				  }
+				  catch {}
+        		})
+			} catch {}
+        
+            //document.write(canvas.toDataURL("image/png").split(',')[1]);
+
+      }
+ </script>
+</body>
+</html>
+
+
+
