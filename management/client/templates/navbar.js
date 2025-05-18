@@ -4,3 +4,11 @@ Template.navbar.onCreated(function navbarOnCreated() {
  Meteor.subscribe('groups');
  // alert('here');
 });
+
+
+Template.navbar.helpers({
+
+        myip: function () {
+          return Session.get("myip")
+        }
+})
