@@ -40,12 +40,47 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-30",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 530.0, 344.0, 61.0, 22.0 ],
+					"text" : "delay 100"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-25",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 310.0, 676.0, 150.0, 20.0 ],
+					"text" : "@autostart 1 @watch 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-21",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 851.0, 437.0, 104.0, 22.0 ],
+					"text" : "~/Movies/TV.Clips"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-22",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 600.5, 230.0, 29.5, 22.0 ],
+					"patching_rect" : [ 600.5, 155.0, 29.5, 22.0 ],
 					"text" : "+ 2"
 				}
 
@@ -209,7 +244,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 687.0, 630.5, 65.0, 22.0 ],
+					"patching_rect" : [ 1152.0, 432.5, 65.0, 22.0 ],
 					"text" : "script stop"
 				}
 
@@ -221,7 +256,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 614.0, 630.5, 66.0, 22.0 ],
+					"patching_rect" : [ 1079.0, 432.5, 66.0, 22.0 ],
 					"text" : "script start"
 				}
 
@@ -233,14 +268,16 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 162.0, 675.0, 268.0, 22.0 ],
+					"patching_rect" : [ 162.0, 675.0, 139.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"autostart" : 1,
+						"autostart" : 0,
 						"defer" : 0,
-						"watch" : 1
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
+						"watch" : 0
 					}
 ,
-					"text" : "node.script autoloader.js @autostart 1 @watch 1"
+					"text" : "node.script autoloader.js"
 				}
 
 			}
@@ -251,7 +288,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 600.5, 340.0, 37.0, 22.0 ],
+					"patching_rect" : [ 600.5, 265.0, 37.0, 22.0 ],
 					"text" : "delay"
 				}
 
@@ -263,7 +300,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 618.5, 312.0, 43.0, 22.0 ],
+					"patching_rect" : [ 618.5, 237.0, 43.0, 22.0 ],
 					"text" : "* 1000"
 				}
 
@@ -275,7 +312,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "int" ],
-					"patching_rect" : [ 600.5, 278.0, 29.5, 22.0 ],
+					"patching_rect" : [ 600.5, 203.0, 29.5, 22.0 ],
 					"text" : "t b i"
 				}
 
@@ -287,7 +324,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 600.5, 169.0, 77.0, 22.0 ],
+					"patching_rect" : [ 600.5, 94.0, 77.0, 22.0 ],
 					"text" : "loadmess #1"
 				}
 
@@ -961,7 +998,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/00-Jingle.mov",
 								"filename" : "00-Jingle.mov",
 								"filekind" : "moviefile",
-								"id" : "u326001951",
+								"id" : "u563001046",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -972,7 +1009,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/01_Dosenbach.mov",
 								"filename" : "01_Dosenbach.mov",
 								"filekind" : "moviefile",
-								"id" : "u065001964",
+								"id" : "u486001059",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -983,7 +1020,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/02_Coop.mov",
 								"filename" : "02_Coop.mov",
 								"filekind" : "moviefile",
-								"id" : "u293001977",
+								"id" : "u760001072",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -994,7 +1031,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/03-La posta.mov",
 								"filename" : "03-La posta.mov",
 								"filekind" : "moviefile",
-								"id" : "u395001990",
+								"id" : "u240001085",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1005,7 +1042,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/04_Spitex.mov",
 								"filename" : "04_Spitex.mov",
 								"filekind" : "moviefile",
-								"id" : "u294002003",
+								"id" : "u733001098",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1016,7 +1053,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_1_Quiz_Deutsch.mov",
 								"filename" : "05_1_Quiz_Deutsch.mov",
 								"filekind" : "moviefile",
-								"id" : "u587002020",
+								"id" : "u954001111",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1027,7 +1064,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_2_Quiz_Tamilisch.mov",
 								"filename" : "05_2_Quiz_Tamilisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u437002033",
+								"id" : "u285001124",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1038,7 +1075,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_3_Quiz_Portugiesisch.mov",
 								"filename" : "05_3_Quiz_Portugiesisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u490002046",
+								"id" : "u647001137",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1049,7 +1086,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_4_Quiz_Albanisch.mov",
 								"filename" : "05_4_Quiz_Albanisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u517002059",
+								"id" : "u865001150",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1060,7 +1097,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_5_Quiz_Yoroba.mov",
 								"filename" : "05_5_Quiz_Yoroba.mov",
 								"filekind" : "moviefile",
-								"id" : "u671002072",
+								"id" : "u853001163",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1071,7 +1108,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_Quiz_Italienisch.mov",
 								"filename" : "05_Quiz_Italienisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u622002085",
+								"id" : "u541001176",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1082,7 +1119,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_Quiz_Spanisch.mov",
 								"filename" : "05_Quiz_Spanisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u603002098",
+								"id" : "u267001189",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1093,7 +1130,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/05_Quiz_Türkisch.mov",
 								"filename" : "05_Quiz_Türkisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u672002111",
+								"id" : "u126001202",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1104,7 +1141,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/06_müller.mov",
 								"filename" : "06_müller.mov",
 								"filekind" : "moviefile",
-								"id" : "u560002124",
+								"id" : "u710001215",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1115,7 +1152,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/07_Barber Sali 1.mov",
 								"filename" : "07_Barber Sali 1.mov",
 								"filekind" : "moviefile",
-								"id" : "u920002137",
+								"id" : "u106001228",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1126,7 +1163,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/08_PoolPlus.mov",
 								"filename" : "08_PoolPlus.mov",
 								"filekind" : "moviefile",
-								"id" : "u088002150",
+								"id" : "u629001241",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1137,7 +1174,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/09_Schnuffi.mov",
 								"filename" : "09_Schnuffi.mov",
 								"filekind" : "moviefile",
-								"id" : "u272002163",
+								"id" : "u091001254",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1148,7 +1185,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/10_hood_barber.mov",
 								"filename" : "10_hood_barber.mov",
 								"filekind" : "moviefile",
-								"id" : "u517002176",
+								"id" : "u153001267",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1159,7 +1196,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/11_Pizza Yolo Ganz.mov",
 								"filename" : "11_Pizza Yolo Ganz.mov",
 								"filekind" : "moviefile",
-								"id" : "u955002189",
+								"id" : "u058001280",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1170,7 +1207,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/12_Quiz_Apfel.mov",
 								"filename" : "12_Quiz_Apfel.mov",
 								"filekind" : "moviefile",
-								"id" : "u403002202",
+								"id" : "u591001293",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1181,7 +1218,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/12_Quiz_Sterns.mov",
 								"filename" : "12_Quiz_Sterns.mov",
 								"filekind" : "moviefile",
-								"id" : "u630002215",
+								"id" : "u041001306",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1192,7 +1229,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/12_Quiz_Tintenfisch.mov",
 								"filename" : "12_Quiz_Tintenfisch.mov",
 								"filekind" : "moviefile",
-								"id" : "u169002228",
+								"id" : "u405001319",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1203,7 +1240,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/13_WetzikonDoku.mov",
 								"filename" : "13_WetzikonDoku.mov",
 								"filekind" : "moviefile",
-								"id" : "u598002241",
+								"id" : "u986001332",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1214,7 +1251,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/14_Berrylicious.mov",
 								"filename" : "14_Berrylicious.mov",
 								"filekind" : "moviefile",
-								"id" : "u448002254",
+								"id" : "u840001345",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1225,7 +1262,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/15_Schreinerei.mov",
 								"filename" : "15_Schreinerei.mov",
 								"filekind" : "moviefile",
-								"id" : "u678002267",
+								"id" : "u959001358",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1236,7 +1273,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/16_yara shop.mov",
 								"filename" : "16_yara shop.mov",
 								"filekind" : "moviefile",
-								"id" : "u233002280",
+								"id" : "u795001371",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1247,7 +1284,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/17-takko.mov",
 								"filename" : "17-takko.mov",
 								"filekind" : "moviefile",
-								"id" : "u383002293",
+								"id" : "u871001384",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1258,7 +1295,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/18_Sky Bowling.mov",
 								"filename" : "18_Sky Bowling.mov",
 								"filekind" : "moviefile",
-								"id" : "u974002306",
+								"id" : "u603001397",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1269,7 +1306,7 @@
 								"absolutepath" : "/Users/tv//Movies/TV.Clips/99-SchulTV-Abspann1080p25.mov",
 								"filename" : "99-SchulTV-Abspann1080p25.mov",
 								"filekind" : "moviefile",
-								"id" : "u045002319",
+								"id" : "u833001410",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1344,7 +1381,17 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
+					"destination" : [ "obj-19", 0 ],
+					"midpoints" : [ 610.0, 359.25, 1088.5, 359.25 ],
+					"order" : 0,
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-30", 0 ],
+					"order" : 1,
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -1359,7 +1406,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 0 ],
-					"midpoints" : [ 696.5, 664.75, 171.5, 664.75 ],
+					"midpoints" : [ 1161.5, 664.75, 171.5, 664.75 ],
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -1367,7 +1414,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 0 ],
-					"midpoints" : [ 623.5, 664.75, 171.5, 664.75 ],
+					"midpoints" : [ 1088.5, 664.75, 171.5, 664.75 ],
 					"source" : [ "obj-19", 0 ]
 				}
 
@@ -1390,6 +1437,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-46", 0 ],
 					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-29", 0 ],
+					"source" : [ "obj-21", 0 ]
 				}
 
 			}
@@ -1426,6 +1480,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-16", 0 ],
 					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"source" : [ "obj-30", 0 ]
 				}
 
 			}
