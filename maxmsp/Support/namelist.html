@@ -109,105 +109,105 @@
                     //   window.max.outlet("names", allnames)
                     var obj = { "namen": allnames }
                     window.max.setDict("namen", obj)
-
+                    window.max.outlet("changes", "bang")
                 } catch {
-                }
+        }
 
             }
 
-            $('#sort').click(function () {
-                titles.namen = titles.namen.sort()
+        $('#sort').click(function () {
+            titles.namen = titles.namen.sort()
+            rebuild_list();
+            output_list();
+        })
+
+        $('#neu').click(function () {
+            var nn = prompt("Neuer Name:");
+            if (nn) {
+                titles.namen.push(nn)
                 rebuild_list();
+                output_list();
+            }
+        })
+
+        $('#order').click(function () {
+            if ($(this).attr('status') == 0) {
+                $('#filmlist').sortable();
+                $('#filmlist').sortable('enable');
+                $(this).children('.text').html("Fertig")
+                $(this).attr('status', 1)
+                $('.handle').show();
+            } else {
+                $('#filmlist').sortable('disable');
+                $(this).children('.text').html("Ordnen")
+                $(this).attr('status', 0);
+                $('.handle').hide();
+                output_list();
+            }
+        })
+
+
+        function rebuild_list() {
+            $('#filmlist').html("");
+            titles.namen.forEach(function (clip, i) {
+                totaltime = totaltime + clip.durationms;
+                var dur = clip.durationms;
+                var s = '<li class="movie"><i class="handle fa-solid fa-grip-lines"></i> <span class="name">' + clip + '</span><span class="duration text-muted"><i class="fa-solid fa-pen-to-square editbtn"></i> <i class="fa-solid fa-trash-can deletebtn"></i></span></li>'
+                $('#filmlist').append(s);
+            })
+            $(".movie").click(function () {
+                $(".movie").removeClass('selected');
+                $(this).addClass('selected');
+                selected = $(this).index();
+                console.log($(this).children('.name').html());
+                try {
+                    window.max.outlet("selected", unEntity($(this).children('.name').html()))
+                } catch {
+                }
+            })
+
+            $(".editbtn").click(function () {
+                selected = $(this).closest('li').index();
+                var n = $(this).closest('li').children('.name').html();
+                var nn = prompt("Neuer Name:", n);
+                if (nn) $(this).parent().parent().children('.name').html(nn);
                 output_list();
             })
 
-            $('#neu').click(function () {
-                var nn = prompt("Neuer Name:");
-                if (nn) {
-                    titles.namen.push(nn)
-                    rebuild_list();
-                    output_list();
+            $(".deletebtn").click(function () {
+                var n = $(this).parent().parent().children('.name').html();
+                if (confirm(n + " wirklich löchen")) {
+                    $(this).closest('li').remove();
                 }
+                output_list();
             })
 
-            $('#order').click(function () {
-                if ($(this).attr('status') == 0) {
-                    $('#filmlist').sortable();
-                    $('#filmlist').sortable('enable');
-                    $(this).children('.text').html("Fertig")
-                    $(this).attr('status', 1)
-                    $('.handle').show();
-                } else {
-                    $('#filmlist').sortable('disable');
-                    $(this).children('.text').html("Ordnen")
-                    $(this).attr('status', 0);
-                    $('.handle').hide();
-                    output_list();
-                }
+        }
+
+
+        try {
+            // access dictionary
+            window.max.getDict("namen", function (dict) {
+                // dict is a JS object, so you can do things like
+                titles = dict;
+                rebuild_list();
             })
+        } catch (error) { }
 
-
-            function rebuild_list() {
-                $('#filmlist').html("");
-                titles.namen.forEach(function (clip, i) {
-                    totaltime = totaltime + clip.durationms;
-                    var dur = clip.durationms;
-                    var s = '<li class="movie"><i class="handle fa-solid fa-grip-lines"></i> <span class="name">' + clip + '</span><span class="duration text-muted"><i class="fa-solid fa-pen-to-square editbtn"></i> <i class="fa-solid fa-trash-can deletebtn"></i></span></li>'
-                    $('#filmlist').append(s);
-                })
-                $(".movie").click(function () {
-                    $(".movie").removeClass('selected');
-                    $(this).addClass('selected');
-                    selected = $(this).index();
-                    console.log($(this).children('.name').html());
-                    try {
-                        window.max.outlet("selected", unEntity($(this).children('.name').html()))
-                    } catch {
-                    }
-                })
-
-                $(".editbtn").click(function () {
-                    selected = $(this).closest('li').index();
-                    var n = $(this).closest('li').children('.name').html();
-                    var nn = prompt("Neuer Name:", n);
-                    if (nn) $(this).parent().parent().children('.name').html(nn);
-                    output_list();
-                })
-
-                $(".deletebtn").click(function () {
-                    var n = $(this).parent().parent().children('.name').html();
-                    if (confirm(n + " wirklich löchen")) {
-                        $(this).closest('li').remove();
-                    }
-                    output_list();
-                })
-
-            }
-
-
-            try {
-                // access dictionary
-                window.max.getDict("namen", function (dict) {
-                    // dict is a JS object, so you can do things like
-                    titles = dict;
-                    rebuild_list();
-                })
-            } catch (error) { }
-
-            try {
-                window.max.bindInlet("next", function () {
-                    select_next();
-                })
-            } catch {
-                ;
-            }
-            try {
-                window.max.bindInlet("prev", function () {
-                    select_prev();
-                })
-            } catch {
-                ;
-            }
+        try {
+            window.max.bindInlet("next", function () {
+                select_next();
+            })
+        } catch {
+            ;
+        }
+        try {
+            window.max.bindInlet("prev", function () {
+                select_prev();
+            })
+        } catch {
+            ;
+        }
             //  rebuild_list();
             //  output_list();
         });
