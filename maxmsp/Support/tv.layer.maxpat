@@ -40,6 +40,41 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-49",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 81.0, 274.0, 82.0, 22.0 ],
+					"text" : "prepend send"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-46",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 81.0, 243.0, 111.0, 22.0 ],
+					"text" : "combine s _playing"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-45",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 81.0, 687.0, 49.0, 22.0 ],
+					"text" : "forward"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-48",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -488,10 +523,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 871.0, 369.0, 19.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"attr_comment" : ""
-					}
-,
 					"text" : "in"
 				}
 
@@ -866,6 +897,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-46", 0 ],
+					"midpoints" : [ 573.5, 185.0, 90.5, 185.0 ],
+					"order" : 2,
+					"source" : [ "obj-14", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-47", 0 ],
 					"order" : 0,
 					"source" : [ "obj-14", 1 ]
@@ -1100,6 +1140,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-35", 0 ],
+					"order" : 0,
+					"source" : [ "obj-38", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-45", 0 ],
+					"order" : 1,
 					"source" : [ "obj-38", 0 ]
 				}
 
@@ -1165,6 +1214,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-49", 0 ],
+					"source" : [ "obj-46", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-48", 0 ],
 					"source" : [ "obj-47", 0 ]
 				}
@@ -1174,6 +1230,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-4", 0 ],
 					"source" : [ "obj-48", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-45", 0 ],
+					"source" : [ "obj-49", 0 ]
 				}
 
 			}
@@ -1254,14 +1317,14 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "tv.layer.handler.js",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "tv.transparencycheck.maxpat",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1

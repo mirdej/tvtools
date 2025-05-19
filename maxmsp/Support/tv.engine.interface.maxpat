@@ -910,7 +910,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 704.0, 152.0, 216.0, 22.0 ]
+									"patching_rect" : [ 704.0, 152.0, 216.0, 22.0 ],
+									"text" : "\"03-La posta.mov\""
 								}
 
 							}
@@ -2975,21 +2976,21 @@
 						"player" : [ 							{
 								"name" : "Niemand",
 								"online" : 0,
-								"score" : 1
+								"score" : 3
 							}
 , 							{
-								"name" : "Niemand",
+								"name" : "Nadirah",
+								"score" : 3,
+								"online" : 1
+							}
+, 							{
+								"name" : "Kira und Vittoria",
 								"score" : 0,
-								"online" : 0
+								"online" : 1
 							}
 , 							{
-								"name" : "Niemand",
-								"score" : 0,
-								"online" : 0
-							}
-, 							{
-								"name" : "Niemand",
-								"online" : 0,
+								"name" : "Ambra und Sera",
+								"online" : 1,
 								"score" : 0
 							}
  ],
@@ -4659,7 +4660,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 25.0, 846.0, 63.0, 35.0 ],
-					"text" : "selected Michael"
+					"text" : "title namelist"
 				}
 
 			}

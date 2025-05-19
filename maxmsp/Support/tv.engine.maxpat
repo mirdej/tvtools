@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 236.0, 53.0, 1375.0, 721.0 ],
+		"rect" : [ 405.0, 304.0, 810.0, 362.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -910,8 +910,8 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-10", 0 ],
-									"midpoints" : [ 216.5, 236.0, 507.5, 236.0 ],
-									"source" : [ "obj-3", 2 ]
+									"midpoints" : [ 204.0, 236.0, 507.5, 236.0 ],
+									"source" : [ "obj-3", 1 ]
 								}
 
 							}
@@ -1885,21 +1885,21 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "tv.layer.handler.js",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "tv.layer.maxpat",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "tv.transparencycheck.maxpat",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
