@@ -2,12 +2,12 @@ Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
 
-ProjectID = "SchulTV-WE-2025";
+ProjectID = "SchulTV-TEST";
 
 if (Meteor.isClient) {
     Session.set("Project", {
         show_all: true,
-        name: "Wetzikon",
+        name: "TEST",
         place: "Walenbach",
         id: ProjectID,
         logo: "logo-universal.png",

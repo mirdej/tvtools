@@ -108,6 +108,7 @@ Template.memberlist.events({
        e.stopPropagation();
        e.preventDefault();
           Session.set("crop", this._id);
+          Session.set("cropname", this.first + " " + this.last);
       },
 
       "click .setMale": function (e,t) {

@@ -1,8 +1,14 @@
+const PICWIDTH = 256
+const PICHEIGHT = 331
+
 Template.member_crop.helpers({
 	edit :  function() {
      return   Session.get("crop");
     },
-    
+
+  cropname :  function() {
+     return   Session.get("cropname");
+    },
     pic: function() {
        return Members.findOne({_id:Session.get("crop")}).pic;
     }
@@ -27,7 +33,7 @@ Template.member_crop.events({
 		e.preventDefault();
 		e.stopPropagation();
 		var fullsize  =   	$(".img-container > img").cropper("getDataURL");
-		var thumbnail =    $(".img-container > img").cropper("getDataURL", {width:350, height: 450}, "image/jpeg", 0.6);
+		var thumbnail =    $(".img-container > img").cropper("getDataURL", {width:PICWIDTH, height: PICHEIGHT}, "image/jpeg", 0.6);
 		 Members.update(Session.get("crop"),{$set:{
      		pic:	fullsize	,
       		thumb:	thumbnail
@@ -82,12 +88,12 @@ Template.member_crop.rendered = function() {
     }
 
 $(".img-container > img").cropper({
-  aspectRatio: 0.777777,
+  aspectRatio: PICWIDTH / PICHEIGHT,
   data: {
     x: 0,
     y: 0,
-    width: 350,
-    height: 450
+    width: PICWIDTH,
+    height: PICHEIGHT
   },
   done: function(data) {
     // Output the result data for cropping image.
