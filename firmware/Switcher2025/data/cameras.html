@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="src/bootstrap.min.css">
+	<script src="src/jquery-3.4.1.min.js">
+	</script>
+	<script src="src/bootstrap.bundle.min.js">
+	</script>
+	<link href="src/bootstrap4-toggle.min.css" rel="stylesheet">
+	<script src="src/bootstrap4-toggle.min.js">
+	</script>
+	<title> TV.Switchbox - Camera Control </title>
+	<style>		.btn {margin:10px;}
+	</style>
+</head>
+<body>
+<div class="container-fluid">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"> TV Switchbox v2.0 by [&nbsp;a&nbsp;n&nbsp;y&nbsp;m&nbsp;a&nbsp;] </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"> </span> </button> 
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> <a class="nav-link" href="#"> Home </a> </li>
+				<li> <a class="nav-link" href="http://switchbox.local/cameras"> Cameras <span class="sr-only"> (current) </span></a> </li>
+				<li> <a class="nav-link" href="http://lights.local"> Lights </a> </li>
+			</ul>
+		</div>
+	</nav>
+	    <h1>
+			Camera Settings </h1>
+		<div class="row">
+			<div class="card" id="c_1">
+			</div>
+			<div class="card" id="c_2">
+			</div>
+			<div class="card" id="c_3">
+			</div>
+			<div class="card" id="c_4">
+			</div>
+			<div class="card" id="c_5">
+			</div>
+		</div>
+		<button id="save">Save</button>		<button id="reset">Rest</button>
+
+	</div>
+</div>
+</div>
+<script>
+	$( document ).ready(function(){
+	
+	
+		    var hostname = "untitled";
+		    var homebase;
+		    if (window.location.hostname ) { homebase = window.location.hostname}
+		   else {homebase = "192.168.252.200"}
+		   
+		   	    var websocket;
+		 var settings;
+
+		 $('#reset').click(function(){
+		    for (var i = 0; i < 5;i++){
+		        settings["camera"][i]["Gain"] = 2048;
+		        settings["camera"][i]["Wb"] =   3200;
+		        settings["camera"][i]["LiftY"] = 0;
+		        settings["camera"][i]["GammaY"] = 0;
+		        settings["camera"][i]["GainY"] = 0;
+		    }
+		    display_settings();
+        });
+        		 
+		 $('#save').click(function(){
+		 //   console.log(JSON.stringify(settings));
+		   // return;
+	            $.post("http://"+homebase+"/post",JSON.stringify(settings));
+		 })
+		 //-----------------------------------------------------------------------------------
+		
+		    function initWebSocket() {
+		        ////console.log('Trying to open a WebSocket connection…');
+		        websocket = new WebSocket("ws://"+homebase+"/ws");
+		        websocket.binaryType = "arraybuffer";
+		        websocket.onopen = onOpen;
+		        websocket.onclose = onClose;
+		        websocket.onmessage = onMessage;
+		    }
+		
+		    function onOpen(event) {
+		        ////console.log('Connection opened');
+		        $('#connection_info').html("Getting info…")
+		        message = {message:"getInfo"}
+		        websocket.send(JSON.stringify(message));
+		        message = {message:"getCameras"}
+		        websocket.send(JSON.stringify(message));
+		   }
+		
+		    function onClose(event) {
+		        ////console.log('Connection closed');
+		        setTimeout(initWebSocket, 2000);
+		    }
+		
+		function display_settings() {
+		  var cams = settings["camera"];
+	                    
+	                    cams.forEach(function(c,n){
+	                        if (c) {
+	                            var keys = Object.keys(c);
+	                            var values = Object.values(c)
+                                var s = "<h3>Camera "+ parseInt(n + 1) + "</h3><pre>";
+                                
+                                for (var i = 0; i < keys.length; i++) { 
+                                    s = s + keys[i];
+                                    s = s + ": ";
+                                    s = s + values[i];
+                                    s = s + "\r"
+                                    
+                                }
+                            s = s + "</pre>";
+                            $("#c_"+(n+1)).html(s);
+	                        }
+	                    })
+		}
+		
+		    function onMessage(event) {
+		        //console.log(event.data)
+		        if(event.data instanceof ArrayBuffer){
+		            var bytes = new Uint8Array(event.data);
+		        } else {
+		            var obj = JSON.parse(event.data);
+		            // console.log(obj);
+                 //    console.log(event.data);
+		           if (obj["message"] == "info") {  
+		                hostname = obj["hostname"];
+		                ip = obj["ip"];
+	                    console.log(hostname);
+	                    console.log(ip);
+		           } else if (obj["message"] == "hosstnameSet") {
+		           } else if (obj["message"] == "camera_settings") {
+	                    
+	                    settings = obj;
+	                    display_settings();
+	                  
+		                
+		           }    else if (obj["message"] == "hallo") {
+		                $('#test').html(obj["zahl"]);
+		           }
+		           
+		        }
+		    }
+		
+	//    $.get('http://switchbox.local/fcp?on=0');
+		    initWebSocket();
+	
+	});
+</script>
+</body>
+</html>

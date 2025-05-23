@@ -10,6 +10,7 @@ if (Meteor.isClient) {
         name: "TEST",
         place: "Walenbach",
         id: ProjectID,
+        archive: "o2i2vB=e@E",
         logo: "logo-universal.png",
         badge: "carte-de-presse-schultv2.jpg",
         begin: "Mon, 12 May 2025 07:00:00 +0200",

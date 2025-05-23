@@ -1,0 +1,61 @@
+<template name="badgeback">
+       {{#each members}}
+
+    <div
+        class="ausweis"
+        style="
+            clear: both;
+            position: relative;
+            width: 86mm;
+            height: 54.7mm;
+            margin: 0mm;
+            padding: 0mm;
+        "
+    >
+        <div
+            class="name"
+            style="
+                position: absolute;
+                width: 52mm;
+                height: 11mm;
+                left: 2.5mm;
+                vertical-align: bottom;
+                top: 16mm;
+                font-size: 1.5em;
+                font-weight: bold;
+                line-height: 90%;
+            "
+        >
+            <span style="position: absolute; bottom: 0mm; left: 0mm"
+                >{{first}} {{last}}</span
+            >
+        </div>
+        <div
+            class="valid"
+            style="position: absolute; left: 22mm; bottom: 3mm; color: white"
+        >
+            Text hier
+        </div>
+        <div
+            class="project"
+            style="position: absolute; left: 2.5mm; top: 9mm; color: #fafafa"
+        >
+            {{project}}
+        </div>
+
+        <div
+            style="
+                position: absolute;
+                width: 132px;
+                height: 100px;
+                overflow: hidden;
+            "
+        >
+            <img src="https://schultv.ch/archiv/{{archive}}/qr_code.png" />
+        </div>
+    </div>
+
+    {{/each}}
+
+    <button class="btn btn-primary alpha showAll dontPrint">Alle zeigen</button>
+</template>

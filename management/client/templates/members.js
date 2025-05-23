@@ -126,12 +126,12 @@ Template.memberlist.events({
       "click .setInvisible": function (e,t) {
        e.stopPropagation();
        e.preventDefault();
-         Members.update(this._id,{$set:{image_rights:"0"}});
+         Members.update(this._id,{$set:{image_rights:0}});
       },
       "click .setVisible": function (e,t) {
        e.stopPropagation();
        e.preventDefault();
-         Members.update(this._id,{$set:{image_rights:"1"}});
+         Members.update(this._id,{$set:{image_rights:1}});
       },
       
        "change .showall input": function (e,t) {
