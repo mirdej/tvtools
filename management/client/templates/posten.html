@@ -3,15 +3,21 @@
 <table class="table table-condensed listederlueste">
 
 {{#each members}}
-<tr id="{{_id}}">
-   <th class="{{isSet}}">{{first}} {{last}}</th>
-
+<tr id="{{_id}}" class=" {{isSet}}">
+   <th >{{first}} {{last}} {{#if image_rights}} <i></i>{{else}} <i class="fa fa-eye-slash"></i>{{/if}}</th>
+<td>{{emoji}}</td>
 
    {{#each jobs}}
          <td class="job {{lustClass ..}} {{hasJob ..}}">{{job}}</td>
    {{/each}}
 </tr>
 {{/each}}
+
+<tr><td></td><td>{{happyPeople}}</td>
+{{#each jobs}}
+         <td></td>
+   {{/each}}
+</tr>
 </table>
 <button class="clear">Clear</button>
 </template>

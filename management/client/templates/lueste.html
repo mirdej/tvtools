@@ -5,7 +5,7 @@
 
 {{#each members}}
 <tr id="{{_id}}">
-   <th>{{first}} {{last}}</th>
+   <th>{{first}} {{last}} {{#if image_rights}} <i></i>{{else}} <i class="fa fa-eye-slash"></i>{{/if}}</th>
 
 
    {{#each jobs}}

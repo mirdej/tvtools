@@ -28,7 +28,7 @@ hr  {clear:both;}
 	.ausweis:nth-of-type(4) {page-break-after: always;margin:0mm;padding:0mm;} */
 	.ausweis {margin:.5mm;padding:0mm;}
     .dontPrint {display:none;}
-    .project: {color:#fafafa;}
+    .project {color:#fafafa;}
 }
 
 @page  

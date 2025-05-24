@@ -7,8 +7,9 @@ ProjectID = "SchulTV-TEST";
 if (Meteor.isClient) {
     Session.set("Project", {
         show_all: true,
-        name: "TEST",
-        place: "Walenbach",
+        name: "Fribourg",
+        number: 50,
+        place: "Atelier",
         id: ProjectID,
         archive: "o2i2vB=e@E",
         logo: "logo-universal.png",

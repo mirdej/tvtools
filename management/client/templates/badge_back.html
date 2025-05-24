@@ -1,5 +1,5 @@
 <template name="badgeback">
-       {{#each members}}
+    {{#each members}}
 
     <div
         class="ausweis"
@@ -10,6 +10,7 @@
             height: 54.7mm;
             margin: 0mm;
             padding: 0mm;
+            font-size:9pt
         "
     >
         <div
@@ -25,33 +26,40 @@
                 font-weight: bold;
                 line-height: 90%;
             "
-        >
-            <span style="position: absolute; bottom: 0mm; left: 0mm"
-                >{{first}} {{last}}</span
-            >
-        </div>
-        <div
-            class="valid"
-            style="position: absolute; left: 22mm; bottom: 3mm; color: white"
-        >
-            Text hier
-        </div>
+        ></div>
         <div
             class="project"
-            style="position: absolute; left: 2.5mm; top: 9mm; color: #fafafa"
+            style="position: absolute; right: 2.5mm; top: 2mm; color: #000"
         >
-            {{project}}
+            <h2 style="font-size:12pt;text-align:right;">SchulTV#{{number}}<br/>{{name}}<br/>{{place}}</h2>
+            <p style="">
+Michi: 079 278 31 39
+<br/><br/>
+Margrit: 079 353 65 60<br/><br/>
+
+Studio:044 508 59 76</p
+            >
         </div>
 
         <div
             style="
                 position: absolute;
+                top: 9.5mm;
+                left: 2mm;
                 width: 132px;
-                height: 100px;
+                height: 120px;
                 overflow: hidden;
             "
         >
             <img src="https://schultv.ch/archiv/{{archive}}/qr_code.png" />
+        </div>
+        <div style="
+                position: absolute;
+                bottom: 1.5mm;
+                left: 5mm;
+            "
+        >
+        schultv.ch/archiv/{{archive}}
         </div>
     </div>
 
