@@ -5,7 +5,7 @@ Jobs = new Mongo.Collection("jobs");
 
 /* Jobs.remove({});
  */
-ProjectID = "SchulTV-TEST";
+ProjectID = "SchulTV-TEST4-2025";
 
 if (Meteor.isClient) {
     Session.set("Project", {
