@@ -1,16 +1,35 @@
 <template name="member_crop">
- <button class="snap"><i class="fa fa-camera-retro fa-2x"></i></button>
- 
- <label class="btn btn-primary" for="inputImage" title="Upload image file">
-              <input class="hide" id="inputImage" name="file" type="file" accept="image/*">
-              <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with FileReader">
-                <span class="glyphicon glyphicon-upload"></span>
-              </span>
-            </label>
-            
+    <button class="snap"><i class="fa fa-camera-retro fa-2x"></i></button>
 
-<h2>Crop {{cropname}}</h2>
-   <div><form class="cropper"><div class="img-container">
-<img src={{pic}}  width="320"/></div>
-<button class="save">Save</button><button class="cancel">Cancel</button><button class="reset">Reset</button></form></div>
+    <label class="btn btn-primary" for="inputImage" title="Upload image file">
+        <input
+            class="hide"
+            id="inputImage"
+            name="file"
+            type="file"
+            accept="image/*"
+        />
+        <span
+            class="docs-tooltip"
+            data-toggle="tooltip"
+            title=""
+            data-original-title="Import image with FileReader"
+        >
+            <span class="glyphicon glyphicon-upload"></span>
+        </span>
+    </label>
+
+    <h2>Crop {{cropname}}</h2>
+    <div>
+        <form class="cropper">
+            <div class="img-container">
+                <img src="{{pic}}" width="320" />
+            </div>
+            <button type="submit" class="save">Save</button
+            ><button class="cancel">Cancel</button
+            ><button class="reset">Reset</button>
+                        <input id="faketext" type="text" /><input />
+
+        </form>
+    </div>
 </template>
