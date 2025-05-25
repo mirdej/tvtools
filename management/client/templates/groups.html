@@ -74,10 +74,10 @@
 <!-- ======================================================================= -->
 <template name="cams"> 
 <div class="camerachooser panel panel-default">
-	<div class="panel-heading">
+	<div id="cam-panel-heading" class="panel-heading">
 		Kameras <span class="caret"></span> 
 	</div>
-	<ul id="cameralist" class="list-group cameras" style="display:none;" >
+	<ul id="cameralist" class="list-group cameras" style="" >
 		{{#each cams}} 
 		<li id="camera_{{name}}" class="list-group-item cam" style="color:{{textcolor}};background-color:{{color}}"> {{name}} </li>
 		{{/each}} 
