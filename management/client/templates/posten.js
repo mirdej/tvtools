@@ -7,7 +7,7 @@ Template.posten.helpers({
     },
 
     jobs: function () {
-        return Jobs.find(  {},          { sort: { order: 1 } });
+        return Jobs.find({}, { sort: { order: 1 } });
     },
 
     lustClass: function (parent) {
@@ -21,6 +21,19 @@ Template.posten.helpers({
         if (this.happy == 2) return "😊";
         if (this.happy > 2) return "❤️";
         return "";
+    },
+
+    missing: function () {
+        const membs = Members.find(
+            { project: Session.get("Project").id },
+            { sort: { first: 1 } }
+        );
+        let miss = membs.count();
+
+        membs.forEach(function (m) {
+            if (m.posten.length) miss--;
+        });
+        return miss;
     },
 
     hasJob: function (parent) {
@@ -39,6 +52,11 @@ Template.posten.helpers({
         else return "";
     },
 
+    needsSomeone: function () {
+        if (this.cnt < this.min) return "needsomeone";
+        else return "";
+    },
+
     happyPeople: function () {
         return Session.get("happy_people");
     },
@@ -49,9 +67,13 @@ Template.posten.events({
         //       console.log(e.target.parentElement.id, e.target.innerHTML, );
 
         var classes = e.target.className.split(" ");
-        var theJob = e.target.innerHTML;
+        var theJob = e.target.innerHTML.trim();
+        console.log("clicked: ",theJob);
+
         var theJobinDB = Jobs.findOne({ job: theJob });
-        console.log(theJobinDB._id);
+
+        //console.log(theJob, theJobinDB.count());
+
         if (classes.includes("posten")) {
             Members.update(e.target.parentElement.id, {
                 $pull: { posten: theJob },
@@ -73,12 +95,10 @@ Template.posten.events({
             { project: Session.get("Project").id },
             { sort: { first: 1 } }
         );
-        console.log(membs.count());
         let global_happyness = 0;
 
         membs.forEach(function (m) {
             let h = 0;
-            m.posten.forEach(function (p) {});
             if (m.posten.includes(m.lust_2)) h = 1;
             if (m.posten.includes(m.lust_1)) h = h + 2;
             if (h) {

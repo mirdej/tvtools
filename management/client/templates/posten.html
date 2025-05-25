@@ -10,16 +10,18 @@
             <td>{{emoji}}</td>
 
             {{#each jobs}}
-            <td class="job {{lustClass ..}} {{hasJob ..}} {{isOccupied}}">{{job}}</td>
+            <td class="job {{lustClass ..}} {{hasJob ..}} {{isOccupied}} {{needsSomeone}}">
+                {{job}}
+            </td>
             {{/each}}
         </tr>
         {{/each}}
-
-        <tr>
-            <td></td>
+        <tr style="height: 1em"></tr>
+        <tr style="border-top:1px solid #666;text-align:center; font-size: .8em;">
+            <td>{{missing}}</td>
             <td>{{happyPeople}}</td>
             {{#each jobs}}
-            <td>{{cnt}} / {{max}}</td>
+            <td class="{{needsSomeone}}">{{cnt}}</td>
             {{/each}}
         </tr>
     </table>

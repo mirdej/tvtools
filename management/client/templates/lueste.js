@@ -8,7 +8,7 @@ Template.lueste.helpers({
         );
     },
     jobs: function () {
-        return Jobs.find();
+        return Jobs.find(  {},          { sort: { order: 1 } });
     },
     lustClass: function (parent) {
         if (parent.lust_1 == this.job) return "lust_1";
