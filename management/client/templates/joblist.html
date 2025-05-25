@@ -1,0 +1,11 @@
+<template name="joblist">
+    <h2>Liste der Jobs</h2>
+    <table class="table table-condensed listederlueste">
+        <ul>
+            {{#each jobs}}
+            <li class="job">{{job}}-{{min}}-{{max}}-{{cnt}}</li>
+            {{/each}}
+        </ul>
+    </table>
+    <button class="create">Create Jobs</button>
+</template>

@@ -1,7 +1,10 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
+Jobs = new Mongo.Collection("jobs");
 
+/* Jobs.remove({});
+ */
 ProjectID = "SchulTV-TEST";
 
 if (Meteor.isClient) {
@@ -39,6 +42,8 @@ if (Meteor.isClient) {
         "November",
         "Dezember",
     ];
+
+
 
     var von = new Date(Session.get("Project").begin);
     var bis = new Date(Session.get("Project").end);
@@ -97,5 +102,9 @@ if (Meteor.isServer) {
     });
     Meteor.publish("projects", function projectsPublication() {
         return Projects.find();
+    });
+
+      Meteor.publish("jobs", function jobsPublication() {
+        return Jobs.find();
     });
 }

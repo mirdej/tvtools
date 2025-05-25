@@ -1,5 +1,3 @@
-
-
 Template.posten.helpers({
     members: function () {
         return Members.find(
@@ -8,11 +6,10 @@ Template.posten.helpers({
         );
     },
 
-    jobs: [
-        { job: "Egal" },
-        { job: "Kamera", min: 3, max: 4 },
-        { job: "Kameraregie", min: 0, max: 1 },
-    ], //,{job:"Bildschnitt"},{job:"Operateur"},{job:"Untertitel"},{job:"Ton"},{job:"Licht"},{job:"Fotografie"},{job:"Making of"},{job:"Security"},{job:"Maske"},{job:"Moderation"},{job:"Sendeleitung"},{job:"Studiogast"},{job:"Streaming"},{job:"Stagemanager"},{job:"Prompter"}],
+    jobs: function () {
+        return Jobs.find(  {},          { sort: { job: 1 } });
+    },
+
     lustClass: function (parent) {
         if (parent.lust_1 == this.job) return "lust_1";
         if (parent.lust_2 == this.job) return "lust_2";
@@ -37,7 +34,14 @@ Template.posten.helpers({
         else return "";
     },
 
-    happyPeople: function(){return Session.get("happy_people")}
+    isOccupied: function () {
+        if (this.cnt >= this.max) return "assigned";
+        else return "";
+    },
+
+    happyPeople: function () {
+        return Session.get("happy_people");
+    },
 });
 
 Template.posten.events({
@@ -46,14 +50,21 @@ Template.posten.events({
 
         var classes = e.target.className.split(" ");
         var theJob = e.target.innerHTML;
-
-        if (classes[classes.length - 1] == "posten") {
+        var theJobinDB = Jobs.findOne({ job: theJob });
+        console.log(theJobinDB._id);
+        if (classes.includes("posten")) {
             Members.update(e.target.parentElement.id, {
                 $pull: { posten: theJob },
+            });
+            Jobs.update(theJobinDB._id, {
+                $inc: { cnt: -1 },
             });
         } else {
             Members.update(e.target.parentElement.id, {
                 $push: { posten: theJob },
+            });
+            Jobs.update(theJobinDB._id, {
+                $inc: { cnt: 1 },
             });
         }
         //   Members.update(e.target.parentElement.id, {$set: {lust_1: e.target.innerHTML}});
@@ -67,21 +78,28 @@ Template.posten.events({
 
         membs.forEach(function (m) {
             let h = 0;
+            m.posten.forEach(function (p) {});
             if (m.posten.includes(m.lust_2)) h = 1;
             if (m.posten.includes(m.lust_1)) h = h + 2;
             if (h) {
                 global_happyness = global_happyness + 1;
             }
             Members.update(m._id, { $set: { happy: h } });
-            Session.set("happy_people",global_happyness)
+            Session.set("happy_people", global_happyness);
         });
     },
 
     "click .clear": function (e, t) {
-        var m = Members.find({ project: Session.get("Project").id });
-        for (var i = 0; i < m.length; i++) {
-            console.log(m._id);
-            Members.update(m._id, { $set: { job: [] } });
-        }
+        console.log("Clear");
+        var membs = Members.find({ project: Session.get("Project").id });
+        console.log(membs.count());
+        membs.forEach(function (m) {
+            Members.update(m._id, { $set: { posten: [] } });
+        });
+
+        var jobss = Jobs.find({});
+        jobss.forEach(function (m) {
+            Jobs.update(m._id, { $set: { cnt: 0 } });
+        });
     },
 });

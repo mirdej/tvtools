@@ -1,13 +1,15 @@
 .listederlueste tr:hover {background-color:#bbb;cursor:pointer;}
 .listederlueste td:hover {background-color:#555;color:#fff;cursor:pointer;}
 
-.listederlueste  td.job {color:#888;}
+/* .listederlueste  td.job {color:#888;} */
 
 .lust_1 {color:red;border:1px solid red;background-color:#fdd;padding:2px 1px;}
 .lust_2 {color:rgb(240, 163, 163);border:1px dotted red;border-color:#fdd;background-color:#fdd;padding:2px 1px;}
 .posten {background-color:#333;color:white;}
 
-.listederlueste tr.assigned {color:#c6e296 !important; }
+.listederlueste tr.assigned {color:#a9aaa9; }
+.job.assigned {color:white;}
+.listederlueste tr.assigned td.job {color:white;}
 
 .listederlueste tr th {width:150px;}
 .listederlueste tr td {padding:3px 2px;}

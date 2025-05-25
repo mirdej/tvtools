@@ -22,6 +22,7 @@ Router.route('/import', 		function () {this.render( 'import');},{name:'import'})
 
 
 Router.route('/ablauf', 			function () {this.render( 'ablauf');},{name:'ablauf'});
+Router.route('/jobs', 			function () {this.render( 'joblist');},{name:'jobs'});
 
 
 Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'});  });
