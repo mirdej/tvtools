@@ -8,8 +8,8 @@
 .posten {background-color:#333;color:white;}
 
 .listederlueste tr.assigned {color:#a9aaa9; }
-.job.assigned {color:white;}
-.listederlueste tr.assigned td.job {color:white;}
+.job.assigned {color:#eee;}
+.listederlueste tr.assigned td.job {color:#eee;}
 
 .listederlueste tr th {width:150px;}
 .listederlueste tr td {padding:3px 2px;}

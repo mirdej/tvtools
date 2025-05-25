@@ -7,7 +7,7 @@ Template.posten.helpers({
     },
 
     jobs: function () {
-        return Jobs.find(  {},          { sort: { job: 1 } });
+        return Jobs.find(  {},          { sort: { order: 1 } });
     },
 
     lustClass: function (parent) {
