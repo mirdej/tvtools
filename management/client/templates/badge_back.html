@@ -7,31 +7,17 @@
             clear: both;
             position: relative;
             width: 86mm;
-            height: 54.7mm;
+            height: 52.7mm;
             margin: 0mm;
             padding: 0mm;
             font-size:9pt
         "
     >
         <div
-            class="name"
-            style="
-                position: absolute;
-                width: 52mm;
-                height: 11mm;
-                left: 2.5mm;
-                vertical-align: bottom;
-                top: 16mm;
-                font-size: 1.5em;
-                font-weight: bold;
-                line-height: 90%;
-            "
-        ></div>
-        <div
             class="project"
-            style="position: absolute; right: 2.5mm; top: 2mm; color: #000"
+            style="position: absolute; left: 43mm; top: 10mm; color: #000"
         >
-            <h2 style="font-size:12pt;text-align:right;">SchulTV#{{number}}<br/>{{name}}<br/>{{place}}</h2>
+            <p style="font-size:12pt;text-align:left;line-height: .8em;"><strong>SchulTV#{{number}}</strong><br/>{{name}}<br/>{{place}}</p>
             <p style="">
 Michi: 079 278 31 39
 <br/><br/>
@@ -44,22 +30,27 @@ Studio:044 508 59 76</p
         <div
             style="
                 position: absolute;
-                top: 9.5mm;
-                left: 2mm;
-                width: 132px;
-                height: 120px;
+                top: 5mm;
+                left: 0mm;
+                width: 45mm;
+                height: 40mm;
                 overflow: hidden;
+                z-index:-2;
             "
         >
-            <img src="https://schultv.ch/archiv/{{archive}}/qr_code.png" />
+            <img src="https://schultv.ch/archiv/{{archive}}/qr_code.png" style="width:50mm"/>
         </div>
         <div style="
                 position: absolute;
-                bottom: 1.5mm;
-                left: 5mm;
+                width: 82mm;
+                border-top: 1px solid #666;
+                bottom: 1.2mm;
+                left: 2mm;
+                text-align: center;
+                font-size: 9pt;
             "
         >
-        schultv.ch/archiv/{{archive}}
+        https://schultv.ch/archiv/{{archive}}
         </div>
     </div>
 
