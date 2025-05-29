@@ -40,6 +40,29 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 923.0, 107.0, 150.0, 20.0 ],
+					"text" : "c filter talkmaster"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-18",
+					"maxclass" : "newobj",
+					"numinlets" : 3,
+					"numoutlets" : 2,
+					"outlettype" : [ "int", "int" ],
+					"patching_rect" : [ 727.0, 126.0, 77.0, 22.0 ],
+					"text" : "split 100 121"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-19",
 					"maxclass" : "button",
 					"numinlets" : 1,
@@ -1529,7 +1552,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 95.0, 135.0, 29.5, 22.0 ],
+					"patching_rect" : [ 95.0, 147.0, 29.5, 22.0 ],
 					"text" : "i"
 				}
 
@@ -1624,8 +1647,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "int", "int" ],
-					"patching_rect" : [ 727.0, 29.0, 144.0, 22.0 ],
-					"text" : "notein TV-Quiz-Controller"
+					"patching_rect" : [ 727.0, 29.0, 223.0, 22.0 ],
+					"text" : "notein TV-Quiz-Controller @matchport 1"
 				}
 
 			}
@@ -2196,6 +2219,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-18", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-16", 0 ],
 					"source" : [ "obj-19", 0 ]
 				}
@@ -2471,8 +2501,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-1", 0 ],
-					"midpoints" : [ 736.5, 124.0, 104.5, 124.0 ],
+					"destination" : [ "obj-18", 0 ],
 					"source" : [ "obj-70", 0 ]
 				}
 
@@ -2587,7 +2616,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "buzzer_channel.maxpat",
-				"bootpath" : "~/Documents/titler2023/Support",
+				"bootpath" : "~/tvtools/maxmsp/Support",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1

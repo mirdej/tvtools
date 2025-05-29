@@ -57,8 +57,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 463.0, 714.0, 63.0, 22.0 ],
-					"text" : "closebang"
+					"patching_rect" : [ 463.0, 714.0, 56.0, 22.0 ],
+					"text" : "freebang"
 				}
 
 			}
@@ -308,8 +308,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
