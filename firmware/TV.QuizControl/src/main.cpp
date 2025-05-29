@@ -77,6 +77,14 @@ void tud_midi_rx_cb(uint8_t itf)
       }
       send_triggered_buzzer();
     }
+    else // send raw midi
+    {
+      uint8_t buf[3];
+      buf[0] = _mid[1];
+      buf[1] = _mid[2];
+      buf[2] = _mid[3];
+      Agora.tell(buf, 3);
+    }
   }
   else
   {
@@ -101,15 +109,22 @@ void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
   if (len == 2)
   {
     Serial.printf("Callback called %d %d\n", incomingData[0], incomingData[1]);
-    if (triggered_buzzer == 0)
+    if (incomingData[1] < 10)
     {
-      if (incomingData[0])
+      if (triggered_buzzer == 0)
       {
-        Serial.print("Trigger");
-        triggered_buzzer = incomingData[1];
-        Serial.println(triggered_buzzer);
-        send_triggered_buzzer();
+        if (incomingData[0])
+        {
+          Serial.print("Trigger");
+          triggered_buzzer = incomingData[1];
+          Serial.println(triggered_buzzer);
+          send_triggered_buzzer();
+        }
       }
+    }
+    else // TALK CONTROLLER SENDS ALSO TO THIS MIDI DEVICE
+    {
+      midi.noteON(incomingData[1], incomingData[0]);
     }
   }
 
@@ -117,7 +132,7 @@ void callback(const uint8_t *macAddr, const uint8_t *incomingData, int len)
   {
     if (incomingData[0] == MESSAGE_BATTERYLEVEL)
     {
-      midi.controlChange(incomingData[1],incomingData[2]);
+      midi.controlChange(incomingData[1], incomingData[2]);
     }
   }
 }

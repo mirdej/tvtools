@@ -1,0 +1,86 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/me/.meteor/packages/meteor-tool/.1.1.3.1edu0id.67jz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/node',
+1 verbose cli   '/Users/me/.meteor/packages/meteor-tool/.1.1.3.1edu0id.67jz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   '@fortawesome/fontawesome-free' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.36
+4 verbose cache add [ '@fortawesome/fontawesome-free', null ]
+5 verbose cache add name=undefined spec="@fortawesome/fontawesome-free" args=["@fortawesome/fontawesome-free",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: '@fortawesome/fontawesome-free',
+6 verbose parsed url   path: '@fortawesome/fontawesome-free',
+6 verbose parsed url   href: '@fortawesome/fontawesome-free' }
+7 verbose cache add name="" spec="fortawesome/fontawesome-free" args=["","fortawesome/fontawesome-free"]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'fortawesome/fontawesome-free',
+8 verbose parsed url   path: 'fortawesome/fontawesome-free',
+8 verbose parsed url   href: 'fortawesome/fontawesome-free' }
+9 silly lockFile d63b436a-fortawesome-fontawesome-free fortawesome/fontawesome-free
+10 verbose lock fortawesome/fontawesome-free /Users/me/.npm/d63b436a-fortawesome-fontawesome-free.lock
+11 info maybeGithub Attempting fortawesome/fontawesome-free from git://github.com/fortawesome/fontawesome-free
+12 silly lockFile 54738b15-com-fortawesome-fontawesome-free git://github.com/fortawesome/fontawesome-free
+13 verbose lock git://github.com/fortawesome/fontawesome-free /Users/me/.npm/54738b15-com-fortawesome-fontawesome-free.lock
+14 verbose addRemoteGit [ 'git://github.com/fortawesome/fontawesome-free', 'master' ]
+15 verbose git clone git://github.com/fortawesome/fontawesome-free Cloning into bare repository '/Users/me/.npm/_git-remotes/git-github-com-fortawesome-fontawesome-free-54738b15'...
+15 verbose git clone git://github.com/fortawesome/fontawesome-free fatal: unable to connect to github.com:
+15 verbose git clone git://github.com/fortawesome/fontawesome-free github.com[0: 140.82.121.4]: errno=Operation timed out
+16 silly lockFile 54738b15-com-fortawesome-fontawesome-free git://github.com/fortawesome/fontawesome-free
+17 silly lockFile 54738b15-com-fortawesome-fontawesome-free git://github.com/fortawesome/fontawesome-free
+18 info maybeGithub Attempting fortawesome/fontawesome-free from git+ssh://git@github.com:fortawesome/fontawesome-free
+19 silly lockFile 3b3b59d2-com-fortawesome-fontawesome-free git@github.com:fortawesome/fontawesome-free
+20 verbose lock git@github.com:fortawesome/fontawesome-free /Users/me/.npm/3b3b59d2-com-fortawesome-fontawesome-free.lock
+21 verbose addRemoteGit [ 'git@github.com:fortawesome/fontawesome-free', 'master' ]
+22 error git clone git@github.com:fortawesome/fontawesome-free Cloning into bare repository '/Users/me/.npm/_git-remotes/git-github-com-fortawesome-fontawesome-free-3b3b59d2'...
+22 error git clone git@github.com:fortawesome/fontawesome-free @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+22 error git clone git@github.com:fortawesome/fontawesome-free @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+22 error git clone git@github.com:fortawesome/fontawesome-free @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+22 error git clone git@github.com:fortawesome/fontawesome-free IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+22 error git clone git@github.com:fortawesome/fontawesome-free Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+22 error git clone git@github.com:fortawesome/fontawesome-free It is also possible that a host key has just been changed.
+22 error git clone git@github.com:fortawesome/fontawesome-free The fingerprint for the RSA key sent by the remote host is
+22 error git clone git@github.com:fortawesome/fontawesome-free SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+22 error git clone git@github.com:fortawesome/fontawesome-free Please contact your system administrator.
+22 error git clone git@github.com:fortawesome/fontawesome-free Add correct host key in /Users/me/.ssh/known_hosts to get rid of this message.
+22 error git clone git@github.com:fortawesome/fontawesome-free Offending RSA key in /Users/me/.ssh/known_hosts:61
+22 error git clone git@github.com:fortawesome/fontawesome-free Host key for github.com has changed and you have requested strict checking.
+22 error git clone git@github.com:fortawesome/fontawesome-free Host key verification failed.
+22 error git clone git@github.com:fortawesome/fontawesome-free fatal: Could not read from remote repository.
+22 error git clone git@github.com:fortawesome/fontawesome-free
+22 error git clone git@github.com:fortawesome/fontawesome-free Please make sure you have the correct access rights
+22 error git clone git@github.com:fortawesome/fontawesome-free and the repository exists.
+23 silly lockFile 3b3b59d2-com-fortawesome-fontawesome-free git@github.com:fortawesome/fontawesome-free
+24 silly lockFile 3b3b59d2-com-fortawesome-fontawesome-free git@github.com:fortawesome/fontawesome-free
+25 silly lockFile d63b436a-fortawesome-fontawesome-free fortawesome/fontawesome-free
+26 silly lockFile d63b436a-fortawesome-fontawesome-free fortawesome/fontawesome-free
+27 error addLocal Could not install fortawesome/fontawesome-free
+28 error Error: ENOENT, stat 'fortawesome/fontawesome-free'
+29 error If you need help, you may report this *entire* log,
+29 error including the npm and node versions, at:
+29 error     <http://github.com/npm/npm/issues>
+30 error System Darwin 23.6.0
+31 error command "/Users/me/.meteor/packages/meteor-tool/.1.1.3.1edu0id.67jz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/node" "/Users/me/.meteor/packages/meteor-tool/.1.1.3.1edu0id.67jz++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/bin/npm" "install" "--save" "@fortawesome/fontawesome-free"
+32 error cwd /Users/me/Documents/projets_en_cours/schulTV/tvtools/management
+33 error node -v v0.10.36
+34 error npm -v 1.4.28
+35 error path fortawesome/fontawesome-free
+36 error code ENOENT
+37 error errno 34
+38 verbose exit [ 34, true ]

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="src/bootstrap.min.css">
+	<script src="src/jquery-3.4.1.min.js">
+	</script>
+	<script src="src/bootstrap.bundle.min.js">
+	</script>
+	<link href="src/bootstrap4-toggle.min.css" rel="stylesheet">
+	<script src="src/bootstrap4-toggle.min.js">
+	</script>
+	<title> TV.Switchbox - Talkmaster </title>
+	<style>		.btn {margin:10px;}
+	</style>
+</head>
+<body>
+<div class="container-fluid">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"> TV Switchbox v2.0 by [&nbsp;a&nbsp;n&nbsp;y&nbsp;m&nbsp;a&nbsp;] </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"> </span> </button> 
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> 
+				    <a class="nav-link" href="#"> Home <span class="sr-only"> (current) </span> </a> 
+				</li>
+				<li> <a class="nav-link" href="http://switchbox.local/cameras"> Cameras </a> </li>
+				 <li> <a class="nav-link" href="http://lights.local"> Lights </a> </li>
+			</ul>
+		</div>
+	</nav>
+	<div class="card" id="switch">
+		<div class="card-header">
+			Switch 
+		</div>
+		<div class="card-body">
+			<form class="form-inline my-2 my-lg-0">
+				<div class="col-1 text-muted">
+					Live: 
+				</div>
+				<div class="col-9">
+					<button type="button" class="air btn btn-lg btn-outline-light">1</button> <button type="button" class="air btn btn-lg btn-outline-light">2</button> <button type="button" class="air btn btn-lg btn-outline-light">3</button> <button type="button" class="air btn btn-lg btn-outline-light">4</button> <button id="dsk" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">DSK</button> <button id="dsk2" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">TITLES</button> 
+<button id="computer" style="margin-left:60px" type="button" class="btn btn-lg btn-outline-light">Computer</button> 				</div>
+			</form>
+		</div>
+	</div>
+	<div class="card" id="talk">
+		<div class="card-header">
+			Talk 
+		</div>
+		<div class="card-body">
+			<form class="form-inline my-2 my-lg-0">
+				<div class="col-1 text-muted">
+					Perform: 
+				</div>
+				<div class="col-9">
+					<button type="button" id="starttalk" class="btn btn-lg btn-outline-light">Start Talk</button> <button type="button" id="endtalk" class="btn btn-lg btn-outline-light">End Talk</button> 
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="card" id="talk2">
+		<div class="card-header">
+			Talk 
+		</div>
+		<div class="card-body">
+			<div class="row">
+					<div class="col-1 text-muted">
+						Watch: 
+					</div>
+					<div class="col-9">
+						<button type="button" id="watchtalk" class="btn btn-lg btn-outline-light">Watch Talk</button> <button type="button" id="toggleview" class="btn btn-lg btn-outline-light">Live|Talk</button> <button type="button" id="toggleplay" class="btn btn-lg btn-outline-light">Play|Pause</button> 
+					</div>
+			</div>
+			<div class="row">
+					<div class="col-1 text-muted">
+						Skip: 
+					</div>
+					<div class="col-9">
+						<button type="button" class="skip btn btn-lg btn-outline-light">-10</button> <button type="button" class="skip btn btn-lg btn-outline-light">-1</button> <button type="button" class="skip btn btn-lg btn-outline-light">1</button> <button type="button" class="skip btn btn-lg btn-outline-light">10</button> 
+					</div>
+			</div>
+		</div>
+	<div class="card" id="talk2">
+		<div class="card-header">
+			Talk 
+		</div>
+		<div class="card-body">
+			<div class="row">
+					<div class="col-1 text-muted">
+						Prepare: 
+					</div>
+					<div class="col-9">
+						<button type="button" id="preptalk" class="btn btn-lg btn-outline-light">New Talk</button> 
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$( ".air" ).click(function(e) {
+	    var val = $(this).html();
+	    $( "button" ).removeClass('btn-light');
+	    $( "button" ).removeClass('btn-outline-light');
+	    $( "button" ).addClass('btn-outline-light');
+	    $(this).removeClass('btn-outline-light');
+	    $(this).addClass('btn-light');
+	    $.get('http://switchbox.local/air?cam='+val);
+	   
+	});
+	
+	$( ".skip" ).click(function(e) {
+	    var val = $(this).html();
+	    $.get('http://switchbox.local/talk?skip='+val);
+	   
+	});
+
+	$( "#preptalk" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=prepare');
+	   });
+	
+	$( "#starttalk" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=start');
+	   });
+	
+	$( "#endtalk" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=end');
+	   });
+	
+	$( "#watchtalk" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=watch');
+	   });
+	
+	$( "#toggleview" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=toggleview');
+	   });
+	$( "#toggleplay" ).click(function(e) {
+	        $.get('http://switchbox.local/talk?action=toggleplay');
+	   });
+	
+	var dsk = 0;
+	var dsk2 = 0;
+	var fcp = 0;
+	
+	$("#dsk").click(function(){
+	    if(dsk){
+	        $.get('http://switchbox.local/dsk1?on=0');
+	        dsk = 0;
+	    } else {
+	        $.get('http://switchbox.local/dsk1?on=1');
+	        dsk=1;
+	    };
+    });
+
+	$("#dsk2").click(function(){
+	    if(dsk2){
+	        $.get('http://switchbox.local/dsk2?on=0');
+	        dsk2 = 0;
+	    } else {
+	        $.get('http://switchbox.local/dsk2?on=1');
+	        dsk2=1;
+	    };
+    });
+
+	$("#computer").click(function(){
+	    if(fcp){
+	        $.get('http://switchbox.local/fcp?on=0');
+	        fcp = 0;
+	    } else {
+	        $.get('http://switchbox.local/fcp?on=1');
+	        fcp=1;
+	    };
+	});
+</script>
+</body>
+</html>

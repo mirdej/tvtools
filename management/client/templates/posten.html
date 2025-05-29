@@ -1,17 +1,29 @@
 <template name="posten">
-<h2>Jobverteilung</h2>
-<table class="table table-condensed listederlueste">
+    <h2>Jobverteilung</h2>
+    <table class="table table-condensed listederlueste">
+        {{#each members}}
+        <tr id="{{_id}}" class=" {{isSet}}">
+            <th>
+                {{first}} {{last}} {{#if image_rights}} <i></i>{{else}}
+                <i class="fa fa-eye-slash"></i>{{/if}}
+            </th>
+            <td>{{emoji}}</td>
 
-{{#each members}}
-<tr id="{{_id}}">
-   <th class="{{isSet}}">{{first}} {{last}}</th>
-
-
-   {{#each jobs}}
-         <td class="job {{lustClass ..}} {{hasJob ..}}">{{job}}</td>
-   {{/each}}
-</tr>
-{{/each}}
-</table>
-<button class="clear">Clear</button>
+            {{#each jobs}}
+            <td class="job {{lustClass ..}} {{hasJob ..}} {{isOccupied}} {{needsSomeone}}">
+                {{job}}
+            </td>
+            {{/each}}
+        </tr>
+        {{/each}}
+        <tr style="height: 1em"></tr>
+        <tr style="border-top:1px solid #666;text-align:center; font-size: .8em;">
+            <td>{{missing}}</td>
+            <td>{{happyPeople}}</td>
+            {{#each jobs}}
+            <td class="{{needsSomeone}}">{{cnt}}</td>
+            {{/each}}
+        </tr>
+    </table>
+    <button class="clear">Clear</button>
 </template>

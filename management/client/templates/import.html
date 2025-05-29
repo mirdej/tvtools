@@ -1,10 +1,26 @@
 <template name="import">
-<div class="container-fluid">
- <div class="panel">
- <form class="import">
- <input type="submit" class="btn btn-primary" value="import" />
- <textarea id="f" class="form-control" rows="24">Paste here..</textarea>
- </form>
- </div>
-</div>
+    <h2>Import CSV</h2>
+    <p>Last name, First name, Phone</p>
+    <div class="container-fluid">
+        <div class="panel">
+            <form class="import">
+                <input type="submit" class="btn btn-primary" value="import" />
+                <textarea id="f" class="form-control" rows="24"></textarea
+                >
+            </form>
+        </div>
+    </div>
+
+    <hr />
+    <h2>Export CSV</h2>
+
+    <div class="container-fluid">
+        <div class="panel">
+            <pre>
+{{#each members}}{{last}},{{first}},{{tel}}
+{{/each}} 
+ </pre
+            >
+        </div>
+    </div>
 </template>

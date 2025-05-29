@@ -8,6 +8,7 @@ Router.route('/mitarbeiter/neu', 	function () {this.render( 'member_new');},{nam
 Router.route('/mitarbeiter/crop', 	function () {this.render( 'member_crop');},{name:'/mitarbeiter/crop'});
 Router.route('/mitarbeiter/lernen', function () {this.render( 'learn');},{name:'/mitarbeiter/lernen'});
 Router.route('/mitarbeiter/ausweis', function () {this.render( 'badge');},{name:'/mitarbeiter/ausweis'});
+Router.route('/mitarbeiter/ausweis_rueckseite', function () {this.render( 'badgeback');},{name:'/mitarbeiter/ausweis_rueckseite'});
 Router.route('/attestations', 		function () {this.render( 'attestations');},{name:'attestations'});
 Router.route('/bestaetigungen', 		function () {this.render( 'bestaetigungen');},{name:'bestaetigungen'});
 Router.route('/gruppen', 			function () {this.render( 'groups');},{name:'gruppen'});
@@ -21,6 +22,7 @@ Router.route('/import', 		function () {this.render( 'import');},{name:'import'})
 
 
 Router.route('/ablauf', 			function () {this.render( 'ablauf');},{name:'ablauf'});
+Router.route('/jobs', 			function () {this.render( 'joblist');},{name:'jobs'});
 
 
 Router.route('/login', 			function () {this.render( 'login', {to: 'loginYield'});  });

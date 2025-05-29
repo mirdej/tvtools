@@ -1,15 +1,20 @@
 Members = new Mongo.Collection("members");
 Groups = new Mongo.Collection("groups");
 Projects = new Mongo.Collection("projects");
+Jobs = new Mongo.Collection("jobs");
 
-ProjectID = "SchulTV-WE-2025";
+/* Jobs.remove({});
+ */
+ProjectID = "SchulTV-TEST4-2025";
 
 if (Meteor.isClient) {
     Session.set("Project", {
         show_all: true,
-        name: "Wetzikon",
-        place: "Walenbach",
+        name: "Fribourg",
+        number: 50,
+        place: "Atelier",
         id: ProjectID,
+        archive: "o2i2vB=e@E",
         logo: "logo-universal.png",
         badge: "carte-de-presse-schultv2.jpg",
         begin: "Mon, 12 May 2025 07:00:00 +0200",
@@ -37,6 +42,8 @@ if (Meteor.isClient) {
         "November",
         "Dezember",
     ];
+
+
 
     var von = new Date(Session.get("Project").begin);
     var bis = new Date(Session.get("Project").end);
@@ -95,5 +102,9 @@ if (Meteor.isServer) {
     });
     Meteor.publish("projects", function projectsPublication() {
         return Projects.find();
+    });
+
+      Meteor.publish("jobs", function jobsPublication() {
+        return Jobs.find();
     });
 }

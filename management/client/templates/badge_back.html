@@ -1,0 +1,60 @@
+<template name="badgeback">
+    {{#each members}}
+
+    <div
+        class="ausweis"
+        style="
+            clear: both;
+            position: relative;
+            width: 86mm;
+            height: 52.7mm;
+            margin: 0mm;
+            padding: 0mm;
+            font-size:9pt
+        "
+    >
+        <div
+            class="project"
+            style="position: absolute; left: 43mm; top: 10mm; color: #000"
+        >
+            <p style="font-size:12pt;text-align:left;line-height: .8em;"><strong>SchulTV#{{number}}</strong><br/>{{name}}<br/>{{place}}</p>
+            <p style="">
+Michi: 079 278 31 39
+<br/><br/>
+Margrit: 079 353 65 60<br/><br/>
+
+Studio:044 508 59 76</p
+            >
+        </div>
+
+        <div
+            style="
+                position: absolute;
+                top: 5mm;
+                left: 0mm;
+                width: 45mm;
+                height: 40mm;
+                overflow: hidden;
+                z-index:-2;
+            "
+        >
+            <img src="https://schultv.ch/archiv/{{archive}}/qr_code.png" style="width:50mm"/>
+        </div>
+        <div style="
+                position: absolute;
+                width: 82mm;
+                border-top: 1px solid #666;
+                bottom: 1.2mm;
+                left: 2mm;
+                text-align: center;
+                font-size: 9pt;
+            "
+        >
+        https://schultv.ch/archiv/{{archive}}
+        </div>
+    </div>
+
+    {{/each}}
+
+    <button class="btn btn-primary alpha showAll dontPrint">Alle zeigen</button>
+</template>
