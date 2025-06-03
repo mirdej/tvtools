@@ -23,6 +23,7 @@
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #include <OTA.h>
+#include <aWOT.h>
 
 #include <ATEMbase.h>
 #include <ATEMmax.h>
@@ -33,6 +34,14 @@
 #include <ETH.h>
 
 // ...........................................................................DEFFINES
+
+#define IP_SWITCHBOX 240
+#define IP_FRANCIS 241
+#define IP_PLAYER 242
+#define IP_RECORDER 243
+// #define IP_STREAMER 244
+#define IP_HERBERT 245
+#define IP_LIGHTS 249
 
 #define BRIGHTNESS 120
 /*
@@ -69,6 +78,8 @@ const int NUM_PIXELS = 8;
 Preferences preferences;
 int camera_count = 4;
 int fixture[8];
+Application app;
+WiFiServer server(80);
 
 int connection_state;
 
@@ -83,16 +94,16 @@ AsyncWebSocket ws("/ws");
  */
 static bool eth_connected = false;
 
-IPAddress switcherIp(IP1, IP2, IP3, 241);
-IPAddress MainSwitcherIp(IP1, IP2, IP3, 245);
-IPAddress local_IP(IP1, IP2, IP3, 200);
+IPAddress switcherIp(IP1, IP2, IP3, IP_FRANCIS);
+IPAddress MainSwitcherIp(IP1, IP2, IP3, IP_HERBERT);
+IPAddress local_IP(IP1, IP2, IP3, IP_SWITCHBOX);
 IPAddress gateway(IP1, IP2, IP3, 1);
 IPAddress subnet(255, 255, 255, 0);
 IPAddress primaryDNS(8, 8, 8, 8);   // optional
 IPAddress secondaryDNS(8, 8, 4, 4); // optional
+
 ATEMmax CamSwitcher;
 ATEMmax MainSwitcher;
-
 
 int greenscreen;
 
@@ -135,6 +146,44 @@ void service_BMD()
   }
 }
 
+//----------------------------------------------------------------------------------------
+//																				                                       WEB Stuff
+
+int num_client_connections;
+
+void TaskClientSocket(void *pvParameters)
+{
+  WiFiClient clientHandle = *((WiFiClient *)pvParameters);
+  int client_id = num_client_connections++;
+
+  if (clientHandle.connected())
+  {
+    //   log_v("New Client Connected. Client#: %d", client_id);
+    app.process(&clientHandle);
+    clientHandle.stop();
+  }
+  //  log_v("Client #%d disconnected", client_id);
+  num_client_connections--;
+  vTaskDelete(NULL);
+}
+
+void cors_headers(Request &req, Response &res)
+{
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, PUT, HEAD, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  //  log_v("_____________________\nPath %s, Method %d", req.path(), req.method());
+  // res.status(204);
+  if (req.method() == 7)
+    res.sendStatus(204);
+}
+
+void cors(Request &req, Response &res)
+{
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, HEAD");
+  res.sendStatus(204);
+}
 //----------------------------------------------------------------------------------------
 //																		tally
 bool check_tally(void *)
@@ -374,7 +423,7 @@ void dsk2(int on)
     MainSwitcher.setDownstreamKeyerKeySource(0, 2);
     MainSwitcher.setDownstreamKeyerPreMultiplied(0, true);
     MainSwitcher.setDownstreamKeyerOnAir(0, true);
-    MainSwitcher.setProgramInputVideoSource(0,5);
+    MainSwitcher.setProgramInputVideoSource(0, 5);
     Serial.println("DSK2 On Air");
   }
   else
@@ -386,7 +435,7 @@ void dsk2(int on)
 
 void set_camera_settings()
 {
-return;
+  return;
   File file = LittleFS.open("/settings.json");
   DynamicJsonDocument doc(2048);
   DeserializationError error = deserializeJson(doc, file);
@@ -550,6 +599,7 @@ void WiFiEvent(WiFiEvent_t event)
 
 void setup()
 {
+  Serial.begin(115200);
 
   FastLED.addLeds<NEOPIXEL, PIN_PIXELS>(pixels, NUM_PIXELS);
 
@@ -561,19 +611,18 @@ void setup()
   }
   FastLED.setBrightness(BRIGHTNESS);
 
-  Serial.begin(115200);
   Serial.println("Setup Start");
 
   pinMode(PIN_CS, OUTPUT);
   digitalWrite(PIN_CS, HIGH);
   SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI);
 
- /*  if (!LittleFS.begin())
-  {
-    Serial.println("An Error has occurred while mounting LittleFS");
-    return;
-  }
- */
+  /*  if (!LittleFS.begin())
+   {
+     Serial.println("An Error has occurred while mounting LittleFS");
+     return;
+   }
+  */
   preferences.begin("anyma", false);
   camera_count = preferences.getInt("camera_count", 4);
   greenscreen = preferences.getInt("greenscreen", 3);
@@ -610,6 +659,28 @@ void setup()
   dsk2(1);
   set_camera_settings();
 
+  //-- web server
+  app.use(&cors_headers);
+  app.options(&cors);
+
+  app.get("/api/pgm", [](Request &req, Response &res)
+          {             
+            res.println();
+            res.print(on_air); });
+
+  app.get("/api/pgm/:s", [](Request &req, Response &res)
+          {
+            char s[10];
+            req.route("s", s, 10);
+            int n = atoi(s);
+            Serial.printf("Set on air %d\n",n);
+            set_preview(n);
+            CamSwitcher.performCutME(0);
+            res.println();
+            res.print(n); });
+
+  server.begin();
+
   t.every(100, check_tally);
   t.every(20, check_buttons);
   t.every(50, update_pixels);
@@ -626,4 +697,12 @@ void loop()
   t.tick();
   service_BMD();
   OTA::handle();
+
+  WiFiClient client = server.available();
+
+  if (client.connected())
+  {
+    app.process(&client);
+  }
+  taskYIELD();
 }
