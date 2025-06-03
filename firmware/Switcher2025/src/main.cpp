@@ -24,6 +24,9 @@
 #include <ArduinoJson.h>
 #include <OTA.h>
 #include <aWOT.h>
+#include "MimeTypes.h"
+#include "ESP-FTP-Server-Lib.h"
+#include "FTPFilesystem.h"
 
 #include <ATEMbase.h>
 #include <ATEMmax.h>
@@ -72,6 +75,10 @@ const int NUM_PIXELS = 8;
 #define IP2 168
 #define IP3 252
 
+#define WEBROOT ""
+#define READ_BUFFER_SIZE 512
+#define MAIN_FILE_SYSTEM LittleFS
+
 //========================================================================================
 //----------------------------------------------------------------------------------------
 //																				GLOBALS
@@ -80,6 +87,7 @@ int camera_count = 4;
 int fixture[8];
 Application app;
 WiFiServer server(80);
+FTPServer ftp;
 
 int connection_state;
 
@@ -184,6 +192,69 @@ void cors(Request &req, Response &res)
   res.set("Access-Control-Allow-Methods", "GET, HEAD");
   res.sendStatus(204);
 }
+
+/** ------------------------------------------------------------------------------------------------------------------------------------
+ * @brief  Serve static files from MAIN_FILE_SYSTEM
+ *
+ *
+ *
+ * @param  req          aWot Request
+ * @param  res          aWot Response
+ */
+void fileServer(Request &req, Response &res)
+{
+
+  if (req.method() != Request::GET)
+  {
+    return;
+  }
+
+  const char *path = req.path();
+
+  if (strcmp(path, "/") == 0)
+  {
+    path = "/index.html";
+  }
+
+  char local_path[120];
+  strcpy(local_path, WEBROOT);
+  strcat(local_path, path);
+
+  log_v("Request file %s -> %s", path, local_path);
+
+  if (!MAIN_FILE_SYSTEM.exists(local_path))
+  {
+    return;
+  }
+
+  File file = MAIN_FILE_SYSTEM.open(local_path);
+
+  if (file.isDirectory())
+  {
+    file.close();
+    return;
+  }
+
+  uint8_t readBuffer[READ_BUFFER_SIZE];
+  const char *mimeType = MimeTypes::getType(file.name());
+  res.set("Content-Type", mimeType);
+
+  res.set("Connection", "close"); // from CardFiles.ino exanple
+
+  size_t length = file.size();
+
+  while (length)
+  {
+    size_t toRead = length > READ_BUFFER_SIZE ? READ_BUFFER_SIZE : length;
+    file.read(readBuffer, toRead);
+    res.write(readBuffer, toRead);
+    length = length - toRead;
+    taskYIELD();
+  }
+  file.close();
+  res.end();
+}
+
 //----------------------------------------------------------------------------------------
 //																		tally
 bool check_tally(void *)
@@ -617,12 +688,12 @@ void setup()
   digitalWrite(PIN_CS, HIGH);
   SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI);
 
-  /*  if (!LittleFS.begin())
-   {
-     Serial.println("An Error has occurred while mounting LittleFS");
-     return;
-   }
-  */
+  if (!LittleFS.begin())
+  {
+    Serial.println("An Error has occurred while mounting LittleFS");
+    return;
+  }
+
   preferences.begin("anyma", false);
   camera_count = preferences.getInt("camera_count", 4);
   greenscreen = preferences.getInt("greenscreen", 3);
@@ -663,10 +734,12 @@ void setup()
   app.use(&cors_headers);
   app.options(&cors);
 
-  app.get("/api/pgm", [](Request &req, Response &res)
+  app.get("/api/pgm/", [](Request &req, Response &res)
           {             
             res.println();
-            res.print(on_air); });
+            res.print(on_air); 
+            res.end(); 
+  });
 
   app.get("/api/pgm/:s", [](Request &req, Response &res)
           {
@@ -677,9 +750,18 @@ void setup()
             set_preview(n);
             CamSwitcher.performCutME(0);
             res.println();
-            res.print(n); });
+            res.print(n); 
+            res.end();
+        });
+  
+  app.get(&fileServer);
 
   server.begin();
+
+  ftp.addUser("me", "me");
+  ftp.addFilesystem("LittleFS", &LittleFS);
+  ftp.begin();
+  log_i("FTP server started.");
 
   t.every(100, check_tally);
   t.every(20, check_buttons);
@@ -697,6 +779,7 @@ void loop()
   t.tick();
   service_BMD();
   OTA::handle();
+  ftp.handle();
 
   WiFiClient client = server.available();
 
