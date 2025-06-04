@@ -57,7 +57,7 @@
         <button
             type="button"
             scene="5"
-            color="2"
+            color="9"
             class="lights btn btn-lg btn-outline-light"
         >
             Fonds
@@ -135,8 +135,9 @@
                         $(this).addClass("online");
                     } else {
                         if (
-                            parseInt(data.colors) && (parseInt($(this).attr("color")) ===
-                            parseInt(data.colors))
+                            parseInt(data.colors) &&
+                            parseInt($(this).attr("color")) ===
+                                parseInt(data.colors)
                         ) {
                             $(this).addClass("online");
                         } else {
@@ -162,7 +163,12 @@
                 url = lights_url + "api/scene/load/" + String(val);
                 $.get(url);
                 val = parseInt($(this).attr("color"));
-                url = lights_url + "api/colorset/load/" + String(val);
+                if (val == 9) {
+                    url = lights_url + "api/colorset/load/" + String(fonds);
+                    fonds = (fonds + 1) % 6;
+                } else {
+                    url = lights_url + "api/colorset/load/" + String(val);
+                }
                 $.get(url);
             });
 
