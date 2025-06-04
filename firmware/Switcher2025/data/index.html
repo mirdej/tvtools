@@ -56,21 +56,24 @@
 
         <button
             type="button"
-            scene="0"
+            scene="5"
+            color="2"
             class="lights btn btn-lg btn-outline-light"
         >
             Fonds
         </button>
         <button
             type="button"
-            scene="1"
+            scene="2"
+            color="0"
             class="lights btn btn-lg btn-outline-light"
         >
             Back
         </button>
         <button
             type="button"
-            scene="2"
+            scene="4"
+            color="0"
             class="lights btn btn-lg btn-outline-light"
         >
             Front
@@ -78,6 +81,7 @@
         <button
             type="button"
             scene="3"
+            color="0"
             class="lights btn btn-lg btn-outline-light"
         >
             Side
@@ -85,14 +89,16 @@
         <hr />
         <button
             type="button"
-            scene="4"
+            scene="1"
+            color="1"
             class="lights btn btn-lg btn-outline-light"
         >
             Live
         </button>
         <button
             type="button"
-            scene="4"
+            scene="0"
+            color="0"
             class="lights btn btn-lg btn-outline-light"
         >
             Kons
@@ -101,12 +107,15 @@
         <button
             type="button"
             scene="5"
+            color="0"
             class="lights btn btn-lg btn-outline-light"
         >
             Off
         </button>
         <script>
             var lights_url = "http://192.168.252.249/";
+            var my_url = "http://192.168.252.240/";
+            var fonds = 1;
 
             function setTally(data) {
                 $(".air").each(function () {
@@ -118,10 +127,29 @@
                 });
             }
 
+            function setLight(data) {
+                $(".lights").each(function () {
+                    if (
+                        parseInt($(this).attr("scene")) === parseInt(data.scene)
+                    ) {
+                        $(this).addClass("online");
+                    } else {
+                        if (
+                            parseInt(data.colors) && (parseInt($(this).attr("color")) ===
+                            parseInt(data.colors))
+                        ) {
+                            $(this).addClass("online");
+                        } else {
+                            $(this).removeClass("online");
+                        }
+                    }
+                });
+            }
+
             $(".air").click(function (e) {
                 var val = parseInt($(this).html());
 
-                var url = "api/pgm/" + String(val - 1) + "/";
+                var url = my_url + "api/pgm/" + String(val - 1) + "/";
                 console.log(url);
                 $.get(url, function (data) {
                     setTally(data);
@@ -129,19 +157,23 @@
             });
 
             $(".lights").click(function (e) {
+                var url;
                 var val = parseInt($(this).attr("scene"));
-                var url = lights_url + "api/scene/load/" + String(val);
-
-                console.log(url);
+                url = lights_url + "api/scene/load/" + String(val);
+                $.get(url);
+                val = parseInt($(this).attr("color"));
+                url = lights_url + "api/colorset/load/" + String(val);
+                $.get(url);
             });
 
             setInterval(function () {
-                $.get("api/pgm/", function (data) {
+                $.get(my_url + "api/pgm/", function (data) {
                     //console.log(data);
                     setTally(data);
                 });
-                $.get(lights_url + "api/atatus/", function (data) {
+                $.get(lights_url + "api/status", function (data) {
                     console.log(data);
+                    setLight(data);
                 });
             }, 1000);
         </script>

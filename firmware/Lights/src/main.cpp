@@ -24,6 +24,7 @@ or: Maybe worlds most complicated Arduino Blink Sketch
 #include <Arduino.h>
 #include "FS.h"
 #include <FastLED.h>
+#include <EthernetESP32.h>
 
 #include "AnymaEspSettings.h"
 #include "AnymaEspNetworking.h"

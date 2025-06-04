@@ -21,9 +21,20 @@
 #include "FTPFilesystem.h"
 
 #if USE_ETHERNET
+
 #include <SPI.h>
 #include <EthernetESP32.h>
 
+#define IP1 192
+#define IP2 168
+#define IP3 252
+#define IP_LIGHTS 249
+
+IPAddress local_IP(IP1, IP2, IP3, IP_LIGHTS);
+IPAddress gateway(IP1, IP2, IP3, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress primaryDNS(8, 8, 8, 8);   // optional
+IPAddress secondaryDNS(8, 8, 4, 4); // optional
 
 const int PIN_CS = 14;
 const int PIN_SCK = 13;
@@ -42,7 +53,6 @@ W5500Driver driver(PIN_CS, PIN_INT, W5500_RST_PORT);
 #define READ_BUFFER_SIZE 4096
 const char *NTP_SERVER = "pool.ntp.org";
 const char *TZ_STRING = "CET-1CEST,M3.5.0/2,M10.5.0/3";
-
 
 WiFiMulti wifiMulti;
 FTPServer ftp;
@@ -160,7 +170,7 @@ void findFriends()
             server_info["name"] = String(MDNS.hostname(i));
             Serial.println(MDNS.hostname(i));
 
-            //server_info["ip"] = String(MDNS.IP(i).toString());
+            // server_info["ip"] = String(MDNS.IP(i).toString());
             server_info["port"] = String(MDNS.port(i));
             doc.add(server_info);
         }
@@ -182,28 +192,28 @@ bool setup_w5500()
     WiFi.begin();
     WiFi.disconnect();
 
-   
     SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI);
 
     Ethernet.init(driver);
     Ethernet.setHostname(settings.hostname.c_str());
-  
-    Serial.println("Initialize Ethernet with DHCP:");
-    if (Ethernet.begin())
-    {
-      Serial.print("  DHCP assigned IP ");
-      Serial.println(Ethernet.localIP());
-    }
-    else
-    {
-      Serial.println("Failed to configure Ethernet using DHCP");
-      while (true)
-      {
-        delay(1);
-      }
-    }
+    Ethernet.begin(local_IP, primaryDNS, gateway, subnet);
 
-    
+    /*
+    Serial.println("Initialize Ethernet with DHCP:");x
+      if Ethernet.begin())
+     {
+    //   Serial.print("  DHCP assigned IP ");
+       Serial.println(Ethernet.localIP());
+     }
+     else
+     {
+       Serial.println("Failed to configure Ethernet  using DHCP");
+       while (true)
+       {
+         delay(1);
+       }
+     } */
+
     log_v("Done. Time taken %d", millis() - startTime);
     return true;
 }
@@ -237,16 +247,17 @@ void network_task(void *)
     WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
     WiFi.setHostname(settings.hostname.c_str());
 
+#if USE_ETHERNET
+        WiFi.setAutoReconnect(false);
+        setup_w5500();
+
+#else
+
     WiFi.mode(WIFI_STA);
     WiFi.setSleep(false); // better resonsiveness, more power consumption
     // wifiMulti.addAP(settings.ssid.c_str(), settings.pass.c_str());
     wifiMulti.addAP("Anymair", "Mot de passe pas complique");
 
-#if USE_ETHERNET
-    setup_w5500();
-
-
-#else
     while (WiFi.status() != WL_CONNECTED)
     {
         wifiMulti.run();
