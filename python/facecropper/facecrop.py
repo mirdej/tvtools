@@ -2,7 +2,7 @@
 
 # Place raw pictures in "in" folder
 # Use visual studio code, activate virtual env, control-F5 -> BAM!!!
-
+#(drop faccropper folder into vscode, select facecropper.py, then CTL-F5)
 
 import cv2
 import numpy as np
