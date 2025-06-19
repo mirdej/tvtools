@@ -33,4 +33,9 @@ Template.lueste.events({
         lustindex = (lustindex + 1) % 2;
         Session.set("lustindex", lustindex);
     },
+
+
+    
 });
+
+
