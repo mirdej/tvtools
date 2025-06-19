@@ -1,4 +1,7 @@
 <template name="posten">
+       <label class="showAssigned"> Show All 
+    	<input type="checkbox" data-toggle="toggle" checked="{{show_assigned}}" />
+	</label> 
     <h2>Jobverteilung</h2>
     <table class="table table-condensed listederlueste">
         {{#each members}}
@@ -26,4 +29,6 @@
         </tr>
     </table>
     <button class="clear">Clear</button>
+ 
+
 </template>

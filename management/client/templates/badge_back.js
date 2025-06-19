@@ -28,7 +28,7 @@ Template.badgeback.events({
         e.stopPropagation();
         e.preventDefault();
         $("div.ausweis").hide();
-        $(e.target).parent("div.ausweis").show();
+        $("div.ausweis").first().show();
     },
 
     "click .showAll": function (e, t) {

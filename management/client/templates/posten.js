@@ -6,6 +6,10 @@ Template.posten.helpers({
         );
     },
 
+    show_assigned: function () {
+        return Session.get("show_assigned");
+    },
+
     jobs: function () {
         return Jobs.find({}, { sort: { order: 1 } });
     },
@@ -43,8 +47,13 @@ Template.posten.helpers({
     },
 
     isSet: function () {
-        if (this.posten.length) return "assigned";
-        else return "";
+        if (this.posten.length) {
+            if (Session.get("show_assigned")) {
+                return "assigned";
+            } else {
+                return "hidden";
+            }
+        } else return "";
     },
 
     isOccupied: function () {
@@ -68,7 +77,7 @@ Template.posten.events({
 
         var classes = e.target.className.split(" ");
         var theJob = e.target.innerHTML.trim();
-        console.log("clicked: ",theJob);
+        console.log("clicked: ", theJob);
 
         var theJobinDB = Jobs.findOne({ job: theJob });
 
@@ -121,5 +130,9 @@ Template.posten.events({
         jobss.forEach(function (m) {
             Jobs.update(m._id, { $set: { cnt: 0 } });
         });
+    },
+
+    "change .showAssigned input": function (e, t) {
+        Session.set("show_assigned", e.target.checked);
     },
 });
